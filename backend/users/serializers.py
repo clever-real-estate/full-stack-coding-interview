@@ -4,7 +4,6 @@ from django.contrib.auth.hashers import make_password
 
 class UserSerializer(serializers.ModelSerializer):
     email = serializers.EmailField()
-    username = serializers.CharField(max_length=150)
     password = serializers.CharField(max_length=100, write_only=True)
     
     first_name = serializers.CharField(max_length=30, required=False)
@@ -13,17 +12,11 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
-            "username",
             "email",
             "password",
             "first_name",
             "last_name",
         ]
-
-    def validate_username(self, value):
-        if User.objects.filter(username=value).exists():
-            raise serializers.ValidationError("Username already exists")
-        return value
 
     def validate_email(self, value):
         if User.objects.filter(email=value).exists():
@@ -32,4 +25,8 @@ class UserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         validated_data['password'] = make_password(validated_data['password'])
+        email = validated_data['email']
+        username = email
+        
+        validated_data['username'] = username
         return super().create(validated_data)
