@@ -1,54 +1,54 @@
-import Head from "next/head";
-import PhotoList from "./PhotoList";
+"use client"
+
+import { Photo } from "@/app/components/Photo";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 
 
-export const metadata = {
-  title: 'Photos List Page',
-  description: 'Photos',
-  keywords: 'Clever, photos, list, page, rent',  
-}
-
-async function getPhotos() {
-    let token: string | null = ""
-    if (typeof window !== 'undefined') {
-        token = window.localStorage.getItem('token')
-    }
-
-    console.log("token", token)
-
+async function getPhotos(token: string | null) {
+  try {
     const response = await fetch('http://localhost:8000/photos/', {
         method: 'GET',
         headers: {
-            'Content-Type': 'application/json',
-            "Authorization": `Token ${token}`
+            "Authorization": `Bearer ${token}`
         },
-    })
-
-    const data = await response.json()
-    console.log("resp_json", data)
+    });
 
     if (!response.ok) {
-        throw new Error('Error fetching photos');
+        throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
-    const photos = await response.json()
-    return photos
+    // Handle the response
+    const data = await response.json();
+    return data
+  } catch (error) {
+    console.error('Error:', error);
+  }
+
 }
 
 
-const Page = async () => {
-  const photos = await getPhotos();
+export default function Page() {
+  const [photos, setPhotos] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+        const user_token = localStorage.getItem('token');
+        const photos = await getPhotos(user_token);
+
+        setPhotos(photos);
+    };
+
+    fetchData();
+}, []);
 
   return (
-    <>
-      <Head>
-        <title>{metadata.title}</title>
-        <meta name="description" content={metadata.description} />
-        <meta name="keywords" content={metadata.keywords} />
-      </Head>
-      <PhotoList photos={photos}/>
-    </>
+    <div>
+      <h1 className="font-bold text-2xl mb-5">All Photos</h1>
+      
+      {photos && photos.map((photo: any) => (
+        <Photo key={photo.id} photo={photo} />
+      ))}
+      
+    </div>
   )
 }
-
-export default Page;
