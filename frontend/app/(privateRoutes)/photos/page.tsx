@@ -1,9 +1,8 @@
 "use client"
 
 import { Photo } from "@/app/components/Photo";
-import Image from "next/image";
 import { useEffect, useState } from "react";
-
+import Image from 'next/image'
 
 async function getPhotos(token: string | null) {
   try {
@@ -43,6 +42,9 @@ export default function Page() {
 
   return (
     <div>
+      <div className="mb-3">
+          <Image src={`logo.svg`} alt='Clever logo' width="100" height="100" />
+      </div>
       <h1 className="font-bold text-2xl mb-5">All Photos</h1>
       
       {photos && photos.map((photo: any) => (

@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Image from "next/image";
 import Link from 'next/link';
 
+
 export function Photo({photo}: {photo: any}) {
+    const[user_liked, setUseLiked] = useState(photo.user_liked)
+
     const likeDislikePhoto = async (photo_id: number) => {
         const user_token = localStorage.getItem('token');
         const response = await fetch(`http://localhost:8000/photos/${photo_id}/like/`, {
@@ -14,41 +17,84 @@ export function Photo({photo}: {photo: any}) {
         });
     
         if (response.ok) {
-            alert('Photo liked')
+            const data = await response.json();
+            if(data.liked){
+                setUseLiked(true)
+            }else {
+                setUseLiked(false)
+            }
         }else{
             const error = await response.json()
             alert(error.detail)
         }
-    }   
+    }
+
+    const Star = ({user_liked}:{user_liked: boolean}) => {
+        return (
+            <div className='flex gap-3'>
+                {user_liked ? 
+                    <Image
+                        className="cursor-pointer"
+                        onClick={() => likeDislikePhoto(photo.id)} 
+                        src="star-fill.svg" 
+                        alt="star user liked" 
+                        width={30} 
+                        height={30} 
+                    /> : 
+                    <Image
+                        className="cursor-pointer"
+                        onClick={() => likeDislikePhoto(photo.id)} 
+                        src="star-line.svg" 
+                        alt="star user not liked" 
+                        width={30} 
+                        height={30} 
+                    />
+                }
+            </div>
+        )
+    }
+
+    const PortfolioWithStar = ({photo, user_liked}:{photo: any, user_liked: boolean}) => {
+        return (
+            <>
+                <div>
+                    <Link className="text-blue-500 flex gap-2" href={`${photo.photographer_url}`}>
+                        <Image src="links.svg" alt="portfolio link" width={20} height={20} />
+                        <span className='text-xl'>Portfolio</span>
+                    </Link>
+                </div>
+                <div className='lg:hidden block'>
+                    <Star user_liked={user_liked} />
+                </div>
+            </>
+        )
+    }
 
   return (
-    <div className='flex gap-2 mt-5'>
-        <div>
-            <Image onClick={() => likeDislikePhoto(photo.id)} 
-                src="star-fill.svg" alt="star user liked" width={50} height={50} />
-            <Image onClick={() => likeDislikePhoto(photo.id)} 
-                src="star-line.svg" alt="star user not liked" width={50} height={50} />
+    <div className='flex gap-4 my-5 flex-wrap'>
+        <div className='lg:block hidden'>
+            <Star user_liked={user_liked} />
         </div>
         <div>
           <Image src={photo.src_original} alt={photo.alt} width={350} height={200} />
         </div>
         <div className='flex justify-between flex-1'>
-            <div className='flex flex-col'>
+            <div className='flex flex-col gap-2'>
                 <span className='font-bold text-lg'>{photo.photographer}</span>    
                 <span className='text-lg'>{photo.alt}</span>    
-                <div className='flex'>
-                    <span className={`text-[${photo.avg_color}] text-md`}>{photo.avg_color}</span>
-                    <div className={`w-[100px] h-[100px] bg-[${photo.avg_color}]`}></div>
-                </div>    
+                <div className='flex gap-3 items-center'>
+                    <span className="text-xl" style={{ color: photo.avg_color }}>{photo.avg_color}</span>
+                    <div className="w-6 h-6"  style={{ backgroundColor: photo.avg_color }}></div>
+                </div>
+
+                <div className='lg:hidden flex gap-3 items-center'>
+                    <PortfolioWithStar photo={photo} user_liked={user_liked} />
+                </div>
             </div>
-            <div>
-                <Link className="text-blue-500 flex gap-1" href={`${photo.photographer_url}`}>
-                    <Image src="links.svg" alt="portfolio link" width={20} height={20} />
-                    <span className='text-xl'>Portfolio</span>
-                </Link>
+            <div className='gap-3 lg:flex hidden'>
+                <PortfolioWithStar photo={photo} user_liked={user_liked} />
             </div>
         </div>
-       
     </div>
   )
 }

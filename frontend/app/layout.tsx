@@ -15,10 +15,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="flex justify-center mt-20">
-        <div className="max-w-[980px]">
-          {children}
-        </div>
+      <body className="flex justify-center md:p-20 p-5">
+        {children}
       </body>
     </html>
   );

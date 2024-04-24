@@ -23,9 +23,6 @@ export default function SignIn() {
         });
 
         const data = await response.json()
-        console.log("response......", data)
-        console.log("data.access_token......", data.access)
-        console.log("data.refresh_token......", data.refresh)
 
         if (response.ok) {
             // save the token in local storage
@@ -42,13 +39,13 @@ export default function SignIn() {
     }
 
     return (
-      <main>
+      <main className="lg:w-1/3 w-full">
         <div className="flex flex-col items-center gap-3">
             <Image src={`logo.svg`} alt='Clever logo' width="75" height="75" />
             <h1 className="text-xl font-bold">Sign in to your account</h1>
         </div>
         
-        <form onSubmit={handleSubmit} >
+        <form onSubmit={handleSubmit} className="mt-5">
             <div className="mb-3">
                 <label htmlFor="email" className="form-label">Email</label>
                 <input 
@@ -72,7 +69,7 @@ export default function SignIn() {
                 
             </div>
             <div className="mb-3">
-                <span>Not an user yet? sign up and don&apos;t miss anything: </span>
+                <span>Not an user yet? </span>
                 <Link className="text-blue-500" href="/sign-up">sign-up</Link>
             </div>
             <SubmitButton label="Sign In" />

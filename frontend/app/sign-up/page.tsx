@@ -35,7 +35,7 @@ export default function SignUp() {
     } 
 
     return (
-      <main>
+      <main className='lg:w-1/3 w-full'>
         <div className="flex flex-col items-center gap-3">
             <Image src={`logo.svg`} alt='Clever logo' width="75" height="75" />
             <h1 className="text-xl font-bold">Sign up to an account</h1>
