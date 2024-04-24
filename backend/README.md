@@ -14,4 +14,5 @@ Postgres 13
 - Inside the container,  create the database and give the user the right permissions to it: `CREATE DATABASE clever_db;` 
     - `GRANT ALL PRIVILEGES ON DATABASE clever_db TO clever_user;`
 - Run migrations `poetry run python manage.py migrate`
+- Run the importer for the photos `poetry run python manage.py import_photos`
 - Run server `poetry run python manage.py runserver`
