@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { SubmitButton } from "../components/SubmitButton";
 import { useRouter } from 'next/navigation'
+import { formatError } from "../utils";
 
 
 export default function SignIn() {
@@ -14,7 +15,7 @@ export default function SignIn() {
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
-        const response = await fetch('http://localhost:8000/token/', {
+        const response = await fetch(`${process.env.API_URL}/token/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -25,16 +26,15 @@ export default function SignIn() {
         const data = await response.json()
 
         if (response.ok) {
-            // save the token in local storage
             if (typeof window !== 'undefined') {
                 window.localStorage.setItem('token', data.access)
                 window.localStorage.setItem('refresh_token', data.refresh)
             }
-
             router.push('/photos')
         }else{
-            const error = await response.json()
-            alert(error.detail)
+            const error = await response.json();
+            const errorMessage = formatError(error);
+            alert(errorMessage);
         }
     }
 

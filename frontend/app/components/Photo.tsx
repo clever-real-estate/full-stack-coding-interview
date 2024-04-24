@@ -1,14 +1,22 @@
 import React, { useState } from 'react'
 import Image from "next/image";
 import Link from 'next/link';
+import { formatError } from '../utils';
+import { isTokenExpired } from '../auth';
+import { useRouter } from 'next/navigation';
 
 
 export function Photo({photo}: {photo: any}) {
     const[user_liked, setUseLiked] = useState(photo.user_liked)
+    const router = useRouter()
 
     const likeDislikePhoto = async (photo_id: number) => {
         const user_token = localStorage.getItem('token');
-        const response = await fetch(`http://localhost:8000/photos/${photo_id}/like/`, {
+        if (isTokenExpired(user_token)) {
+            router.push('/sign-in')
+        }
+
+        const response = await fetch(`${process.env.API_URL}/photos/${photo_id}/like/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -24,8 +32,9 @@ export function Photo({photo}: {photo: any}) {
                 setUseLiked(false)
             }
         }else{
-            const error = await response.json()
-            alert(error.detail)
+            const error = await response.json();
+            const errorMessage = formatError(error);
+            alert(errorMessage);
         }
     }
 

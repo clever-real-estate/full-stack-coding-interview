@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react';
 import { useRouter } from 'next/navigation'
+import { formatError } from '../utils';
 
 export default function SignUp() {
     const [email, setEmail] = useState("");
@@ -28,9 +29,10 @@ export default function SignUp() {
 
         if (response.ok) {
             router.push('/sign-in')
-        }else{
-            const error = await response.json()
-            alert(error.detail)
+        }else {
+            const error = await response.json();
+            const errorMessage = formatError(error);
+            alert(errorMessage);
         }
     } 
 
