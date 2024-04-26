@@ -1,18 +1,13 @@
 from django.contrib.auth import get_user_model
-from django.contrib.auth import authenticate
 
 from rest_framework import serializers, exceptions
 
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 
 UserModel = get_user_model()
 
-from rest_framework import serializers
-from django.contrib.auth import authenticate
-from rest_framework_simplejwt.tokens import RefreshToken
 
 class CustomTokenObtainSerializer(serializers.Serializer):
     email = serializers.EmailField()
