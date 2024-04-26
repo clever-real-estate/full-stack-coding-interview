@@ -1,0 +1,16 @@
+name: backend # name of the project
+
+services:
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: clever_db
+      POSTGRES_USER: clever_user
+      POSTGRES_PASSWORD: clever_pass
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:
