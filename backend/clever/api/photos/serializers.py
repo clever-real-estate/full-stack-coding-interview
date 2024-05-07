@@ -38,6 +38,9 @@ class PhotoSerializer(serializers.ModelSerializer):
             return any(like.photo_id == obj.id for like in obj.user_likes)
         return False
 
+    def get_likes(self, obj):
+        return obj.total_likes
+
 
 class LikeSerializer(serializers.ModelSerializer):
     class Meta:

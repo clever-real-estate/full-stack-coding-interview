@@ -1,5 +1,5 @@
 from clever.photos.models import Like, Photo
-from django.db.models import Prefetch
+from django.db.models import Count, Prefetch
 from rest_framework import status
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated
@@ -11,7 +11,6 @@ from .serializers import LikeSerializer, PhotoSerializer
 
 class PhotoListView(ListAPIView):
     permission_classes = [IsAuthenticated]
-    queryset = Photo.objects.all()
     serializer_class = PhotoSerializer
 
     def get_queryset(self):
@@ -22,8 +21,10 @@ class PhotoListView(ListAPIView):
                 queryset=Like.objects.filter(user=user),
                 to_attr="user_likes",
             )
-            return Photo.objects.prefetch_related(likes_prefetch)
-        return Photo.objects.all()
+            return Photo.objects.annotate(total_likes=Count("likes")).prefetch_related(
+                likes_prefetch
+            )
+        return None
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
