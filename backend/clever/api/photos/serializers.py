@@ -1,4 +1,6 @@
-from clever.photos.models import Photo
+from datetime import timezone
+
+from clever.photos.models import Like, Photo
 from rest_framework import serializers
 from versatileimagefield.serializers import VersatileImageFieldSerializer
 
@@ -21,6 +23,7 @@ class PhotoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Photo
         fields = [
+            "id",
             "photographer",
             "photographer_url",
             "description",
@@ -29,3 +32,20 @@ class PhotoSerializer(serializers.ModelSerializer):
             "liked",
             "likes",
         ]
+
+    def get_liked(self, obj):
+        if hasattr(obj, "user_likes"):
+            return any(like.photo_id == obj.id for like in obj.user_likes)
+        return False
+
+
+class LikeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Like
+        fields = ["id", "user", "photo", "date"]
+        read_only_fields = ["user", "date"]
+
+    def create(self, validated_data):
+        validated_data["user"] = self.context["request"].user
+        validated_data["date"] = timezone.now()
+        return super().create(validated_data)
