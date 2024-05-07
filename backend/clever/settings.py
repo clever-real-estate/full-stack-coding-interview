@@ -42,8 +42,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # libs
     "debug_toolbar",
-    "imagefield",
     "rest_framework",
+    "versatileimagefield",
     # apps
     "clever.photos",
 ]
