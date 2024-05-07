@@ -44,6 +44,13 @@ class ToggleLikeView(APIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
+        photo = Photo.objects.filter(id=photo_id).first()
+        if not photo:
+            return Response(
+                {"message": "There's no photo with this ID"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
         like, created = Like.objects.get_or_create(user=user, photo_id=photo_id)
 
         if not created:
