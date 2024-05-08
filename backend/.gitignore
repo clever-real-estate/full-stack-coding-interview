@@ -1,0 +1,12 @@
+venv
+media
+staticfiles
+static
+.pytest_cache
+__pycache__
+
+*.pyc
+*.venv
+*.sqlite3
+
+db.sqlite3
