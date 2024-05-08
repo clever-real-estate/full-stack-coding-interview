@@ -56,6 +56,7 @@ export const Login = ({
               name="username"
               onChange={onChange}
               value={data.username}
+              data-testid="username"
             />
             {!!errors.username && (
               <FormHelperText>{errors.username}</FormHelperText>
@@ -76,6 +77,7 @@ export const Login = ({
               name="password"
               onChange={onChange}
               value={data.password}
+              data-testid="password"
             />
             {!!errors.password && (
               <FormHelperText>{errors.password}</FormHelperText>
