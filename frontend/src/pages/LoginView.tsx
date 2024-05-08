@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { Errors } from "@/types";
+import { useEffect, useState } from "react";
 import { Login } from "../components/Login";
 import { useGetTokenMutation } from "../redux/authApi";
 import { setCredentials } from "../redux/authSlice";
@@ -11,7 +12,16 @@ export const LoginView = () => {
     username: "",
     password: "",
   });
+  const [errors, setErrors] = useState<Errors>({});
   const [getToken, { error, isLoading }] = useGetTokenMutation();
+
+  useEffect(() => {
+    if (error) {
+      if ("status" in error) {
+        setErrors(error.data as Errors);
+      }
+    }
+  }, [error]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -27,5 +37,13 @@ export const LoginView = () => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
-  return <Login onChange={handleChange} onSubmit={handleSubmit} data={data} />;
+  return (
+    <Login
+      onChange={handleChange}
+      onSubmit={handleSubmit}
+      data={data}
+      isLoading={isLoading}
+      errors={errors}
+    />
+  );
 };

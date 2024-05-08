@@ -19,3 +19,5 @@ export type Photo = {
   likes: number;
   color?: string;
 };
+
+export type Errors = Record<string, string>;

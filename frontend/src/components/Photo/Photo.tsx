@@ -14,7 +14,7 @@ interface PhotoProps {
 
 export const Photo = ({ photo, onLike }: PhotoProps) => {
   return (
-    <Card variant="plain" sx={{ maxWidth: 450, mx: "auto" }}>
+    <Card variant="plain">
       <Stack direction={"row"} spacing={2}>
         <Box>
           <Like onClick={() => onLike(photo.id)}>
@@ -24,7 +24,7 @@ export const Photo = ({ photo, onLike }: PhotoProps) => {
         <Box>
           <Image src={photo.image.medium} alt={photo.description} />
         </Box>
-        <Box>
+        <Box sx={{ flexGrow: 1 }}>
           <Stack
             direction="row"
             alignItems={"center"}
