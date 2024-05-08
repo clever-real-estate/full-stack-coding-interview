@@ -31,6 +31,7 @@ class PhotoSerializer(serializers.ModelSerializer):
             "image",
             "liked",
             "likes",
+            "color",
         ]
 
     def get_liked(self, obj):

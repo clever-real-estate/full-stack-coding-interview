@@ -27,9 +27,11 @@ SECRET_KEY = "django-insecure-ju)cc7ogf(=d9vx0jr^d%wue-#$c!ri=(4hkhqnuuv6qsox-0c
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 INTERNAL_IPS = ["127.0.0.1"]
+
+CORS_ALLOW_ALL_ORIGINS = DEBUG
 
 
 # Application definition
@@ -42,6 +44,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # libs
+    "corsheaders",
     "debug_toolbar",
     "rest_framework",
     "versatileimagefield",
@@ -51,6 +54,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
