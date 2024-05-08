@@ -1,4 +1,4 @@
-import { Photo as PhotoType } from "../../types";
+import { Photo as PhotoType } from "@/types";
 import { Photo } from "../Photo";
 
 interface PhotoListProps {

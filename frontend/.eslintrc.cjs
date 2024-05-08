@@ -1,7 +1,8 @@
 module.exports = {
   root: true,
-  env: { browser: true, es2020: true },
+  env: { browser: true, es2021: true },
   extends: [
+    "plugin:react/recommended",
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:react-hooks/recommended",
@@ -17,10 +18,8 @@ module.exports = {
     "prettier",
   ],
   rules: {
-    "react-refresh/only-export-components": [
-      "warn",
-      { allowConstantExport: true },
-    ],
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": ["error"],
   },
   overrides: [
     {

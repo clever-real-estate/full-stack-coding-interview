@@ -10,9 +10,9 @@ import {
   Typography,
 } from "@mui/joy";
 
+import logo from "@/assets/logo.svg";
+import { AuthCredentials } from "@/redux/types";
 import React from "react";
-import logo from "../../assets/logo.svg";
-import { AuthCredentials } from "../../redux/types";
 
 interface LoginProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;

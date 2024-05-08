@@ -1,8 +1,8 @@
+import { Photo as PhotoType } from "@/types";
 import LinkIcon from "@mui/icons-material/Link";
 import StarIcon from "@mui/icons-material/Star";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import { Box, Card, Link, Stack, Typography } from "@mui/joy";
-import { Photo as PhotoType } from "../../types";
 import { Color } from "./Color";
 import { Image } from "./Image";
 
