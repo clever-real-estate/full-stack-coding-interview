@@ -47,7 +47,7 @@ export const Photo = ({
             <Typography level="body-sm">{description}</Typography>
           )}
           {color && (
-            <Color level="body-sm" customColor={color}>
+            <Color level="body-sm" customcolor={color}>
               {color}
             </Color>
           )}

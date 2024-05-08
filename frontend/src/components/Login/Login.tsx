@@ -10,12 +10,20 @@ import {
   Typography,
 } from "@mui/joy";
 
+import React from "react";
 import logo from "../../assets/logo.svg";
+import { AuthCredentials } from "../../redux/types";
 
-export const Login = () => {
+interface LoginProps {
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
+  data: AuthCredentials;
+}
+
+export const Login = ({ onChange, onSubmit, data }: LoginProps) => {
   return (
     <Card variant="plain" sx={{ maxWidth: 400, mx: "auto" }}>
-      <form>
+      <form onSubmit={onSubmit}>
         <Stack alignItems={"center"} spacing={1}>
           <Box>
             <img src={logo} alt="Clever" />
@@ -27,7 +35,12 @@ export const Login = () => {
         <Stack spacing={3} mt={3}>
           <FormControl>
             <FormLabel>Username</FormLabel>
-            <Input size="lg" />
+            <Input
+              size="lg"
+              name="username"
+              onChange={onChange}
+              value={data.username}
+            />
           </FormControl>
           <FormControl>
             <Stack
@@ -38,10 +51,16 @@ export const Login = () => {
               <FormLabel>Password</FormLabel>
               <Link level="body-sm">Forgot password?</Link>
             </Stack>
-            <Input size="lg" />
+            <Input
+              size="lg"
+              type="password"
+              name="password"
+              onChange={onChange}
+              value={data.password}
+            />
           </FormControl>
           <FormControl>
-            <Button>Sign in</Button>
+            <Button type="submit">Sign in</Button>
           </FormControl>
         </Stack>
       </form>
