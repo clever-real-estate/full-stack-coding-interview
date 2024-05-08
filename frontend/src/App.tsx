@@ -1,5 +1,6 @@
 import { Photo } from "./components/Photo/Photo";
 import { LoginView } from "./pages/LoginView";
+import { useAppSelector } from "./redux/hooks";
 
 const photo = {
   id: 1,
@@ -30,12 +31,8 @@ const photo = {
 };
 
 function App() {
-  return (
-    <>
-      <LoginView />
-      <Photo {...photo} />
-    </>
-  );
+  const { isAuthenticated } = useAppSelector((state) => state.auth);
+  return <>{isAuthenticated ? <Photo {...photo} /> : <LoginView />}</>;
 }
 
 export default App;
