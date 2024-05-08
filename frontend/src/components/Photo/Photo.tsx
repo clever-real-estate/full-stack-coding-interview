@@ -5,27 +5,24 @@ import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import { Box, Card, Link, Stack, Typography } from "@mui/joy";
 import { Color } from "./Color";
 import { Image } from "./Image";
+import { Like } from "./Like";
 
-export const Photo = ({
-  photographer,
-  photographer_url,
-  description,
-  image,
-  image_url,
-  liked,
-  likes,
-  color,
-}: PhotoType) => {
+interface PhotoProps {
+  photo: PhotoType;
+  onLike: (id: number) => void;
+}
+
+export const Photo = ({ photo, onLike }: PhotoProps) => {
   return (
     <Card variant="plain" sx={{ maxWidth: 450, mx: "auto" }}>
       <Stack direction={"row"} spacing={2}>
         <Box>
-          <button style={{ all: "unset" }}>
-            {liked ? <StarIcon color="warning" /> : <StarOutlineIcon />}
-          </button>
+          <Like onClick={() => onLike(photo.id)}>
+            {photo.liked ? <StarIcon color="warning" /> : <StarOutlineIcon />}
+          </Like>
         </Box>
         <Box>
-          <Image src={image.medium} alt={description} />
+          <Image src={photo.image.medium} alt={photo.description} />
         </Box>
         <Box>
           <Stack
@@ -34,21 +31,21 @@ export const Photo = ({
             justifyContent={"space-between"}
           >
             <Typography level="title-sm" fontWeight={"bold"}>
-              {photographer}
+              {photo.photographer}
             </Typography>
-            {photographer_url && (
-              <Link level="body-sm" href={photographer_url}>
+            {photo.photographer_url && (
+              <Link level="body-sm" href={photo.photographer_url}>
                 <LinkIcon />
                 Portfolio
               </Link>
             )}
           </Stack>
-          {description && (
-            <Typography level="body-sm">{description}</Typography>
+          {photo.description && (
+            <Typography level="body-sm">{photo.description}</Typography>
           )}
-          {color && (
-            <Color level="body-sm" customcolor={color}>
-              {color}
+          {photo.color && (
+            <Color level="body-sm" customcolor={photo.color}>
+              {photo.color}
             </Color>
           )}
         </Box>
