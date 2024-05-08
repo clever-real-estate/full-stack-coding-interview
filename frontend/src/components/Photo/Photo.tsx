@@ -22,7 +22,9 @@ export const Photo = ({ photo, onLike }: PhotoProps) => {
           </Like>
         </Box>
         <Box>
-          <Image src={photo.image.medium} alt={photo.description} />
+          <Link href={photo.image_url} target="_blank">
+            <Image src={photo.image.medium} alt={photo.description} />
+          </Link>
         </Box>
         <Box sx={{ flexGrow: 1 }}>
           <Stack
