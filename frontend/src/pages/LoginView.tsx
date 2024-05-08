@@ -18,12 +18,10 @@ export const LoginView = () => {
     getToken(data)
       .unwrap()
       .then((payload) => {
-        dispatch(setCredentials({ token: payload.token }));
+        dispatch(setCredentials({ token: payload.access }));
       })
       .catch((err) => console.error("Failed to login", err));
   };
-
-  console.log(data, error, isLoading);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData({ ...data, [e.target.name]: e.target.value });

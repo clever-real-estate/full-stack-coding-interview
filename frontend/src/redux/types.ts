@@ -4,5 +4,5 @@ export interface AuthCredentials {
 }
 
 export interface AuthResponse {
-  token: string;
+  access: string;
 }
