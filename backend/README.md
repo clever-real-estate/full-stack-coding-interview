@@ -45,6 +45,12 @@ password: **clever**
 python manage.py runserver
 ```
 
+7. Optionaly you can run the tests just typing
+
+```
+pytest
+```
+
 #### Available endipoints
 
 | Endpoint          | Protocol | Description                                            |
