@@ -16,6 +16,7 @@
     "@mui/icons-material": "^5.15.16",
     "@mui/joy": "^5.0.0-beta.36",
     "@reduxjs/toolkit": "^2.2.3",
+    "js-cookie": "^3.0.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^9.1.2",
@@ -23,6 +24,7 @@
     "vite-tsconfig-paths": "^4.3.2"
   },
   "devDependencies": {
+    "@types/js-cookie": "^3.0.6",
     "@types/node": "^20.12.10",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
