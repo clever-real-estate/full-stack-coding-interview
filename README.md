@@ -50,7 +50,7 @@ Now, you can already run the server
 `python manage.py runserver`
 and access http://localhost:8000
 
-and play with the [DRF API]().
+and play with the [DRF API](https://github.com/vitorrcunhaa/full-stack-coding-interview/blob/main/DRF-API.md).
 
 ### Running tests:
 Users:
@@ -120,6 +120,8 @@ The app is divided into components, and the main components are:
 
 Things I'd like to do if I had more time:
 - Dockerize the app
+- Add ordering and filtering to the photos
+- Add pagination to the photos
 - Add more backend tests and cover all edge cases
 - Add frontend tests
 - Make use of all the info and display images in a bigger/nicer way
