@@ -1,0 +1,64 @@
+.photo-container {
+    font-family: Arial, sans-serif;
+}
+
+.photo-card {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.photo-image {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin-right: 20px;
+}
+
+.photo-info {
+    flex-grow: 1;
+}
+
+.photo-info h2 {
+    margin: 0;
+    color: #333;
+}
+
+.photo-info a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+.photo-info p {
+    margin: 5px 0;
+    font-size: small;
+}
+
+.photo-color {
+    width: 20px;
+    height: 20px;
+    border-radius: 20%;
+}
+
+.photo-star {
+    min-width: 20px;
+    width: 3vh;
+    height: 3vh;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.photo-color-square {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+}
+
+.link-svg {
+    width: 15px;
+    height: 15px;
+    margin-right: 3px;
+}
