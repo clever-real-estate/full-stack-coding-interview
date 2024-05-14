@@ -1,0 +1,32 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.navbar {
+    background-color: #F8F3F3FF;
+    border: #d3d3d3 solid 1px;
+}
+
+.navbar-text .btn {
+    border: #d3cbcb solid 1px;
+}
+
+.form-inline {
+  width: 100%;
+}
+
+.btn {
+  width: 100%;
+}
+
+.center {
+    padding: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
