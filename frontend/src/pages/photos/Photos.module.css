@@ -1,0 +1,52 @@
+/* Photos.module.css */
+.container {
+  padding: 1rem;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.logo {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 1.5rem;
+  display: block;
+}
+
+.logo svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.logout {
+  background: none;
+  border: none;
+  color: #0075EB;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.list {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: #6B7280;
+}

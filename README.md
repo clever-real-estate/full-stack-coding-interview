@@ -1,34 +1,146 @@
-# Clever's Fullstack Coding Interview
-👋 Hello!, Hola!, Witam!
+# Photo Gallery App
 
-Thank you for taking the time to interview with Clever. This coding challenge is meant to be an exercise to see how you code throughout the stack. We don't want this to take too much of your time (and if does, certainly let us know!).
+A full-stack photo gallery application built with Django (backend) and React with TypeScript (frontend). Users can sign up, sign in, reset passwords, and like/unlike photos. The app displays a responsive, mobile-friendly gallery of photos fetched from a Django REST API.
 
-### Requirements
-- Create a small web app to display photos and details about the photos.
-- For the back end, you're open to use whatever framework & language you feel most comfortable with.
-- For the front end, although we'd like to see a small react app that interfaces with an API from the backend, if this ends up taking too much time, we are open to other options.
-- However, please use either `npm` or `yarn` for any front end package management.
+## Features
 
-#### Product requirements
-- Make the "Sign in" page functional.
-- Make "All photos" require authentication to access.
-- Only need to show 10 photos on the "All photos" page. Paging is not required.
-- The authenticated user should be able to like a photo and have that like persisted to the database.
-- If pages are mobile responsive, thats a plus!
+* User authentication (Sign Up, Sign In)
+* Password reset functionality
+* JWT-based auth with `djangorestframework-simplejwt`
+* View up to 10 photos (imported from CSV)
+* Like/Unlike photos (toggle behavior)
+* Responsive grid layout on desktop and mobile
+* Clean, modular code structure
 
-### Details
-- We've provided a CSV with each row representing a photo & it's details. We'd like these to be the photos (and their details) we show on the front end of the app.
-- We want to keep this an open ended challenge, so take a look at the attached Figma mocks and add data models to the back end as you see fit. Use the attached CSV for the data.
-- Mocks for these pages are provided in [Figma](https://www.figma.com/file/wr1seCuhlRtoFGuz1iWgyF/Frontend-Coding-Mocks?type=design&node-id=0%3A1&mode=design&t=Uw1av3TypDUDcLAd-1). If you have any issues accessing, or aren't familiar with how to use Figma, just let us know.
-- There is also a logo and an icon provided (SVGs) included in this repo.
+## Technology Stack
 
-### Final Thoughts
-- You can fork this repo and commit your code there. Please open a PR from the fork _back_ to the main repo, and once done, please add the following users as members so we can review:
-  - James Crain (@imjamescrain)
-  - Jimmy Lien (@jlien)
-  - Nick Clucas (@nickcluc)
-  - Ryan McCue (@rymccue)
-- If you do find yourself spending too much time on the exercise itself, let us know what next steps you would take in a README file.
-- We'll circle back with you and review 1:1.
+* **Backend**: Django, Django REST Framework, Simple JWT, django-environ
+* **Frontend**: React, TypeScript, React Router, Context API, Recat Hooks, Axios, CSS Modules
+* **Styling**: Pure CSS Modules for scoped, responsive styles
 
-**Any questions**, just let us know. Send emails to <a href="mailto:nick.clucas@movewithclever.com">nick.clucas@movewithclever.com</a>. Good luck!
+## Prerequisites
+
+* Python 3.10+ (with pip)
+* Node.js 16+ and npm or Yarn
+* (Optional) Docker & Docker Compose
+
+## Repo Structure
+
+```
+photo-gallery/
+├── backend/                # Django project
+│   ├── config/             # settings, URLs, WSGI/ASGI
+│   ├── apps/
+│   │   ├── accounts/       # auth, register, password reset
+│   │   └── photos/         # Photo models, like/unlike, import command
+│   ├── data/               # photos.csv
+│   ├── manage.py
+│   └── requirements.txt
+├── frontend/               # React app
+│   ├── src/
+│   │   ├── assets/         # SVGs (logo, icons)
+│   │   ├── components/     # PhotoCard, etc.
+│   │   ├── hooks/          # useAuth
+│   │   ├── pages/          # SignIn, SignUp, ResetPassword, Photos
+│   │   ├── services/       # API calls
+│   │   ├── types.ts        # TS interfaces
+│   │   └── styles/         # CSS Modules
+│   ├── package.json
+│   └── tsconfig.json
+├── .env.example            # sample environment variables
+└── README.md
+```
+
+---
+
+## Setup & Running Locally
+
+### 1. Clone the repo
+
+### 2. Backend
+
+1. Create and activate a virtual environment:
+
+   ```bash
+   cd backend
+   python3 -m venv venv
+   source venv/bin/activate    # macOS/Linux
+   .\venv\\Scripts\\activate  # Windows PowerShell
+   ```
+2. Install Python dependencies:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. Copy `.env.example` to `.env` and adjust values:
+
+   ```bash
+   cp .env.example .env
+   ```
+4. Apply migrations and import photos(This imports photos data from csv.):
+
+   ```bash
+   python manage.py migrate
+   python manage.py import_photos
+   ```
+5. Run the Django development server:
+
+   ```bash
+   python manage.py runserver
+   ```
+
+### Testing Guide
+
+```
+python manage.py test apps.accounts.tests.AccountsTests
+
+python manage.py test apps.photos.tests.PhotosTests
+```
+
+The backend API will be available at [http://localhost:8000/api/](http://localhost:8000/api/).
+
+### 3. Frontend
+
+1. In a new terminal window, navigate to the frontend folder:
+
+   ```bash
+   cd ../frontend
+   ```
+2. Install npm or Yarn dependencies:
+
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+3. Create a `.env` file in `frontend/` with:
+
+   ```bash
+   REACT_APP_API_URL=http://localhost:8000/api
+   ```
+4. Start the React development server:
+
+   ```bash
+   npm start
+   # or
+   yarn start
+   ```
+
+Your React app will run at [http://localhost:3000](http://localhost:3000).
+
+---
+
+## Scripts
+
+### Backend
+
+* `python manage.py runserver` – start dev server
+* `python manage.py migrate` – apply migrations
+* `python manage.py import_photos` – import data from `photos.csv`
+
+### Frontend
+
+* `npm start` / `yarn start` – run dev server
+* `npm build` / `yarn build` – build production bundle
+
+---

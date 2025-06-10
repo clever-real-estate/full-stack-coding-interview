@@ -1,0 +1,112 @@
+.card {
+  display: grid;
+  grid-template-columns: auto 80px 1fr auto;
+  align-items: start;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: #FFFFFF;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.starBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-right: 0.75rem;
+}
+
+.starIcon {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+.image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.photographer {
+  font-weight: 600;
+  color: #111827;
+}
+
+.caption {
+  font-size: 0.875rem;
+  color: #374151;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: #6B7280;
+}
+  
+.color {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  border: 1px solid #D1D5DB;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.875rem;
+  color: #0075EB;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.linkIcon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* —————————————————————————————— */
+/* collapse each card into a vertical stack on narrow screens */
+/* —————————————————————————————— */
+@media (max-width: 640px) {
+  .card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .starBtn {
+    align-self: flex-end;
+    margin: 0 0 0.5rem 0;
+  }
+
+  .image {
+    width: 100%;
+    height: auto;
+    margin-bottom: 0.5rem;
+  }
+
+  .info {
+    margin-bottom: 0.5rem;
+    width: 100%;
+  }
+
+  .link {
+    margin-top: 0.5rem;
+  }
+}
