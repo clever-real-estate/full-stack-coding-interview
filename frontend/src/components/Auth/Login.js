@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { TextField, Button, Container, Typography, Box } from '@mui/material';
+import { TextField, Button, Container, Typography, Box, Link } from '@mui/material';
 import axios from 'axios';
+import logo from '../../logo.svg';
 
 const Login = () => {
   const [credentials, setCredentials] = useState({ username: '', password: '' });
@@ -22,33 +23,47 @@ const Login = () => {
   return (
     <Container maxWidth="sm">
       <Box sx={{ mt: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <Typography component="h1" variant="h5">Sign in</Typography>
+        <img src={logo} alt="CI Logo" style={{ width: '64px', height: '64px', marginBottom: '24px' }} />
+        <Typography component="h1" variant="h4" sx={{ mb: 4 }}>Sign in to your account</Typography>
         {error && <Typography color="error">{error}</Typography>}
-        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
+        <Box component="form" onSubmit={handleSubmit} sx={{ width: '100%', maxWidth: '400px' }}>
+          <Typography sx={{ mb: 1 }}>Username</Typography>
           <TextField
-            margin="normal"
             required
             fullWidth
-            label="Username"
+            placeholder="testing@testing.com"
             value={credentials.username}
             onChange={(e) => setCredentials({ ...credentials, username: e.target.value })}
+            sx={{ mb: 3 }}
           />
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+            <Typography>Password</Typography>
+            <Link href="#" underline="none" sx={{ color: '#0066FF' }}>Forgot password?</Link>
+          </Box>
           <TextField
-            margin="normal"
             required
             fullWidth
-            label="Password"
             type="password"
             value={credentials.password}
             onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
+            sx={{ mb: 3 }}
           />
           <Button
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+            sx={{ 
+              mt: 2,
+              mb: 2,
+              bgcolor: '#0066FF',
+              '&:hover': { bgcolor: '#0052CC' },
+              height: '48px',
+              borderRadius: '6px',
+              textTransform: 'none',
+              fontSize: '16px'
+            }}
           >
-            Sign In
+            Sign in
           </Button>
         </Box>
       </Box>
