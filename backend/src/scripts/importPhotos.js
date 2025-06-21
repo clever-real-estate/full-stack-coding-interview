@@ -16,7 +16,8 @@ const importPhotos = () => {
                 row.alt,
                 parseInt(row.width),
                 parseInt(row.height),
-                row.avg_color
+                row.avg_color,
+                row.photographer_url
             ]);
         })
         .on('end', () => {
@@ -44,7 +45,8 @@ const importPhotos = () => {
                     alt TEXT,
                     width INTEGER,
                     height INTEGER,
-                    avg_color TEXT
+                    avg_color TEXT,
+                    photographer_url TEXT
                 )`, (err) => {
                     if (err) {
                         console.error('Error creating table:', err);
@@ -52,7 +54,7 @@ const importPhotos = () => {
                     }
                 });
 
-                const stmt = db.prepare('INSERT INTO photos (id, url, photographer, src_medium, alt, width, height, avg_color) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+                const stmt = db.prepare('INSERT INTO photos (id, url, photographer, src_medium, alt, width, height, avg_color, photographer_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
                 
                 photos.forEach(photo => {
                     stmt.run(photo, (err) => {
