@@ -32,3 +32,56 @@ Thank you for taking the time to interview with Clever. This coding challenge is
 - We'll circle back with you and review 1:1.
 
 **Any questions**, just let us know. Send emails to <a href="mailto:nick.clucas@movewithclever.com">nick.clucas@movewithclever.com</a>. Good luck!
+
+## Setup Instructions
+
+### Prerequisites
+- Node.js (v14 or higher)
+- npm or yarn
+- MongoDB
+
+### Backend Setup
+1. Navigate to backend directory:
+   ```bash
+   cd backend
+   npm install
+   ```
+2. Set up environment variables in `.env`:
+   ```
+   MONGODB_URI=mongodb://localhost:27017/photo-app
+   JWT_SECRET=your-secret-key
+   PORT=3001
+   ```
+3. Import initial data:
+   ```bash
+   npm run import-photos
+   npm run create-test-user
+   ```
+
+### Frontend Setup
+1. Navigate to frontend directory:
+   ```bash
+   cd frontend
+   npm install
+   ```
+2. Set up environment variables in `.env`:
+   ```
+   REACT_APP_API_URL=http://localhost:3001
+   ```
+
+### Running the Application
+1. Start backend server:
+   ```bash
+   cd backend
+   npm start
+   ```
+2. In a new terminal, start frontend:
+   ```bash
+   cd frontend
+   npm start
+   ```
+3. Access the application at http://localhost:3000
+
+### Test User Credentials
+- Email: test
+- Password: test123
