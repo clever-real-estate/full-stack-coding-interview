@@ -30,23 +30,29 @@ const PhotoList = () => {
       const photo = photos.find(p => p.id === photoId);
       const isLiked = photo.likes > 0;
       
-      if (isLiked) {
-        await axios.delete(`http://localhost:3001/api/photos/${photoId}/like`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-      } else {
-        await axios.post(`http://localhost:3001/api/photos/${photoId}/like`, {}, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-      }
+      console.log('=== LIKE FLOW START ===');
+      console.log('Photo ID:', photoId);
+      console.log('Current likes:', photo.likes);
+      console.log('Is currently liked?', isLiked);
+      
+      console.log('Attempting to toggle like status...');
+      const response = await axios.post(`http://localhost:3001/api/photos/${photoId}/like`, null, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      console.log('Toggle response:', response.data);
       
       // Update photos state to reflect the new like status
+      const newLikes = isLiked ? 0 : 1;
+      console.log('Setting new likes count to:', newLikes);
+      
       setPhotos(photos.map(photo => 
         photo.id === photoId 
-          ? { ...photo, likes: isLiked ? 0 : 1 } 
+          ? { ...photo, likes: newLikes } 
           : photo
       ));
+      console.log('=== LIKE FLOW END ===');
     } catch (err) {
+      console.error('=== LIKE FLOW ERROR ===');
       console.error('Error liking photo:', err);
     }
   };
