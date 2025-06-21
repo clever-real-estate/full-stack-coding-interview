@@ -3,6 +3,7 @@ import { Box, Card, Typography, IconButton, Container, Link } from '@mui/materia
 import { Star, StarBorder } from '@mui/icons-material';
 import axios from 'axios';
 import logo from '../../logo.svg';
+import links from '../../links.svg';
 
 const PhotoList = () => {
   const [photos, setPhotos] = useState([]);
@@ -55,8 +56,9 @@ const PhotoList = () => {
             key={photo.id} 
             sx={{ 
               display: 'flex',
-              alignItems: 'center',
-              p: 2
+              minHeight: 80,
+              p: 2,
+              alignItems: 'flex-start'
             }}
           >
             <IconButton 
@@ -70,16 +72,20 @@ const PhotoList = () => {
             </IconButton>
 
             <Box sx={{ 
-              width: 48, 
-              height: 48, 
+              width: 75, 
+              height: 75,
               borderRadius: 1,
               overflow: 'hidden',
-              mr: 2
+              mr: 2,
+              position: 'relative'
             }}>
               <img 
                 src={photo.src_medium} 
                 alt={photo.alt}
                 style={{ 
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
                   width: '100%',
                   height: '100%',
                   objectFit: 'cover'
@@ -113,17 +119,26 @@ const PhotoList = () => {
               </Box>
             </Box>
 
-            <Link 
-              href={photo.photographer_url} 
-              target="_blank"
-              sx={{ 
-                color: '#0066FF',
-                textDecoration: 'none',
-                '&:hover': { textDecoration: 'underline' }
-              }}
-            >
-              Portfolio
-            </Link>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <img src={links} alt="Links icon" style={{ width: '16px', height: '16px' }} />
+              <Link 
+                href={photo.photographer_url} 
+                target="_blank"
+                sx={{ 
+                  color: '#0066FF',
+                  textDecoration: 'none',
+                  fontFamily: 'Helvetica',
+                  fontSize: '12px',
+                  fontWeight: 400,
+                  lineHeight: 1,
+                  letterSpacing: '0%',
+                  textAlign: 'right',
+                  '&:hover': { textDecoration: 'underline' }
+                }}
+              >
+                Portfolio
+              </Link>
+            </Box>
           </Box>
         ))}
       </Box>
