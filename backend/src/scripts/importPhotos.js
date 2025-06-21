@@ -15,7 +15,8 @@ const importPhotos = () => {
                 row['src.medium'],
                 row.alt,
                 parseInt(row.width),
-                parseInt(row.height)
+                parseInt(row.height),
+                row.avg_color
             ]);
         })
         .on('end', () => {
@@ -27,7 +28,31 @@ const importPhotos = () => {
                     }
                 });
 
-                const stmt = db.prepare('INSERT INTO photos (id, url, photographer, src_medium, alt, width, height) VALUES (?, ?, ?, ?, ?, ?, ?)');
+                // Drop and recreate the table to include avg_color
+                db.run(`DROP TABLE IF EXISTS photos`, (err) => {
+                    if (err) {
+                        console.error('Error dropping table:', err);
+                        process.exit(1);
+                    }
+                });
+
+                db.run(`CREATE TABLE photos (
+                    id INTEGER PRIMARY KEY,
+                    url TEXT,
+                    photographer TEXT,
+                    src_medium TEXT,
+                    alt TEXT,
+                    width INTEGER,
+                    height INTEGER,
+                    avg_color TEXT
+                )`, (err) => {
+                    if (err) {
+                        console.error('Error creating table:', err);
+                        process.exit(1);
+                    }
+                });
+
+                const stmt = db.prepare('INSERT INTO photos (id, url, photographer, src_medium, alt, width, height, avg_color) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
                 
                 photos.forEach(photo => {
                     stmt.run(photo, (err) => {

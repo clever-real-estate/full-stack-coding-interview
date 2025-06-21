@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, Card, CardMedia, CardContent, CardActions, Typography, IconButton, Container } from '@mui/material';
-import { Favorite, FavoriteBorder } from '@mui/icons-material';
+import { Box, Card, Typography, IconButton, Container, Link } from '@mui/material';
+import { Star, StarBorder } from '@mui/icons-material';
 import axios from 'axios';
+import logo from '../../logo.svg';
 
 const PhotoList = () => {
   const [photos, setPhotos] = useState([]);
@@ -41,33 +42,95 @@ const PhotoList = () => {
   };
 
   return (
-    <Container sx={{ py: 8 }} maxWidth="lg">
-      <Grid container spacing={4}>
+    <Box sx={{ p: 3 }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', mb: 4 }}>
+        <img src={logo} alt="CI Logo" style={{ width: '64px', height: '64px' }} />
+      </Box>
+      
+      <Typography variant="h4" sx={{ mb: 4, fontWeight: 'bold' }}>All photos</Typography>
+      
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
         {photos.map((photo) => (
-          <Grid item key={photo.id} xs={12} sm={6} md={4}>
-            <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-              <CardMedia
-                component="img"
-                sx={{ height: 200, objectFit: 'cover' }}
-                image={photo.src_medium}
+          <Card 
+            key={photo.id} 
+            sx={{ 
+              display: 'flex',
+              alignItems: 'center',
+              p: 2,
+              borderRadius: 2,
+              boxShadow: 'none',
+              border: '1px solid #E5E7EB'
+            }}
+          >
+            <IconButton 
+              onClick={() => handleLike(photo.id)}
+              sx={{ mr: 2 }}
+            >
+              {photo.likes > 0 ? 
+                <Star sx={{ color: '#FDB022' }} /> : 
+                <StarBorder sx={{ color: '#667085' }} />
+              }
+            </IconButton>
+
+            <Box sx={{ 
+              width: 48, 
+              height: 48, 
+              borderRadius: 1,
+              overflow: 'hidden',
+              mr: 2
+            }}>
+              <img 
+                src={photo.src_medium} 
                 alt={photo.alt}
+                style={{ 
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover'
+                }}
               />
-              <CardContent>
-                <Typography gutterBottom variant="h6">
-                  By {photo.photographer}
+            </Box>
+
+            <Box sx={{ flex: 1 }}>
+              <Typography variant="subtitle1" sx={{ fontWeight: 500 }}>
+                {photo.photographer}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {photo.alt}
+              </Typography>
+              <Box sx={{ display: 'flex', alignItems: 'center', mt: 0.5 }}>
+                <Typography 
+                  variant="body2" 
+                  sx={{ color: '#344054' }}
+                >
+                  {photo.avg_color}
                 </Typography>
-              </CardContent>
-              <CardActions>
-                <IconButton onClick={() => handleLike(photo.id)}>
-                  {photo.likes > 0 ? <Favorite color="error" /> : <FavoriteBorder />}
-                </IconButton>
-                <Typography>{photo.likes || 0} likes</Typography>
-              </CardActions>
-            </Card>
-          </Grid>
+                <Box 
+                  sx={{ 
+                    width: 16, 
+                    height: 16, 
+                    bgcolor: photo.avg_color || '#E5E7EB',
+                    borderRadius: 0.5,
+                    ml: 1
+                  }} 
+                />
+              </Box>
+            </Box>
+
+            <Link 
+              href={photo.photographer_url} 
+              target="_blank"
+              sx={{ 
+                color: '#0066FF',
+                textDecoration: 'none',
+                '&:hover': { textDecoration: 'underline' }
+              }}
+            >
+              Portfolio
+            </Link>
+          </Card>
         ))}
-      </Grid>
-    </Container>
+      </Box>
+    </Box>
   );
 };
 
