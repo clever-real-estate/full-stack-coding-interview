@@ -43,12 +43,19 @@ const PhotoList = () => {
   };
 
   return (
-    <Box sx={{ p: 3 }}>
+    <Box sx={{ px: 3, py: 3 }}>
       <Box sx={{ display: 'flex', alignItems: 'center', mb: 4 }}>
         <img src={logo} alt="CI Logo" style={{ width: '64px', height: '64px' }} />
       </Box>
       
-      <Typography variant="h4" sx={{ mb: 4, fontWeight: 'bold' }}>All photos</Typography>
+      <Typography sx={{ 
+        mb: 4,
+        fontFamily: 'Helvetica',
+        fontWeight: 700,
+        fontSize: '20px',
+        lineHeight: 1,
+        letterSpacing: '0%'
+      }}>All photos</Typography>
       
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
         {photos.map((photo) => (
@@ -57,13 +64,13 @@ const PhotoList = () => {
             sx={{ 
               display: 'flex',
               minHeight: 80,
-              p: 2,
+              py: 2,
               alignItems: 'flex-start'
             }}
           >
             <IconButton 
               onClick={() => handleLike(photo.id)}
-              sx={{ mr: 2 }}
+              sx={{ mr: 2, px: 0 }}
             >
               {photo.likes > 0 ? 
                 <Star sx={{ color: '#FDB022' }} /> : 
