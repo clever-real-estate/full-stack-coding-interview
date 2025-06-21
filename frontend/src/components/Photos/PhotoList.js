@@ -27,14 +27,23 @@ const PhotoList = () => {
   const handleLike = async (photoId) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.post(`http://localhost:3001/api/photos/${photoId}/like`, {}, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const photo = photos.find(p => p.id === photoId);
+      const isLiked = photo.likes > 0;
+      
+      if (isLiked) {
+        await axios.delete(`http://localhost:3001/api/photos/${photoId}/like`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+      } else {
+        await axios.post(`http://localhost:3001/api/photos/${photoId}/like`, {}, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+      }
       
       // Update photos state to reflect the new like status
       setPhotos(photos.map(photo => 
         photo.id === photoId 
-          ? { ...photo, likes: photo.likes + 1 } 
+          ? { ...photo, likes: isLiked ? 0 : 1 } 
           : photo
       ));
     } catch (err) {
@@ -101,23 +110,43 @@ const PhotoList = () => {
             </Box>
 
             <Box sx={{ flex: 1 }}>
-              <Typography variant="subtitle1" sx={{ fontWeight: 500 }}>
+              <Typography sx={{ 
+                fontFamily: 'Helvetica',
+                fontWeight: 700,
+                fontSize: '14px',
+                lineHeight: 1,
+                letterSpacing: '0%',
+                mb: 1
+              }}>
                 {photo.photographer}
               </Typography>
-              <Typography variant="body2" color="text.secondary">
+              <Typography sx={{ 
+                fontFamily: 'Helvetica',
+                fontWeight: 400,
+                fontSize: '14px',
+                lineHeight: 1,
+                letterSpacing: '0%',
+                mb: 1
+              }}>
                 {photo.alt}
               </Typography>
-              <Box sx={{ display: 'flex', alignItems: 'center', mt: 0.5 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Typography 
-                  variant="body2" 
-                  sx={{ color: '#344054' }}
+                  sx={{ 
+                    fontFamily: 'Helvetica',
+                    fontWeight: 400,
+                    fontSize: '14px',
+                    lineHeight: 1,
+                    letterSpacing: '0%',
+                    color: '#344054'
+                  }}
                 >
                   {photo.avg_color}
                 </Typography>
                 <Box 
                   sx={{ 
-                    width: 16, 
-                    height: 16, 
+                    width: 12, 
+                    height: 12, 
                     bgcolor: photo.avg_color || '#E5E7EB',
                     borderRadius: 0.5,
                     ml: 1
@@ -127,7 +156,7 @@ const PhotoList = () => {
             </Box>
 
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <img src={links} alt="Links icon" style={{ width: '16px', height: '16px' }} />
+              <img src={links} alt="Links icon" style={{ width: '12px', height: '12px' }} />
               <Link 
                 href={photo.photographer_url} 
                 target="_blank"
