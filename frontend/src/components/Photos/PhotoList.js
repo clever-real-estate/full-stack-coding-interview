@@ -51,15 +51,12 @@ const PhotoList = () => {
       
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
         {photos.map((photo) => (
-          <Card 
+          <Box
             key={photo.id} 
             sx={{ 
               display: 'flex',
               alignItems: 'center',
-              p: 2,
-              borderRadius: 2,
-              boxShadow: 'none',
-              border: '1px solid #E5E7EB'
+              p: 2
             }}
           >
             <IconButton 
@@ -127,7 +124,7 @@ const PhotoList = () => {
             >
               Portfolio
             </Link>
-          </Card>
+          </Box>
         ))}
       </Box>
     </Box>
