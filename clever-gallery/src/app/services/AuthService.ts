@@ -34,4 +34,17 @@ export class AuthService {
       throw new Error(data.error || "Logout failed");
     }
   }
+
+  static async forgotPassword({ email }: { email: string }) {
+    const res = await fetch("/api/forgotPassword", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
+    });
+
+    if (!res.ok) {
+      const data = await res.json();
+      throw new Error(data.error || "Error");
+    }
+  }
 }
