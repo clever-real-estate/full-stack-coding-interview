@@ -16,4 +16,4 @@ export type PhotoResponse = {
   alt: string;
   avg_color: string;
   photographer_url: string;
-}
+};
