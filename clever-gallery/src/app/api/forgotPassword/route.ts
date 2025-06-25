@@ -8,7 +8,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Email is required" }, { status: 400 });
   }
 
-  const firebaseApiKey = process.env.NEXT_PUBLIC_FIREBASE_API_KEY;
+  const firebaseApiKey = process.env.FIREBASE_API_KEY;
 
   if (!firebaseApiKey) {
     return NextResponse.json(
