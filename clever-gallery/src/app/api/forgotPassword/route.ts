@@ -40,7 +40,7 @@ export async function POST(req: Request) {
     }
 
     return NextResponse.json({ message: "Password reset email sent" });
-  } catch (err) {
+  } catch {
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }

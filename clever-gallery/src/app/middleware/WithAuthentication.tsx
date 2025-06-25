@@ -8,6 +8,7 @@ import { AuthService } from "../services/AuthService";
 export default function WithAuthentication(
   WrappedComponent: () => JSX.Element
 ) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const Wrapper = (props: any) => {
     const router = useRouter();
     const { user } = useAuth();

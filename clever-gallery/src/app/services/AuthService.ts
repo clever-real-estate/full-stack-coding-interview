@@ -19,6 +19,7 @@ export class AuthService {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static async logout(router: any) {
     const res = await fetch("/api/logout", {
       method: "POST",

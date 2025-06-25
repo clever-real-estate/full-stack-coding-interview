@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "../hooks/useAuth";
 
 export default function ByPassLogin(WrappedComponent: () => JSX.Element) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const Wrapper = (props: any) => {
     const router = useRouter();
     const pathname = usePathname();
