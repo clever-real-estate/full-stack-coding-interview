@@ -6,8 +6,6 @@ export class AuthService {
       body: JSON.stringify({ email, password }),
     });
 
-    console.log({ res });
-
     if (!res.ok) {
       const data = await res.json();
       switch (data.error) {

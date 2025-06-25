@@ -14,7 +14,7 @@ export async function getAuthenticatedUser() {
       sessionCookie,
       true
     );
-    return decodedToken;
+    return { decodedToken, token: sessionCookie };
   } catch {
     throw new AuthError("Invalid or expired session cookie");
   }

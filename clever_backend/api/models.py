@@ -4,9 +4,9 @@ class Photo(models.Model):
     id = models.CharField(max_length=255, primary_key=True)
     image_url = models.URLField()
     photographer = models.CharField(max_length=255)
-    title = models.CharField(max_length=255)
-    hex_color = models.CharField(max_length=7)
-    portfolio_url = models.URLField()
+    alt = models.CharField(max_length=255)
+    avg_color = models.CharField(max_length=7)
+    photographer_url = models.URLField()
 
     def __str__(self):
         return self.photographer

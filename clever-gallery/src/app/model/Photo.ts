@@ -7,3 +7,13 @@ export type Photo = {
   hexColor: string;
   portfolioUrl: string;
 };
+
+export type PhotoResponse = {
+  id: string;
+  is_favorite: boolean;
+  image_url: string;
+  photographer: string;
+  alt: string;
+  avg_color: string;
+  photographer_url: string;
+}
