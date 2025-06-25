@@ -1,0 +1,1 @@
+web: gunicorn clever_backend.wsgi --log-file -
