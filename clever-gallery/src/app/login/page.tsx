@@ -22,7 +22,7 @@ function LoginPage() {
       await AuthService.auth({ email, password });
 
       router.push("/photos");
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -37,7 +37,7 @@ function LoginPage() {
     try {
       await AuthService.forgotPassword({ email });
       setAlert("Password reset email sent");
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setError(err.message);
     } finally {

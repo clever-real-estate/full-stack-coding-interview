@@ -26,24 +26,29 @@ function PhotosPage() {
 
   const handleAddToFavorites = async (photoId: string) => {
     const newPhotos = await PhotosService.addToFavorites(photoId, photos);
-    setPhotos(newPhotos)
+    setPhotos(newPhotos);
   };
 
   const handleRemoveFromFavorites = async (photoId: string) => {
     const newPhotos = await PhotosService.removeFromFavorites(photoId, photos);
-    setPhotos(newPhotos)
+    setPhotos(newPhotos);
   };
 
   const handleLogout = async () => {
     await AuthService.logout(router);
-  }
+  };
 
   return (
     <div className="max-w-xl mx-auto p-7">
       <div className="mb-6">
         <div className="flex justify-between items-center">
           <ImageIcon />
-          <span className="text-gray-900 text-s hover:cursor-pointer" onClick={() => handleLogout()}>Logout</span>
+          <span
+            className="text-gray-900 text-s hover:cursor-pointer"
+            onClick={() => handleLogout()}
+          >
+            Logout
+          </span>
         </div>
         <h1 className="text-xl font-bold text-gray-900 mt-6">All photos</h1>
       </div>
@@ -96,13 +101,13 @@ function PhotosPage() {
                   </div>
                 </div>
               </div>
-            <Link
+              <Link
                 href={photo.portfolioUrl}
                 className="text-[#0075EB] text-xs flex items-center gap-1 hover:underline ml-2"
               >
-              <LinkIcon size={12} />
-              Portfolio
-            </Link>
+                <LinkIcon size={12} />
+                Portfolio
+              </Link>
             </div>
           </div>
         ))
