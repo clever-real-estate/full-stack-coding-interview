@@ -50,7 +50,8 @@ export async function POST(req: NextRequest) {
     );
 
     return res;
-  } catch {
+  } catch(e: unknown) {
+    console.log(e)
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }

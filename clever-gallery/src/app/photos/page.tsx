@@ -19,7 +19,7 @@ function PhotosPage() {
       setLoading(false);
     };
     getPhotos();
-  });
+  }, []);
 
   const handleAddToFavorites = async (photoId: string) => {
     await PhotosService.addToFavorites(photoId);
