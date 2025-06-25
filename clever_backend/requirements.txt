@@ -6,6 +6,7 @@ certifi==2025.6.15
 cffi==1.17.1
 charset-normalizer==3.4.2
 cryptography==45.0.4
+dj-database-url==3.0.0
 Django==5.2.3
 django-cors-headers==4.7.0
 djangorestframework==3.16.0
@@ -23,6 +24,7 @@ google-resumable-media==2.7.2
 googleapis-common-protos==1.70.0
 grpcio==1.73.0
 grpcio-status==1.73.0
+gunicorn==23.0.0
 h11==0.16.0
 h2==4.2.0
 hpack==4.1.0
@@ -32,6 +34,7 @@ httpx==0.28.1
 hyperframe==6.1.0
 idna==3.10
 msgpack==1.1.1
+packaging==25.0
 proto-plus==1.26.1
 protobuf==6.31.1
 pyasn1==0.6.1
@@ -47,5 +50,4 @@ sqlparse==0.5.3
 typing_extensions==4.14.0
 uritemplate==4.2.0
 urllib3==2.5.0
-dj-database-url==3.0.0
 whitenoise==6.9.0
