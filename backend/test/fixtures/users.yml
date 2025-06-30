@@ -1,5 +1,3 @@
-# test/fixtures/users.yml
-
 one:
   name: Test User One
   email: userone@example.com

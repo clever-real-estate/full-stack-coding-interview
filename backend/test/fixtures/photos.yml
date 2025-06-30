@@ -1,12 +1,12 @@
 one:
-  user: one # This refers to the 'one' user in users.yml
+  user: one
   pexels_id: 1001
   image_url: "https://example.com/photo1.jpg"
   photographer: "User One"
   alt_text: "The first test photo"
 
 two:
-  user: two # This refers to the 'two' user in users.yml
+  user: two
   pexels_id: 1002
   image_url: "https://example.com/photo2.jpg"
   photographer: "User Two"
