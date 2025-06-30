@@ -1,20 +1,16 @@
-# This is the master template. It must come first.
 default: &default
   adapter: postgresql
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
-# This section is for your local development machine.
 development:
   <<: *default
   database: backend_development
 
-# This section is for running automated tests.
 test:
   <<: *default
   database: backend_test
 
-# This is the section for Railway (production).
 production:
   primary:
     <<: *default
