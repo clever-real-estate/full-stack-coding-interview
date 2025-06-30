@@ -1,7 +1,5 @@
 puts "Cleaning database..."
 
-# Destroy dependent records first
-Task.destroy_all
 Photo.destroy_all
 Like.destroy_all
 User.destroy_all
@@ -31,4 +29,4 @@ photo_data.each do |data|
   Photo.create!(photo_attributes)
 end
 
-puts "Finished seeding! Created #{Photo.count} photos and #{Task.count} tasks."
+puts "Finished seeding! Created #{Photo.count} photos"
