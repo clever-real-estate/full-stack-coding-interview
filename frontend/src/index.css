@@ -1,0 +1,64 @@
+@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  font-family: Helvetica, Arial, sans-serif;
+  h2, label {
+    font-weight: 700;
+  }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-4px); }
+  50% { transform: translateY(-2px); }
+  70% { transform: translateY(-1px); }
+}
+
+.bounce-on-hover:hover {
+  animation: bounce 0.28s cubic-bezier(.68,-0.55,.27,1.55);
+}
+
+.fill-left-to-right {
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+}
+.fill-left-to-right::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 0%;
+  background: #3eb2ef;
+  z-index: 1;
+  transition: width 0.35s cubic-bezier(.4,0,.2,1);
+}
+.fill-left-to-right:hover::before {
+  width: 100%;
+}
+.fill-left-to-right > * {
+  position: relative;
+  z-index: 2;
+}
+
+.fill-danger::before {
+  background: #ef4444;
+}
+
+.fill-left-to-right.fill-danger:hover {
+  color: #fff !important;
+  cursor: pointer;
+}
+
+@keyframes star-grow {
+  0%   { transform: scale(1); }
+  90%  { transform: scale(1.2); }
+  100% { transform: scale(1.1); }
+}
+.star-grow {
+  animation: star-grow 0.5s 1;
+}
