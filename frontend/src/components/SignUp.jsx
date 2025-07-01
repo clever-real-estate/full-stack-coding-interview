@@ -47,8 +47,8 @@ const SignUp = () => {
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center items-center font-sans">
       <div className="max-w-md w-full mx-auto p-4">
         <div className="text-center mb-8">
-          <div className="mx-auto h-16 w-16 bg-blue-500 rounded-full text-white flex items-center justify-center text-3xl font-bold">
-            CI
+          <div className="mx-auto h-16 w-16 flex items-center justify-center">
+            <img src="/logo.svg" alt="Logo" className="h-16 w-16" />
           </div>
           <h2 className="mt-6 text-xl font-extrabold text-gray-900">
             Create your account
@@ -142,9 +142,9 @@ const SignUp = () => {
 
             <button
               type="submit"
-              className="w-full py-2 px-4 bg-[#0075EB] hover:opacity-90 text-white font-semibold rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 text-base"
+              className="w-full py-2 px-4 bg-[#0075EB] text-white font-semibold rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 text-base fill-left-to-right"
             >
-              Sign Up
+              <span>Sign Up</span>
             </button>
           </form>
 

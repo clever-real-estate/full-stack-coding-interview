@@ -1,21 +1,23 @@
-import React from "react"
+import React, { useEffect, useRef, useState } from "react"
 const StarIcon = ({ filled, ...props }) => {
+  const [animate, setAnimate] = useState(false)
+  const prevFilled = useRef(filled)
+
+  useEffect(() => {
+    if (!prevFilled.current && filled) {
+      setAnimate(true)
+      setTimeout(() => setAnimate(false), 500)
+    }
+    prevFilled.current = filled
+  }, [filled])
+
   return (
-    <svg
+    <img
       {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      className={`w-6 h-6 cursor-pointer ${
-        filled ? "text-yellow-400" : "text-gray-400"
-      }`}
-      fill={filled ? "currentColor" : "none"}
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-    </svg>
+      src={filled ? "/star-fill.svg" : "/star-line.svg"}
+      alt={filled ? "Filled star" : "Empty star"}
+      className={`w-6 h-6 cursor-pointer${animate ? " star-grow" : ""}`}
+    />
   )
 }
 export default StarIcon

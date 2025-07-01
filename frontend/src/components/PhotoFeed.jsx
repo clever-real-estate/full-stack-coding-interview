@@ -52,18 +52,18 @@ const PhotoFeed = () => {
   return (
     <div className="min-h-screen bg-gray-50 text-gray-800 p-4 md:p-8">
       <div className="max-w-4xl mx-auto">
-        <div className="flex justify-between items-center mb-10">
-          <div className="flex items-center gap-4">
-            <div className="h-16 w-16 bg-blue-500 rounded-full text-white flex items-center justify-center text-3xl font-bold flex-shrink-0">
-              CI
+        <div className="flex justify-between items-start mb-10">
+          <div className="flex flex-col items-start gap-2">
+            <div className="h-16 w-16 flex items-center justify-center flex-shrink-0">
+              <img src="/logo.svg" alt="Logo" className="h-16 w-16" />
             </div>
-            <h1 className="text-4xl font-bold">All photos</h1>
+            <h1 className="text-xl font-bold">All photos</h1>
           </div>
           <button
             onClick={logout}
-            className="px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-md text-sm font-semibold hover:bg-gray-100 flex-shrink-0"
+            className="px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-md text-sm font-semibold flex-shrink-0 fill-left-to-right fill-danger"
           >
-            Logout
+            <span>Logout</span>
           </button>
         </div>
 
@@ -85,6 +85,7 @@ const PhotoFeed = () => {
                         ? handleUnlike(photo.id, userLike.id)
                         : handleLike(photo.id)
                     }
+                    className="w-8 h-8 flex items-center justify-center flex-shrink-0"
                   >
                     <StarIcon filled={!!userLike} />
                   </div>
@@ -108,17 +109,9 @@ const PhotoFeed = () => {
                       href={photo.photographer_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-blue-600 hover:text-blue-500 flex-shrink-0 flex items-center gap-1.5 text-sm ml-4"
+                      className="text-blue-600 hover:text-blue-500 flex-shrink-0 flex items-center gap-1.5 text-xs ml-4"
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-4 w-4"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
-                        <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
-                      </svg>
+                      <img src="/links.svg" alt="External link" className="h-3 w-3" />
                       Portfolio
                     </a>
                   </div>
