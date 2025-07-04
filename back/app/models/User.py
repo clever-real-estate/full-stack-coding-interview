@@ -6,11 +6,6 @@ from sqlmodel import Field, SQLModel, Relationship
 from typing import List
 
 
-class UserAccount(SQLModel):
-    email: EmailStr = Field(max_length=255)
-    password: str = Field(min_length=8, max_length=40)
-
-
 class User(SQLModel, table=True):
     id: uuid.UUID = Field(
         primary_key=True,
