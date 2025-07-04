@@ -9,5 +9,7 @@ class Settings(BaseSettings):
     POSTGRES_DB: str
     DATABASE_URL: str
 
+    SECRET_KEY: str
+
 
 settings = Settings()  # type: ignore

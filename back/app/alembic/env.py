@@ -4,7 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy import pool
 
 from alembic import context
-from app.config import settings
+from app.infra.config import settings
 from sqlmodel import SQLModel
 
 # Import all models so their metadata is registered
