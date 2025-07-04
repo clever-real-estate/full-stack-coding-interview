@@ -1,7 +1,7 @@
 import csv
 import os
 from sqlmodel import Session, select
-from app.db import engine
+from app.infra.db import db
 from app.models import Photo
 
 CSV_PATH = os.path.join(
@@ -22,7 +22,7 @@ def row_to_photo(row):
 def main():
     with open(CSV_PATH, newline="", encoding="utf-8") as csvfile:
         reader = csv.DictReader(csvfile)
-        with Session(engine) as session:
+        with Session(db.engine) as session:
             for row in reader:
                 # Check if photo with same image_url already exists
                 exists = session.exec(

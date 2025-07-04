@@ -1,3 +1,9 @@
+## Install
+
+```sh
+uv pip install -r <(uv pip compile pyproject.toml)
+```
+
 ## Running
 
 ```sh
