@@ -3,24 +3,20 @@ from sqlmodel import Session, select
 from app.infra.db import db
 from app.schemas import UserCreate, UserResponse
 from app.models import User
-from app.utils.security import get_password_hash
+from app.services import UserService
 
 router = APIRouter(prefix="/users", tags=["users"])
 
 
 @router.post("/", response_model=UserResponse)
 def register_user(user: UserCreate, session: Session = Depends(db.get_session)):
-    """Register a new user"""
-    # TODO: Implement email uniqueness check
-    hashed_password = get_password_hash(user.password)
-    db_obj = User(email=user.email, hashed_password=hashed_password, liked_photos=[])  # type: ignore
-    session.add(db_obj)
-    session.commit()
-    session.refresh(db_obj)
-    return UserResponse(
-        id=db_obj.id,
-        email=db_obj.email,
-    )
+    result = UserService.create_user(session, user)
+    if result is None:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Email already registered",
+        )
+    return result
 
 
 @router.post("/login", response_model=User)

@@ -9,4 +9,6 @@ dependencies = [
     "fastapi[all]>=0.115.14",
     "sqlmodel>=0.0.24",
     "psycopg2-binary>=2.9.9",
+    "jwt>=1.4.0",
+    "passlib[bcrypt]<2.0.0,>=1.7.4",
 ]
