@@ -1,16 +1,13 @@
 from fastapi import APIRouter, HTTPException, status
 
-from app.infra.db import db
-from app.repositories.user_repository import UserRepository
 from app.schemas import UserInput, UserLogin, UserResponse
 from app.services import AuthService, UserService
 from app.schemas.token import Token
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
-user_repository = UserRepository(session=next(db.get_session()))
-user_service = UserService(user_repository=user_repository)
-auth_service = AuthService(user_service=user_service)
+user_service = UserService()
+auth_service = AuthService()
 
 
 @router.post("/", response_model=UserResponse, status_code=status.HTTP_200_OK)

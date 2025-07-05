@@ -19,7 +19,7 @@ def test_create():
         liked_photos=[],
     )
 
-    user_service = UserService(mock_user_repository)
+    user_service = UserService(user_repository=mock_user_repository)
     user_response = user_service.create(user_input)
 
     assert user_response is not None
@@ -35,7 +35,7 @@ def test_create_with_existing_email():
         id=uuid4(), email="test@test.com", hashed_password="password", liked_photos=[]
     )
 
-    user_service = UserService(mock_user_repository)
+    user_service = UserService(user_repository=mock_user_repository)
     user_response = user_service.create(user_input)
 
     assert user_response is None

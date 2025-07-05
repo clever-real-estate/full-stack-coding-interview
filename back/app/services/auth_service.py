@@ -8,9 +8,13 @@ from app.infra.config import settings
 
 
 class AuthService:
-    def __init__(self, user_service: UserService, security: Security = Security()):
-        self.user_service = user_service
+    def __init__(
+        self,
+        security: Security = Security(),
+        user_service: UserService = UserService(),
+    ):
         self.security = security
+        self.user_service = user_service
 
     def authenticate(self, token: str) -> UserResponse | None:
         payload = self.security.verify_access_token(token)

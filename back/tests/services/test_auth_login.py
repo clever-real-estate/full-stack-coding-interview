@@ -20,7 +20,10 @@ def test_login():
     mock_security.verify_password.return_value = True
     mock_security.create_access_token.return_value = "token"
 
-    auth_service = AuthService(mock_user_repository, mock_security)
+    auth_service = AuthService(
+        user_service=mock_user_repository,
+        security=mock_security,
+    )
     token = auth_service.login(user_login)
 
     assert token is not None
@@ -41,7 +44,10 @@ def test_login_with_invalid_email():
     mock_security.verify_password.return_value = True
     mock_security.create_access_token.return_value = "token"
 
-    auth_service = AuthService(mock_user_service, mock_security)
+    auth_service = AuthService(
+        user_service=mock_user_service,
+        security=mock_security,
+    )
     token = auth_service.login(user_login)
 
     assert token is None
@@ -60,7 +66,10 @@ def test_login_with_invalid_password():
     mock_security.verify_password.return_value = False
     mock_security.create_access_token.return_value = "token"
 
-    auth_service = AuthService(mock_user_service, mock_security)
+    auth_service = AuthService(
+        user_service=mock_user_service,
+        security=mock_security,
+    )
     token = auth_service.login(user_login)
 
     assert token is None

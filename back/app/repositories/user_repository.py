@@ -2,12 +2,13 @@ from typing import Optional
 
 from sqlmodel import Session, select
 
+from app.infra.db import db
 from app.models import User
 from app.schemas.user import UserCreate
 
 
 class UserRepository:
-    def __init__(self, session: Session):
+    def __init__(self, session: Session = next(db.get_session())):
         self.session = session
 
     def find_by_email(self, email: str) -> Optional[User]:

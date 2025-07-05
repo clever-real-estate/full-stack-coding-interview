@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Callable, Optional
 
 
 from app.models import User
@@ -10,8 +10,8 @@ from app.utils.security import Security
 class UserService:
     def __init__(
         self,
-        user_repository: UserRepository,
-        get_password_hash=Security().get_password_hash,
+        get_password_hash: Callable[[str], str] = Security().get_password_hash,
+        user_repository: UserRepository = UserRepository(),
     ):
         self.get_password_hash = get_password_hash
         self.user_repository = user_repository

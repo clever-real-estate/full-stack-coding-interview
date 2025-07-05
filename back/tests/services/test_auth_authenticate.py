@@ -16,7 +16,10 @@ def test_authenticate():
     mock_security = MagicMock()
     mock_security.verify_access_token.return_value = TokenPayload(sub=str(user.id))
 
-    auth_service = AuthService(mock_user_service, mock_security)
+    auth_service = AuthService(
+        user_service=mock_user_service,
+        security=mock_security,
+    )
     user = auth_service.authenticate("valid_token")
 
     assert user is not None
@@ -35,7 +38,10 @@ def test_authenticate_with_invalid_token():
     mock_security = MagicMock()
     mock_security.verify_access_token.return_value = None
 
-    auth_service = AuthService(mock_user_service, mock_security)
+    auth_service = AuthService(
+        user_service=mock_user_service,
+        security=mock_security,
+    )
     user = auth_service.authenticate("valid_token")
 
     assert user is None
@@ -52,7 +58,10 @@ def test_authenticate_with_invalid_user():
     mock_security = MagicMock()
     mock_security.verify_access_token.return_value = TokenPayload(sub=str(user.id))
 
-    auth_service = AuthService(mock_user_service, mock_security)
+    auth_service = AuthService(
+        user_service=mock_user_service,
+        security=mock_security,
+    )
     user = auth_service.authenticate("valid_token")
 
     assert user is None
