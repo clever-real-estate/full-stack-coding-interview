@@ -13,6 +13,9 @@ class UserRepository:
     def find_by_email(self, email: str) -> Optional[User]:
         return self.session.exec(select(User).where(User.email == email)).first()
 
+    def find_by_id(self, id: str) -> Optional[User]:
+        return self.session.exec(select(User).where(User.id == id)).first()
+
     def insert(self, user_create: UserCreate) -> User:
         user = User(**user_create.model_dump())
         self.session.add(user)

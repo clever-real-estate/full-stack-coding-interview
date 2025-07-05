@@ -21,6 +21,9 @@ class Security:
         )
         return encoded_jwt
 
+    def get_password_hash(self, password: str) -> str:
+        return self.pwd_context.hash(password)
+
     def verify_access_token(self, token: str) -> TokenPayload | None:
         try:
             payload = jwt.decode(
@@ -37,6 +40,3 @@ class Security:
 
     def verify_password(self, plain_password: str, hashed_password: str) -> bool:
         return self.pwd_context.verify(plain_password, hashed_password)
-
-    def get_password_hash(self, password: str) -> str:
-        return self.pwd_context.hash(password)

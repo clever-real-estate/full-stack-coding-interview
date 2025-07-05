@@ -17,6 +17,15 @@ class UserService:
         self.user_repository = user_repository
         self.security = security
 
+    def authenticate(self, token: str) -> UserResponse | None:
+        payload = self.security.verify_access_token(token)
+        if payload is None or payload.sub is None:
+            return None
+        user = self.get_by_id(payload.sub)
+        if user is None:
+            return None
+        return UserResponse(**user.model_dump())
+
     def create(self, user: UserInput) -> UserResponse | None:
         if self.get_by_email(user.email):
             return None
@@ -33,6 +42,9 @@ class UserService:
 
     def get_by_email(self, email: str) -> Optional[User]:
         return self.user_repository.find_by_email(email)
+
+    def get_by_id(self, id: str) -> Optional[User]:
+        return self.user_repository.find_by_id(id)
 
     def login(self, user_login: UserLogin) -> Token | None:
         user_db = self.get_by_email(user_login.email)
