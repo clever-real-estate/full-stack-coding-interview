@@ -1,31 +1,28 @@
-from sqlmodel import Session
-from app.models import User
-from app.schemas.user import UserCreate, UserResponse
 from typing import Optional
-from app.utils.security import get_password_hash
+
+from app.models import User
 from app.repositories.user_repository import UserRepository
+from app.schemas.user import UserInput, UserCreate, UserResponse
+from app.utils.security import get_password_hash
 
 
 class UserService:
-    @staticmethod
-    def get_user_by_email(session: Session, email: str) -> Optional[User]:
-        return UserRepository.get_user_by_email(session, email)
+    def __init__(self, user_repository: UserRepository):
+        self.user_repository = user_repository
 
-    @staticmethod
-    def create_user(session: Session, user: UserCreate) -> UserResponse | None:
-        # Return None if email already exists (let controller handle HTTP response)
-        if UserService.get_user_by_email(session, user.email):
+    def get_user_by_email(self, email: str) -> Optional[User]:
+        return self.user_repository.get_user_by_email(email)
+
+    def create_user(self, user: UserInput) -> UserResponse | None:
+        if self.get_user_by_email(user.email):
             return None
 
-        db_obj = User(
+        db_obj = UserCreate(
             email=user.email,
             hashed_password=get_password_hash(user.password),
             liked_photos=[],  # type: ignore
         )
 
-        UserRepository.create_user(session, db_obj)
+        user_created = self.user_repository.create_user(db_obj)
 
-        return UserResponse(
-            id=db_obj.id,
-            email=db_obj.email,
-        )
+        return UserResponse(**user_created.model_dump())

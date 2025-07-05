@@ -2,11 +2,19 @@ from pydantic import BaseModel, EmailStr
 import uuid
 
 
-class UserCreate(BaseModel):
-    """Schema for user registration"""
+class UserInput(BaseModel):
+    """Schema for user registration input"""
 
     email: EmailStr
     password: str
+
+
+class UserCreate(BaseModel):
+    """Schema for user db insert"""
+
+    email: EmailStr
+    hashed_password: str
+    liked_photos: list[uuid.UUID]
 
 
 class UserLogin(BaseModel):

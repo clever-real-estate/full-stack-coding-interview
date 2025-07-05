@@ -1,16 +1,20 @@
-from fastapi import APIRouter, Depends, HTTPException, status
-from sqlmodel import Session, select
+from fastapi import APIRouter, HTTPException, status
+
 from app.infra.db import db
-from app.schemas import UserCreate, UserResponse
 from app.models import User
-from app.services import UserService
+from app.repositories.user_repository import UserRepository
+from app.schemas import UserInput, UserResponse
+from app.services.user_service import UserService
 
 router = APIRouter(prefix="/users", tags=["users"])
 
+user_repository = UserRepository(session=next(db.get_session()))
+user_service = UserService(user_repository=user_repository)
 
-@router.post("/", response_model=UserResponse)
-def register_user(user: UserCreate, session: Session = Depends(db.get_session)):
-    result = UserService.create_user(session, user)
+
+@router.post("/", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
+def register_user(user: UserInput):
+    result = user_service.create_user(user)
     if result is None:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -20,12 +24,6 @@ def register_user(user: UserCreate, session: Session = Depends(db.get_session)):
 
 
 @router.post("/login", response_model=User)
-def login_user(user: User, session: Session = Depends(db.get_session)):
-    """Login user with email and password"""
-    db_obj = session.exec(select(User).where(User.email == user.email)).first()
-    if not db_obj:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
-        )
-    # TODO: Implement password verification
-    return db_obj
+def login_user(user: User):
+    # TODO: Implement login user
+    pass

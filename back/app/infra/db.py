@@ -27,5 +27,4 @@ class Database:
             yield session
 
 
-# Instância única (pode ser usada como db em todo o projeto)
 db = Database()

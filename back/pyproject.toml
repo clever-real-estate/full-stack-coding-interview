@@ -5,10 +5,16 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12.9"
 dependencies = [
-    "alembic>=1.16.2",
+
     "fastapi[all]>=0.115.14",
     "sqlmodel>=0.0.24",
     "psycopg2-binary>=2.9.9",
     "jwt>=1.4.0",
     "passlib[bcrypt]<2.0.0,>=1.7.4",
+]
+
+[dependency-groups]
+dev = [
+    "alembic>=1.16.2",
+    "pytest>=8.4.1",
 ]

@@ -1,16 +1,21 @@
-from sqlmodel import Session, select
-from app.models import User
 from typing import Optional
+
+from sqlmodel import Session, select
+
+from app.models import User
+from app.schemas.user import UserCreate
 
 
 class UserRepository:
-    @staticmethod
-    def get_user_by_email(session: Session, email: str) -> Optional[User]:
-        return session.exec(select(User).where(User.email == email)).first()
+    def __init__(self, session: Session):
+        self.session = session
 
-    @staticmethod
-    def create_user(session: Session, user: User) -> User:
-        session.add(user)
-        session.commit()
-        session.refresh(user)
+    def get_user_by_email(self, email: str) -> Optional[User]:
+        return self.session.exec(select(User).where(User.email == email)).first()
+
+    def create_user(self, user_create: UserCreate) -> User:
+        user = User(**user_create.model_dump())
+        self.session.add(user)
+        self.session.commit()
+        self.session.refresh(user)
         return user
