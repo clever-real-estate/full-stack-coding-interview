@@ -4,7 +4,7 @@ from unittest.mock import MagicMock
 
 from app.schemas.user import UserLogin
 from app.models import User
-from app.services.user_service import UserService
+from app.services import AuthService
 
 
 def test_login():
@@ -20,8 +20,8 @@ def test_login():
     mock_security.verify_password.return_value = True
     mock_security.create_access_token.return_value = "token"
 
-    user_service = UserService(mock_user_repository, mock_security)
-    token = user_service.login(user_login)
+    auth_service = AuthService(mock_user_repository, mock_security)
+    token = auth_service.login(user_login)
 
     assert token is not None
     assert token.access_token == "token"
@@ -34,15 +34,15 @@ def test_login_with_invalid_email():
     )
     user_login = UserLogin(email=user.email, password=user.hashed_password)
 
-    mock_user_repository = MagicMock()
-    mock_user_repository.find_by_email.return_value = None
+    mock_user_service = MagicMock()
+    mock_user_service.get_by_email.return_value = None
 
     mock_security = MagicMock()
     mock_security.verify_password.return_value = True
     mock_security.create_access_token.return_value = "token"
 
-    user_service = UserService(mock_user_repository, mock_security)
-    token = user_service.login(user_login)
+    auth_service = AuthService(mock_user_service, mock_security)
+    token = auth_service.login(user_login)
 
     assert token is None
 
@@ -53,14 +53,14 @@ def test_login_with_invalid_password():
     )
     user_login = UserLogin(email=user.email, password=user.hashed_password)
 
-    mock_user_repository = MagicMock()
-    mock_user_repository.find_by_email.return_value = user
+    mock_user_service = MagicMock()
+    mock_user_service.get_by_email.return_value = user
 
     mock_security = MagicMock()
     mock_security.verify_password.return_value = False
     mock_security.create_access_token.return_value = "token"
 
-    user_service = UserService(mock_user_repository, mock_security)
-    token = user_service.login(user_login)
+    auth_service = AuthService(mock_user_service, mock_security)
+    token = auth_service.login(user_login)
 
     assert token is None
