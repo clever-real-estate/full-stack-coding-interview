@@ -9,6 +9,7 @@ class Settings(BaseSettings):
     POSTGRES_DB: str
     DATABASE_URL: str
 
+    ACCESS_TOKEN_EXPIRE_MINUTES: int
     SECRET_KEY: str
 
 

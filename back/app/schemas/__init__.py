@@ -1,5 +1,6 @@
 from .user import UserInput, UserCreate, UserResponse, UserLogin
 from .photo import PhotoResponse, PhotoLike
+from .token import Token, TokenPayload
 
 __all__ = [
     "UserInput",
@@ -8,4 +9,6 @@ __all__ = [
     "UserLogin",
     "PhotoResponse",
     "PhotoLike",
+    "Token",
+    "TokenPayload",
 ]

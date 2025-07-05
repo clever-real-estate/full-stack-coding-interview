@@ -23,3 +23,8 @@ uv run alembic upgrade head
 ```sh
 uv run python -m app.utils.import_photos
 ```
+
+### Testing
+```sh
+uv run -m pytest tests
+```

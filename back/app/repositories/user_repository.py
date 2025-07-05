@@ -10,10 +10,10 @@ class UserRepository:
     def __init__(self, session: Session):
         self.session = session
 
-    def get_user_by_email(self, email: str) -> Optional[User]:
+    def find_by_email(self, email: str) -> Optional[User]:
         return self.session.exec(select(User).where(User.email == email)).first()
 
-    def create_user(self, user_create: UserCreate) -> User:
+    def insert(self, user_create: UserCreate) -> User:
         user = User(**user_create.model_dump())
         self.session.add(user)
         self.session.commit()
