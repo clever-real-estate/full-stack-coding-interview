@@ -1,5 +1,4 @@
 from pydantic import BaseModel
-from typing import List
 import uuid
 
 
@@ -12,7 +11,7 @@ class PhotoResponse(BaseModel):
     avg_color: str
     alt: str
     image_url: str
-    likes: List["PhotoLike"]
+    liked: bool = False
 
     class Config:
         from_attributes = True

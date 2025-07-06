@@ -18,10 +18,8 @@ photo_service = PhotoService()
     response_model=List[PhotoResponse],
     dependencies=[Depends(auth_service.authenticate)],
 )
-def index():
-    # TODO: Join to get user likes
-
-    photos = photo_service.get_all()
+def index(user=Depends(auth_service.authenticate)):
+    photos = photo_service.get_all(user_id=user.id)
     return photos
 
 
@@ -32,6 +30,7 @@ def index():
 )
 def like(photo_id: str, user=Depends(auth_service.authenticate)):
     result = photo_service.toggle_like(photo_id, user.id)
+    photo_service.map_to_response
     if result is None:
         raise HTTPException(status_code=404, detail="Photo not found")
     return result

@@ -1,6 +1,7 @@
-from typing import Sequence
+from typing import List
 
 from app.models import Photo
+from app.schemas import PhotoResponse
 from app.repositories.photo_repository import PhotoRepository
 from app.repositories.photo_like_repository import PhotoLikeRepository
 from app.repositories.user_repository import UserRepository
@@ -17,13 +18,21 @@ class PhotoService:
         self.photo_like_repository = photo_like_repository
         self.user_repository = user_repository
 
-    def get_all(self) -> Sequence[Photo]:
-        return self.photo_repository.find_all()
+    def map_to_response(self, photo: Photo, user_id: str) -> PhotoResponse:
+        return PhotoResponse(
+            **photo.model_dump(),
+            liked=any(like.user_id == user_id for like in photo.likes),
+        )
+
+    def get_all(self, user_id: str) -> List[PhotoResponse]:
+        photos = self.photo_repository.find_all()
+
+        return [self.map_to_response(photo, user_id) for photo in photos]
 
     def get_by_id(self, photo_id: str) -> Photo | None:
         return self.photo_repository.find_by_id(photo_id)
 
-    def toggle_like(self, photo_id: str, user_id: str) -> Photo | None:
+    def toggle_like(self, photo_id: str, user_id: str) -> PhotoResponse | None:
         photo = self.get_by_id(photo_id)
         if photo is None:
             return None
@@ -34,4 +43,4 @@ class PhotoService:
         else:
             self.photo_like_repository.add(photo_id, user_id)
 
-        return photo
+        return self.map_to_response(photo, user_id)
