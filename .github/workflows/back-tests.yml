@@ -11,8 +11,9 @@ on:
     branches:
       - main
     types: [opened, reopened, synchronize]
-    paths:
-      - .github/workflows/back-tests.yml
+    paths-ignore:
+      - "front/**"
+      - .github/workflows/front**.yml
 
 env:
   POSTGRES_USER: root
