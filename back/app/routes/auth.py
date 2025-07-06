@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, HTTPException, status, Form
 
 from app.schemas import UserInput, UserLogin, UserResponse
 from app.services import AuthService, UserService
@@ -21,7 +21,13 @@ def authenticate(token: str):
 
 
 @router.post("/login", response_model=Token, status_code=status.HTTP_200_OK)
-def login(user_login: UserLogin):
+def login(
+    username: str = Form(..., description="Email"),
+    password: str = Form(..., description="Password"),
+):
+    user_login = UserLogin(
+        email=username, password=password
+    )  # workaround to work with OAuth2
     result = auth_service.login(user_login)
     if result is None:
         raise HTTPException(

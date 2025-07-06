@@ -1,10 +1,16 @@
 from datetime import timedelta
 
+from fastapi import Depends
+
 from app.services.user_service import UserService
 from app.schemas.user import UserResponse, UserLogin
 from app.schemas.token import Token
 from app.utils.security import Security
 from app.infra.config import settings
+from fastapi.security import OAuth2PasswordBearer
+
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
 
 
 class AuthService:
@@ -16,7 +22,7 @@ class AuthService:
         self.security = security
         self.user_service = user_service
 
-    def authenticate(self, token: str) -> UserResponse | None:
+    def authenticate(self, token: str = Depends(oauth2_scheme)) -> UserResponse | None:
         payload = self.security.verify_access_token(token)
         if payload is None or payload.sub is None:
             return None
