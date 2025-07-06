@@ -27,5 +27,5 @@ def test_get_all():
     ]
 
     photo_service = PhotoService(photo_repository=mock_photo_repository)
-    photos = photo_service.get_all()
+    photos = photo_service.get_all(user_id=str(uuid4()))
     assert len(photos) == 2

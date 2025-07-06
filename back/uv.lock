@@ -53,7 +53,6 @@ dependencies = [
     { name = "pydantic" },
     { name = "pyjwt" },
     { name = "sqlmodel" },
-    { name = "uvicorn" },
 ]
 
 [package.dev-dependencies]
@@ -72,7 +71,6 @@ requires-dist = [
     { name = "pydantic", specifier = ">2.0" },
     { name = "pyjwt", specifier = ">=2.8.0,<3.0.0" },
     { name = "sqlmodel", specifier = ">=0.0.24" },
-    { name = "uvicorn", specifier = ">=0.35.0" },
 ]
 
 [package.metadata.requires-dev]
