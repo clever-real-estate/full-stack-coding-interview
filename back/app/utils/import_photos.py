@@ -4,9 +4,7 @@ from sqlmodel import Session, select
 from app.infra.db import db
 from app.models import Photo
 
-CSV_PATH = os.path.join(
-    os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "..", "photos.csv"
-)
+CSV_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "photos.csv")
 
 
 def row_to_photo(row):
