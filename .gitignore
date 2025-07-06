@@ -27,11 +27,6 @@ alembic/versions/*.pyc
 *.pid
 docker-compose.override.yml
 
-# Lock and package files
-uv.lock
-poetry.lock
-Pipfile.lock
-
 # Node
 node_modules/
 
