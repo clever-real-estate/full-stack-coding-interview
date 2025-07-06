@@ -11,3 +11,6 @@ class PhotoRepository:
 
     def find_all(self) -> Sequence[Photo]:
         return self.session.exec(select(Photo)).all()
+
+    def find_by_id(self, photo_id: str) -> Photo | None:
+        return self.session.get(Photo, photo_id)

@@ -5,7 +5,7 @@ from app.models import Photo
 from app.services import PhotoService
 
 
-def test_list_all():
+def test_get_all():
     mock_photo_repository = MagicMock()
     mock_photo_repository.find_all.return_value = [
         Photo(
@@ -27,5 +27,5 @@ def test_list_all():
     ]
 
     photo_service = PhotoService(photo_repository=mock_photo_repository)
-    photos = photo_service.list_all()
+    photos = photo_service.get_all()
     assert len(photos) == 2

@@ -1,6 +1,6 @@
 from typing import List
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 
 from app.schemas import PhotoResponse
 from app.services import AuthService, PhotoService
@@ -21,5 +21,17 @@ photo_service = PhotoService()
 def index():
     # TODO: Join to get user likes
 
-    photos = photo_service.list()
+    photos = photo_service.get_all()
     return photos
+
+
+@router.post(
+    "/{photo_id}/like",
+    response_model=PhotoResponse,
+    dependencies=[Depends(auth_service.authenticate)],
+)
+def like(photo_id: str, user=Depends(auth_service.authenticate)):
+    result = photo_service.toggle_like(photo_id, user.id)
+    if result is None:
+        raise HTTPException(status_code=404, detail="Photo not found")
+    return result
