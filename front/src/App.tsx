@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 
-import Auth from "@/pages/auth";
+// import Auth from "@/pages/auth";
 import Photos from "@/pages/photos";
 
 export function App() {
@@ -8,7 +8,7 @@ export function App() {
     <main className='bg-gray-200 min-h-screen'>
       <Routes>
         <Route path="/photos" element={<Photos />} />
-        <Route path="*" element={<Auth />} />
+        <Route path="*" element={<Photos />} />
       </Routes>
     </main>
   )
