@@ -3,35 +3,33 @@ import { type SubmitHandler, useForm } from "react-hook-form";
 
 import { Button } from "@/components/ui/button";
 import FormLoginInput from "./form-login-input";
+import { useLogin } from "@/hooks/useLogin";
+import { loginSchema, LoginSchema } from "@/schemas/auth";
 
-// import { useCreateLink } from "@/hooks/useCreateLinks";
-// import { type LinkInput, LinkInputSchema } from "@/schemas/link-schema";
 
 export default function FormLogin() {
-    // const {
-    // 	register,
-    // 	handleSubmit,
-    // 	formState: { errors },
-    // } = useForm<LinkInput>({ resolver: zodResolver(LinkInputSchema) });
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<LoginSchema>({ resolver: zodResolver(loginSchema) });
 
-    // const { mutate, isPending } = useCreateLink();
+    const { mutate, isPending, loginError } = useLogin();
 
-    // const onSubmit: SubmitHandler<LinkInput> = (data) => mutate(data);
-
-    const handleSubmit = (data: any) => {
-        console.log(data);
-    }
+    const onSubmit: SubmitHandler<LoginSchema> = (data) => mutate(data);
 
     return (
         <form
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmit(onSubmit)}
             className="flex flex-col gap-6"
         >
             <FormLoginInput
                 id="username"
                 label="Username"
-                placeholder="testing@testing.com"
-                type="email"
+                placeholder="testing"
+                type="text"
+                error={errors.username?.message}
+                {...register("username")}
             />
             <FormLoginInput
                 id="password"
@@ -42,15 +40,18 @@ export default function FormLogin() {
                     href: "/photos",
                     anchor: "Forgot password?"
                 }}
+                error={errors.password?.message}
+                {...register("password")}
             />
 
             <div className="grid gap-3">
-                <Button type="submit" size="lg">
+                <Button type="submit" size="lg" disabled={isPending}>
                     Sign in
                 </Button>
-                <Button type="submit" size="lg" variant="outline">
+                {loginError && <span className="text-xs text-red-500">{loginError}</span>}
+                {/* <Button type="submit" size="lg" variant="outline">
                     Sign up
-                </Button>
+                </Button> */}
             </div>
         </form>
     );
