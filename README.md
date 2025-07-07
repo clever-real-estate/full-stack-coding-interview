@@ -39,7 +39,8 @@ First, install the necessary dependencies for both the API and the client.
 (cd clever_photos_api && bundle exec rails secret)
 # 2. Open the credentials file:
 (cd clever_photos_api && bundle exec rails credentials:edit)
-# 3. Add `jwt_secret_key: <your-pasted-key>` to the file and save.
+# **Note:** If you encounter an error like "No $VISUAL or $EDITOR to open file in", you need to set your default editor. For example, to use VS Code, run `export VISUAL="code --wait"` in your terminal before running the command, or prefix the command like `VISUAL="code --wait" bundle exec rails credentials:edit`.
+   # 3. Add `jwt_secret_key: <your-pasted-key>` to the file and save.
 
 # Install JavaScript dependencies for the client
 (cd clever_photos && yarn install)

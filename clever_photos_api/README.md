@@ -64,10 +64,10 @@ To get the application up and running, follow these steps:
    Copy the generated key.
 
    Next, edit the credentials file:
-
    ```bash
    bundle exec rails credentials:edit
    ```
+   **Note:** If you encounter an error like "No $VISUAL or $EDITOR to open file in", you need to set your default editor. For example, to use VS Code, run `export VISUAL="code --wait"` in your terminal before running the command, or prefix the command like `VISUAL="code --wait" bundle exec rails credentials:edit`.
 
    This command will create `config/master.key` if it doesn't exist and open the encrypted credentials file. Add the JWT secret you generated:
 
