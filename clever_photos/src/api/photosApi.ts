@@ -28,7 +28,7 @@ export const useLikePhoto = () => {
     onSuccess: (response) => {
       queryClient.setQueryData(["photos"], (old: Photo[]) => {
         return old.map((photo) =>
-          photo.id === response.id ? { ...photo, liked: true } : photo
+          photo.id === response.id ? { ...response } : photo
         );
       });
     },
@@ -41,7 +41,7 @@ export const useUnlikePhoto = () => {
     onSuccess: (response) => {
       queryClient.setQueryData(["photos"], (old: Photo[]) => {
         return old.map((photo) =>
-          photo.id === response.id ? { ...photo, liked: false } : photo
+          photo.id === response.id ? { ...response } : photo
         );
       });
     },
