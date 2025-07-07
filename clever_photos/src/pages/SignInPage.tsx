@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useAuth } from "../hooks/useAuth";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
+
+import logo from "/logo.svg";
+import { Input } from "../components/shared/Input";
+import { Button } from "../components/shared/Button";
 
 const schema = yup.object({
   username: yup
@@ -19,6 +24,7 @@ type FormData = yup.InferType<typeof schema>;
 
 const SignInPage: React.FC = () => {
   const { login } = useAuth();
+  const [showPassword, setShowPassword] = useState(false);
 
   const {
     register,
@@ -28,16 +34,14 @@ const SignInPage: React.FC = () => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = async (data: FormData) => {
-    await login(data.username, data.password);
+  const onSubmit = (data: FormData) => {
+    login(data.username, data.password);
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 w-full">
-      <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8 flex flex-col items-center">
-        <div className="flex items-center justify-center w-16 h-16 rounded-full bg-blue-500 mb-6">
-          <span className="text-white text-3xl font-bold italic">CI</span>
-        </div>
+      <div className="w-full max-w-md bg-white rounded-lg p-8 flex flex-col items-center">
+        <img src={logo} alt="logo" className="w-16 h-16 mb-6" />
         <h2 className="text-2xl font-semibold mb-2 text-center">
           Sign in to your account
         </h2>
@@ -47,58 +51,49 @@ const SignInPage: React.FC = () => {
           noValidate
         >
           <div className="mb-4">
-            <label
-              htmlFor="username"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              Username
-            </label>
-            <input
+            <Input
               id="username"
               type="email"
+              label="Username"
               autoComplete="username"
               {...register("username")}
-              className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
-              required
+              error={errors.username?.message}
             />
-            {errors.username && (
-              <p className="text-red-500 text-xs mt-1">
-                {errors.username.message}
-              </p>
-            )}
           </div>
-          <div className="mb-2">
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              Password
-            </label>
-            <input
-              id="password"
-              type="password"
-              autoComplete="current-password"
-              {...register("password")}
-              className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
-              required
-            />
-            {errors.password && (
-              <p className="text-red-500 text-xs mt-1">
-                {errors.password.message}
-              </p>
-            )}
+          <div className="mb-4">
+            <div className="relative mb-6">
+              <Input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                label={
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="font-bold text-sm">Password</span>
+                    <span className="text-sm text-blue-500 hover:underline cursor-pointer">
+                      Forgot password?
+                    </span>
+                  </div>
+                }
+                autoComplete="current-password"
+                {...register("password")}
+                trailingIcon={
+                  showPassword ? (
+                    <EyeIcon
+                      className="w-4 h-4 text-gray-500 cursor-pointer"
+                      onClick={() => setShowPassword(false)}
+                    />
+                  ) : (
+                    <EyeOffIcon
+                      className="w-4 h-4 text-gray-500 cursor-pointer "
+                      onClick={() => setShowPassword(true)}
+                    />
+                  )
+                }
+                error={errors.password?.message}
+              />
+            </div>
           </div>
-          <div className="flex justify-end mb-6">
-            <a href="#" className="text-sm text-blue-500 hover:underline">
-              Forgot password?
-            </a>
-          </div>
-          <button
-            type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
-          >
-            Sign in
-          </button>
+
+          <Button type="submit">Sign in</Button>
         </form>
       </div>
     </div>
