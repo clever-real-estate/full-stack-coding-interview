@@ -25,6 +25,22 @@ apiClient.interceptors.request.use(
   }
 );
 
+apiClient.interceptors.response.use(
+  (response) => {
+    if (response.status === 401 && response.config.url !== "/users/sign_in") {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+
+      window.location.href = "/sign-in";
+      return Promise.reject(new Error("Unauthorized"));
+    }
+    return response;
+  },
+  (error: AxiosError) => {
+    return Promise.reject(error);
+  }
+);
+
 export { queryClient };
 
 export default apiClient;
