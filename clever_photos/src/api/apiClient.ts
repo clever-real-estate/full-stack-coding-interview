@@ -1,4 +1,7 @@
 import axios, { type AxiosError, type InternalAxiosRequestConfig } from "axios";
+import { QueryClient } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 const apiClient = axios.create({
   baseURL: import.meta.env.VITE_API_URL ?? "http://localhost:3000/api/v1",
@@ -21,5 +24,21 @@ apiClient.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+
+apiClient.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error: AxiosError) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem("token");
+      window.location.href = "/login";
+    }
+
+    return Promise.reject(error);
+  }
+);
+
+export { queryClient };
 
 export default apiClient;

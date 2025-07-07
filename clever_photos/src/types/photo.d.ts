@@ -21,5 +21,5 @@ export interface Photo {
   image_urls: PhotoSource;
   photographer: Photographer;
   likes_count: number;
-  liked_by_current_user: boolean;
+  liked: boolean;
 }

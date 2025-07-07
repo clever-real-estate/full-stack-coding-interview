@@ -1,18 +1,28 @@
 import { Star } from "lucide-react";
 import { LinkIcon } from "lucide-react";
 import type { Photo } from "../../types/photo";
+import { useLikePhoto, useUnlikePhoto } from "../../api/photosApi";
 
 export const PhotoItem = ({ photo }: { photo: Photo }) => {
+  const { mutate: likePhoto } = useLikePhoto();
+  const { mutate: unlikePhoto } = useUnlikePhoto();
+
   return (
     <div
       key={photo.id}
       className="flex items-center gap-4 dark:bg-gray-800 bg-gray-100 p-4 rounded-md text-black dark:text-white"
     >
       <div className="flex-shrink-0">
-        {photo.liked_by_current_user ? (
-          <Star className="text-yellow-400 fill-yellow-400 w-5 h-5" />
+        {photo.liked ? (
+          <Star
+            className="text-yellow-400 fill-yellow-400 w-5 h-5 cursor-pointer"
+            onClick={() => unlikePhoto(photo.id)}
+          />
         ) : (
-          <Star className="text-gray-300 w-5 h-5" />
+          <Star
+            className="text-gray-300 w-5 h-5 cursor-pointer"
+            onClick={() => likePhoto(photo.id)}
+          />
         )}
       </div>
       <div className="w-16 h-16 rounded-md overflow-hidden bg-gray-200 flex items-center justify-center">
