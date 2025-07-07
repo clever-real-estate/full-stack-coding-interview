@@ -25,20 +25,6 @@ apiClient.interceptors.request.use(
   }
 );
 
-apiClient.interceptors.response.use(
-  (response) => {
-    return response;
-  },
-  (error: AxiosError) => {
-    if (error.response?.status === 401) {
-      localStorage.removeItem("token");
-      window.location.href = "/login";
-    }
-
-    return Promise.reject(error);
-  }
-);
-
 export { queryClient };
 
 export default apiClient;
