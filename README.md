@@ -34,6 +34,13 @@ First, install the necessary dependencies for both the API and the client.
 # Install Ruby dependencies for the API
 (cd clever_photos_api && bundle install)
 
+# Set up API credentials and JWT secret
+# 1. Generate a secret key and copy it:
+(cd clever_photos_api && bundle exec rails secret)
+# 2. Open the credentials file:
+(cd clever_photos_api && bundle exec rails credentials:edit)
+# 3. Add `jwt_secret_key: <your-pasted-key>` to the file and save.
+
 # Install JavaScript dependencies for the client
 (cd clever_photos && yarn install)
 

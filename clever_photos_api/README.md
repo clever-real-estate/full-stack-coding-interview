@@ -45,27 +45,48 @@ To get the application up and running, follow these steps:
    bundle install
    ```
 
-3. **Create the database:**
+3. **Set up credentials and JWT secret:**
+
+   Rails uses an encrypted file to store secrets (`config/credentials.yml.enc`), which is decrypted using a master key (`config/master.key`). The master key is not checked into version control. `devise-jwt` also requires a secret key to sign tokens.
+
+   First, generate a secure secret for JWT:
+   ```bash
+   bundle exec rails secret
+   ```
+   Copy the generated key.
+
+   Next, edit the credentials file:
+   ```bash
+   bundle exec rails credentials:edit
+   ```
+
+   This command will create `config/master.key` if it doesn't exist and open the encrypted credentials file. Add the JWT secret you generated:
+   ```yaml
+   jwt_secret_key: <your-pasted-secret-key>
+   ```
+   Save and close the file.
+
+4. **Create the database:**
    ```bash
    rails db:create
    ```
 
-4. **Run the migrations:**
+5. **Run the migrations:**
    ```bash
    rails db:migrate
    ```
 
-5. **Seed the database:**
+6. **Seed the database:**
    ```bash
    rails db:seed
    ```
 
-6. **Run the tests:**
+7. **Run the tests:**
    ```bash
    rspec
    ```
 
-7. **Start the server:**
+8. **Start the server:**
    ```bash
    rails server
    ```
