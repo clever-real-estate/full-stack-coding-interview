@@ -1,34 +1,102 @@
-# Clever's Fullstack Coding Interview
-👋 Hello!, Hola!, Witam!
+# Clever Photos
 
-Thank you for taking the time to interview with Clever. This coding challenge is meant to be an exercise to see how you code throughout the stack. We don't want this to take too much of your time (and if does, certainly let us know!).
+Clever Photos is a full-stack web application that allows users to browse a gallery of photos, like their favorite ones, and view details about each photo. It features a React-based frontend and a Ruby on Rails API backend.
 
-### Requirements
-- Create a small web app to display photos and details about the photos.
-- For the back end, we primarily use Django and Ruby on Rails, but you're welcome to use whatever Python or Ruby framework you're most familiar with.
-- For the front end, although we'd like to see a small react app that interfaces with an API from the backend, if this ends up taking too much time, we are open to other options.
-- However, please use either `npm` or `yarn` for any front end package management.
+This project was originally a coding challenge from Clever, which has been completed.
 
-#### Product requirements
-- Make the "Sign in" page functional.
-- Make "All photos" require authentication to access.
-- Only need to show 10 photos on the "All photos" page. Paging is not required.
-- The authenticated user should be able to like a photo and have that like persisted to the database.
-- If pages are mobile responsive, thats a plus!
+## Features
 
-### Details
-- We've provided a CSV with each row representing a photo & it's details. We'd like these to be the photos (and their details) we show on the front end of the app.
-- We want to keep this an open ended challenge, so take a look at the attached Figma mocks and add data models to the back end as you see fit. Use the attached CSV for the data.
-- Mocks for these pages are provided in [Figma](https://www.figma.com/file/wr1seCuhlRtoFGuz1iWgyF/Frontend-Coding-Mocks?type=design&node-id=0%3A1&mode=design&t=Uw1av3TypDUDcLAd-1). If you have any issues accessing, or aren't familiar with how to use Figma, just let us know.
-- There is also a logo and an icon provided (SVGs) included in this repo.
+- **User Authentication:** Sign in to a secure account to access the photo gallery.
+- **Photo Gallery:** View a collection of beautiful photos with details.
+- **Like Photos:** Like and unlike photos, with changes persisted in the database.
+- **Download Photos:** Download high-quality versions of the photos.
+- **Responsive Design:** The application is designed to be usable on various screen sizes.
 
-### Final Thoughts
-- You can fork this repo and commit your code there. Please open a PR from the fork _back_ to the main repo, and once done, please add the following users as members so we can review:
-  - James Crain (@imjamescrain)
-  - Jimmy Lien (@jlien)
-  - Nick Clucas (@nickcluc)
-  - Ryan McCue (@rymccue)
-- If you do find yourself spending too much time on the exercise itself, let us know what next steps you would take in a README file.
-- We'll circle back with you and review 1:1.
+## Tech Stack
 
-**Any questions**, just let us know. Send emails to <a href="mailto:nick.clucas@movewithclever.com">nick.clucas@movewithclever.com</a>. Good luck!
+- **Frontend:** React, TypeScript, Vite, React Router, Tailwind CSS
+- **Backend:** Ruby on Rails, SQLite, Devise (for authentication), JWT (for sessions)
+
+## Getting Started
+
+To run this project, you'll need to set up both the backend API and the frontend client. You can either run them in separate terminals or use `overmind` to run both with a single command.
+
+### Prerequisites
+
+- [Ruby **3.2.2**](https://www.ruby-lang.org/en/documentation/installation/) and Bundler
+- [Node.js](https://nodejs.org/en/download/) and Yarn
+
+### 1. Initial Setup
+
+First, install the necessary dependencies for both the API and the client.
+
+```bash
+# Install Ruby dependencies for the API
+(cd clever_photos_api && bundle install)
+
+# Set up API credentials and JWT secret
+# 1. Generate a secret key and copy it:
+(cd clever_photos_api && bundle exec rails secret)
+# 2. Open the credentials file:
+(cd clever_photos_api && bundle exec rails credentials:edit)
+# **Note:** If you encounter an error like "No $VISUAL or $EDITOR to open file in", you need to set your default editor. For example, to use VS Code, run `export VISUAL="code --wait"` in your terminal before running the command, or prefix the command like `VISUAL="code --wait" bundle exec rails credentials:edit`.
+   # 3. Add `jwt_secret_key: <your-pasted-key>` to the file and save.
+
+# Install JavaScript dependencies for the client
+(cd clever_photos && yarn install)
+
+# Create the .env file for the client
+(cd clever_photos && cp .env.example .env)
+```
+
+Ensure the `.env` file in `clever_photos` points to your local backend API:
+`VITE_API_URL=http://localhost:3000/api/v1`
+
+### 2. Database Setup
+
+Set up the SQLite database and seed it with initial data.
+
+```bash
+# Create, migrate, and seed the database
+(cd clever_photos_api && rails db:create db:migrate db:seed)
+```
+
+### 3. Running the Application
+
+You have two options for running the application:
+
+#### Option A: Run with Overmind (Recommended)
+
+Use `overmind` to start both the API and client processes with a single command from the project root.
+
+```bash
+# Start both servers
+overmind start
+```
+
+The API will be available at `http://localhost:3000/api/v1` and the client at `http://localhost:5173`.
+
+#### Option B: Run Manually
+
+Run each service in a separate terminal.
+
+```bash
+# In terminal 1, start the Rails API
+(cd clever_photos_api && rails server)
+```
+
+```bash
+# In terminal 2, start the React client
+(cd clever_photos && yarn dev)
+```
+
+### Test Users
+
+You can use the following credentials to sign in, which are created when you seed the database:
+
+- **Email:** `test@test.com`
+- **Password:** `password`
+
+---
+
+_Assets provided by Clever: `logo.svg`, `links.svg`, `star-fill.svg`, `star-line.svg`._
