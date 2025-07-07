@@ -23,8 +23,8 @@ To run this project, you'll need to set up both the backend API and the frontend
 
 ### Prerequisites
 
-- Ruby and Bundler
-- Node.js and Yarn
+- [Ruby](https://www.ruby-lang.org/en/documentation/installation/) and Bundler
+- [Node.js](https://nodejs.org/en/download/) and Yarn
 
 ### 1. Initial Setup
 
