@@ -23,7 +23,7 @@ To run this project, you'll need to set up both the backend API and the frontend
 
 ### Prerequisites
 
-- [Ruby](https://www.ruby-lang.org/en/documentation/installation/) and Bundler
+- [Ruby **3.2.2**](https://www.ruby-lang.org/en/documentation/installation/) and Bundler
 - [Node.js](https://nodejs.org/en/download/) and Yarn
 
 ### 1. Initial Setup
@@ -49,7 +49,7 @@ First, install the necessary dependencies for both the API and the client.
 ```
 
 Ensure the `.env` file in `clever_photos` points to your local backend API:
-`VITE_API_URL=http://localhost:3000`
+`VITE_API_URL=http://localhost:3000/api/v1`
 
 ### 2. Database Setup
 
@@ -73,7 +73,7 @@ Use `overmind` to start both the API and client processes with a single command 
 overmind start
 ```
 
-The API will be available at `http://localhost:3000` and the client at `http://localhost:5173`.
+The API will be available at `http://localhost:3000/api/v1` and the client at `http://localhost:5173`.
 
 #### Option B: Run Manually
 
