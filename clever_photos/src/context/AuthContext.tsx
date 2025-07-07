@@ -39,10 +39,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   }, [user]);
 
-  const { mutate: login } = useLogin();
+  const { mutateAsync: login } = useLogin();
 
   const handleLogin = async (email: string, password: string) => {
-    await login(
+    const response = await login(
       { user: { email, password } },
       {
         onSuccess: (data) => {
@@ -57,6 +57,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         },
       }
     );
+
+    return response;
   };
 
   const handleLogout = () => {

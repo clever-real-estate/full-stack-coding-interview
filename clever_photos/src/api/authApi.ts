@@ -9,7 +9,7 @@ interface LoginCredentials {
   };
 }
 
-interface LoginResponse {
+export interface LoginResponse {
   token: string | null;
   user: User | null;
 }
@@ -25,16 +25,13 @@ const loginUser = async (
 
   if (response.status === 200) {
     const token = response.headers["authorization"];
-    console.log("Response:", response.data);
+
     return {
       token: token,
       user: response.data.user,
     };
   } else {
-    return {
-      token: null,
-      user: null,
-    };
+    throw new Error("Login failed");
   }
 };
 
