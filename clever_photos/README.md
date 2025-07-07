@@ -1,69 +1,50 @@
-# React + TypeScript + Vite
+# CleverPhotos
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a simple photo gallery application built with React, TypeScript, and Vite. It allows users to sign in, view a list of photos, and log out.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **User Authentication:** Users can sign in to their accounts to access the photo gallery.
+- **Photo Gallery:** Once signed in, users can view a list of all photos.
+- **Like Photos:** Users can like and unlike photos.
+- **Download Photos:** Users can download photos in various sizes.
+- **Photographer Portfolio:** Users can visit the photographer's portfolio website.
+- **Logout:** Users can log out of their accounts.
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Frontend:** React, TypeScript, Vite
+- **Routing:** React Router
+- **Data Fetching:** React Query
+- **Styling:** Tailwind CSS
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Getting Started
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/maaut/full-stack-coding-interview.git
+   ```
+2. **Install dependencies:**
+   ```bash
+   cd clever-photos
+   yarn install
+   ```
+3. **Create a `.env` file:**
+   Create a `.env` file in the root of the project and add the following environment variable:
+   ```
+   VITE_API_URL=your_api_url
+   ```
+   Replace `your_api_url` with the actual URL of your API.
+4. **Start the development server:**
+   ```bash
+   yarn dev
+   ```
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+This will start the development server at `http://localhost:5173`.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Available Scripts
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- `yarn dev`: Starts the development server.
+- `yarn build`: Builds the application for production.
+- `yarn lint`: Lints the codebase for errors.
+- `yarn preview`: Serves the production build locally.
