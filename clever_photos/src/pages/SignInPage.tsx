@@ -16,8 +16,8 @@ const SignInPage: React.FC = () => {
   }, [isAuthenticated, navigate]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 w-full">
-      <div className="w-full max-w-md bg-white rounded-lg p-8 flex flex-col items-center">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 dark:text-white text-black w-full">
+      <div className="w-full max-w-md  rounded-lg p-8 flex flex-col items-center">
         <img src={logo} alt="logo" className="w-16 h-16 mb-6" />
         <h2 className="text-2xl font-semibold mb-2 text-center">
           Sign in to your account

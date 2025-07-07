@@ -12,7 +12,7 @@ export const Input = ({ label, error, trailingIcon, ...props }: InputProps) => {
       {typeof label === "string" ? (
         <label
           htmlFor={props.id}
-          className="block text-sm font-bold text-black mb-2"
+          className="block text-sm font-bold dark:text-white text-black mb-2"
         >
           {label}
         </label>
@@ -22,7 +22,7 @@ export const Input = ({ label, error, trailingIcon, ...props }: InputProps) => {
       <div className="relative">
         <input
           {...props}
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black bg-white focus:bg-white auto-fill-data"
+          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black bg-white dark:bg-gray-800 focus:bg-white auto-fill-data"
         />
         {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
         {trailingIcon && (
