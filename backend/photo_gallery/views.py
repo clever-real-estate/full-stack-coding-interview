@@ -1,9 +1,14 @@
+import random
+import string
+
+from django.contrib.auth.models import User
 from rest_framework import permissions, status
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
+from .email.services import EmailService
 from .serializers import RegisterSerializer, UserSerializer
 
 # Create your views here.
@@ -145,8 +150,56 @@ def register_user(request):
             "user": UserSerializer(user).data,
             "message": "User registered successfully.",
         }
+        # Send welcome email
+        try:
+            EmailService.send_welcome_email(user)
+        except Exception as e:
+            # Log email error but don't fail registration
+            # In production, use proper logging
+            print(f"Failed to send welcome email: {e}")
         return Response(response_data, status=status.HTTP_201_CREATED)
     return Response(
         {"success": False, "errors": serializer.errors},
         status=status.HTTP_400_BAD_REQUEST,
+    )
+
+
+@api_view(["POST"])
+@permission_classes([AllowAny])
+def forgot_password(request):
+    """Handle forgot password requests by generating a new password and sending it via email."""
+
+    email = request.data.get("email")
+    if not email:
+        return Response({"error": "Email is required."}, status=400)
+
+    try:
+        user = User.objects.get(email=email)
+    except User.DoesNotExist:
+        # To avoid revealing if email exists or not, return success anyway
+        return Response(
+            {
+                "message": "If an account with this email exists, a new password has been sent."
+            }
+        )
+
+    # Generate a random password (e.g., 10 chars)
+    new_password = "".join(random.choices(string.ascii_letters + string.digits, k=10))
+
+    # Set the new password
+    user.set_password(new_password)
+    user.save()
+
+    # Send email with new password
+    try:
+        EmailService.send_password_reset_email(user, new_password)
+    except Exception as e:
+        # Log email error but don't fail the password reset
+        # In production, use proper logging
+        print(f"Failed to send password reset email: {e}")
+
+    return Response(
+        {
+            "message": "If an account with this email exists, a new password has been sent."
+        }
     )
