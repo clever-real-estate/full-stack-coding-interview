@@ -203,3 +203,41 @@ def forgot_password(request):
             "message": "If an account with this email exists, a new password has been sent."
         }
     )
+
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def change_password(request):
+    """Allow authenticated users to change their password."""
+
+    # Get the user from the request
+    user = request.user
+    # Get new and old passwords from the request data
+    old_password = request.data.get("old_password")
+    new_password = request.data.get("new_password")
+
+    if not old_password or not new_password:
+        return Response(
+            {"error": "Both old_password and new_password are required."}, status=400
+        )
+
+    # Check if password are the same
+    if old_password == new_password:
+        return Response(
+            {"error": "New password cannot be the same as the old password."},
+            status=400,
+        )
+
+    # Check if the old password is correct
+    if not user.check_password(old_password):
+        return Response({"error": "Old password is incorrect."}, status=400)
+
+    if len(new_password) < 8:
+        return Response(
+            {"error": "New password must be at least 8 characters long."}, status=400
+        )
+
+    user.set_password(new_password)
+    user.save()
+
+    return Response({"success": "Password changed successfully."})
