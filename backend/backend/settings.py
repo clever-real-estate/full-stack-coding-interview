@@ -55,6 +55,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -160,7 +161,9 @@ EMAIL_SUBJECT_PREFIX = "[Photo Gallery App] "
 
 
 # CORS settings
-CORS_ALLOWED_ORIGINS = config("CORS_ALLOWED_ORIGINS", default="").split(",")
+CORS_ALLOWED_ORIGINS = config(
+    "CORS_ALLOWED_ORIGINS", default="", cast=lambda x: x.split(",")
+)
 CORS_ALLOW_CREDENTIALS = True
 
 # REST Framework settings
