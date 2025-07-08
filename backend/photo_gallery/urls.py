@@ -9,6 +9,7 @@ from .views import (
     is_authenticated_view,
     logout_view,
     register_user,
+    toggle_like_photo,
 )
 
 urlpatterns = [
@@ -22,4 +23,7 @@ urlpatterns = [
     path("auth/change-password/", change_password, name="change_password"),
     # Photo related URLs
     path("photos/", PhotoListView.as_view(), name="photo-list"),
+    path(
+        "photos/<int:photo_id>/like-toggle", toggle_like_photo, name="toggle_like_photo"
+    ),
 ]

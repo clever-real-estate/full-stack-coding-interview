@@ -10,7 +10,7 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from .email.services import EmailService
-from .models import Photo
+from .models import Like, Photo
 from .serializers import PhotoSerializer, RegisterSerializer, UserSerializer
 
 # Create your views here.
@@ -267,3 +267,31 @@ class PhotoListView(generics.ListAPIView):
     filterset_fields = ["photographer", "width", "height", "avg_color"]
     ordering_fields = ["id", "width", "height", "created_at"]
     search_fields = ["alt", "photographer__name"]
+
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def toggle_like_photo(request, photo_id):
+    """
+    Toggle like/unlike on a photo for the logged-in user.
+
+    - If the photo is already liked by the user, it will be unliked.
+    - If the photo is not yet liked, it will be liked.
+    """
+
+    # Get the current user from the request
+    user = request.user
+
+    try:
+        photo = Photo.objects.get(id=photo_id)
+    except Photo.DoesNotExist:
+        return Response({"error": "Photo not found."}, status=status.HTTP_404_NOT_FOUND)
+
+    existing_like = Like.objects.filter(user=user, photo=photo).first()
+
+    if existing_like:
+        existing_like.delete()
+        return Response({"liked": False}, status=status.HTTP_200_OK)
+    else:
+        Like.objects.create(user=user, photo=photo)
+        return Response({"liked": True}, status=status.HTTP_201_CREATED)
