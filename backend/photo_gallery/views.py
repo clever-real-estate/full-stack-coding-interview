@@ -7,6 +7,7 @@ from rest_framework import filters, generics, permissions, status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from .email.services import EmailService
@@ -295,3 +296,12 @@ def toggle_like_photo(request, photo_id):
     else:
         Like.objects.create(user=user, photo=photo)
         return Response({"liked": True}, status=status.HTTP_201_CREATED)
+
+
+class LikedPhotosView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        liked_photos = Photo.objects.filter(likes__user=request.user).distinct()
+        serializer = PhotoSerializer(liked_photos, many=True)
+        return Response(serializer.data)
