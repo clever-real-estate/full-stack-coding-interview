@@ -299,9 +299,45 @@ def toggle_like_photo(request, photo_id):
 
 
 class LikedPhotosView(APIView):
+    """View to list all photos liked by the authenticated user."""
+
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
         liked_photos = Photo.objects.filter(likes__user=request.user).distinct()
         serializer = PhotoSerializer(liked_photos, many=True)
         return Response(serializer.data)
+
+
+class UpdateProfileView(APIView):
+    """View to update the authenticated user's profile information."""
+
+    permission_classes = [IsAuthenticated]
+
+    def patch(self, request):
+        """Update the user's first and last name."""
+
+        # Get the user from the request
+        user = request.user
+
+        first_name = request.data.get("first_name")
+        last_name = request.data.get("last_name")
+
+        if first_name is not None:
+            user.first_name = first_name
+
+        if last_name is not None:
+            user.last_name = last_name
+
+        user.save()
+        return Response(
+            {
+                "success": True,
+                "message": "Profile updated successfully",
+                "user": {
+                    "first_name": user.first_name,
+                    "last_name": user.last_name,
+                },
+            },
+            status=status.HTTP_200_OK,
+        )

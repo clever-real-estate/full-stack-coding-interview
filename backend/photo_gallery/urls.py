@@ -5,6 +5,7 @@ from .views import (
     CustomTokenObtainPairView,
     LikedPhotosView,
     PhotoListView,
+    UpdateProfileView,
     change_password,
     forgot_password,
     is_authenticated_view,
@@ -22,6 +23,7 @@ urlpatterns = [
     path("auth/is-authenticated/", is_authenticated_view, name="is_authenticated"),
     path("auth/forgot-password/", forgot_password, name="forgot_password"),
     path("auth/change-password/", change_password, name="change_password"),
+    path("auth/update-profile/", UpdateProfileView.as_view(), name="update-profile"),
     # Photo related URLs
     path("photos/", PhotoListView.as_view(), name="photo-list"),
     path("photos/liked/", LikedPhotosView.as_view(), name="liked-photos"),
