@@ -1,9 +1,10 @@
+from rest_framework import permissions, status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
-from .serializers import UserSerializer
+from .serializers import RegisterSerializer, UserSerializer
 
 # Create your views here.
 
@@ -130,3 +131,22 @@ def is_authenticated_view(request):
     user = request.user
     serialized_user = UserSerializer(user)
     return Response({"authenticated": True, "user": serialized_user.data})
+
+
+@api_view(["POST"])
+@permission_classes([permissions.AllowAny])
+def register_user(request):
+    """Register a new user."""
+    serializer = RegisterSerializer(data=request.data)
+    if serializer.is_valid():
+        user = serializer.save()
+        response_data = {
+            "success": True,
+            "user": UserSerializer(user).data,
+            "message": "User registered successfully.",
+        }
+        return Response(response_data, status=status.HTTP_201_CREATED)
+    return Response(
+        {"success": False, "errors": serializer.errors},
+        status=status.HTTP_400_BAD_REQUEST,
+    )
