@@ -3,7 +3,7 @@ import string
 
 from django.contrib.auth.models import User
 from django_filters.rest_framework import DjangoFilterBackend
-from ratelimit.decorators import ratelimit
+from django_ratelimit.decorators import ratelimit
 from rest_framework import filters, generics, permissions, status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
