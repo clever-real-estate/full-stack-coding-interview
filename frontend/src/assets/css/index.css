@@ -1,0 +1,122 @@
+@import "tailwindcss";
+
+@import "./driver.css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --radius: 10px;
+
+  --background: #ffffff;
+  --text: #121725;
+
+  --primary: #3173e3;
+  --primary-text: #ffffff;
+
+  --destructive: #e11d48;
+  --destructive-text: #ffffff;
+
+  --input: #969aa5;
+  --border: #e2e8f0;
+
+  --muted: #a8abb4;
+  --muted-text: #888d99;
+
+  --star-empty: #9ea2ae;
+  --star-filled: #f8d748;
+
+  --link: #3173e3;
+
+  --rt-color-dark: var(--background) !important;
+  --rt-color-white: var(--text) !important;
+}
+
+.dark {
+  --background: #020617;
+  --text: #ffffff;
+
+  --primary: #3173e3;
+  --primary-text: #ffffff;
+
+  --destructive: #e11d48;
+  --destructive-text: #ffffff;
+
+  --input: #334155;
+  --border: #1e293b;
+
+  --muted: #969aa5;
+  --muted-text: #787d8b;
+
+  --star-empty: #9ea2ae;
+  --star-filled: #f8d748;
+
+  --link: #3173e3;
+}
+
+@theme inline {
+  --font-sans: Helvetica, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --color-background: var(--background);
+  --color-text: var(--text);
+
+  --color-primary: var(--primary);
+  --color-primary-text: var(--primary-text);
+
+  --color-destructive: var(--destructive);
+  --color-destructive-text: var(--destructive-text);
+
+  --color-input: var(--input);
+  --color-border: var(--border);
+
+  --color-muted: var(--muted);
+  --color-muted-text: var(--muted-text);
+
+  --color-star-empty: var(--star-empty);
+  --color-star-filled: var(--star-filled);
+
+  --color-link: var(--link);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-primary/50;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+  body {
+    @apply bg-background text-text;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 4px;
+  }
+}
+
+html {
+  color-scheme: light dark;
+}
+html.dark {
+  color-scheme: dark;
+}
+html.light {
+  color-scheme: light;
+}
+
+.react-tooltip {
+  @apply !rounded-md border !px-3 !text-xs shadow;
+}

@@ -1,0 +1,35 @@
+@import "driver.js/dist/driver.css";
+
+/* Class assigned to popover wrapper */
+.driver-popover {
+  @apply bg-background text-text border-border max-w-[350px] rounded-lg border font-sans shadow;
+}
+
+/* Arrow pointing towards the highlighted element */
+.driver-popover-arrow {
+  display: none;
+}
+
+/* Title and description */
+.driver-popover-title {
+  @apply text-base;
+}
+.driver-popover-description {
+  @apply text-muted-text text-sm;
+}
+
+/* Close button displayed on the top right corner */
+.driver-popover-close-btn {
+  @apply hover:bg-muted/50 text-muted-text hover:text-text m-1 flex h-6 w-6 items-center justify-center rounded leading-none transition-all;
+}
+
+/* Footer of the popover displaying progress and navigation buttons */
+.driver-popover-footer {
+}
+.driver-popover-progress-text {
+  @apply text-muted-text;
+}
+.driver-popover-prev-btn {
+}
+.driver-popover-next-btn {
+}
