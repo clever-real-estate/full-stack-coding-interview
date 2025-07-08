@@ -47,10 +47,14 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # Third-party Apps
     "rest_framework",
     "corsheaders",
     "rest_framework_simplejwt",
     "django_filters",
+    # Custom Apps
+    "authentication",
+    "health_check",
     "photo_gallery",
 ]
 
@@ -169,7 +173,7 @@ CORS_ALLOW_CREDENTIALS = True
 # REST Framework settings
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "photo_gallery.authentication.CookiesJWTAuthentication",
+        "authentication.authentication.CookiesJWTAuthentication",
     ),
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",

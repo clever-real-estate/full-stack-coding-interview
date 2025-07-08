@@ -17,12 +17,13 @@ Including another URLconf
 
 from django.conf import settings
 from django.contrib import admin
-from django.urls import include, path, re_path
+from django.urls import include, path
 from django.views.generic import RedirectView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("photo_gallery.urls")),
+    path("api/auth/", include("authentication.urls")),
     path("api/health/", include("health_check.urls")),
     # Serve robots.txt from static
     path(
