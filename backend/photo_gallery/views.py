@@ -3,6 +3,7 @@ import string
 
 from django.contrib.auth.models import User
 from django_filters.rest_framework import DjangoFilterBackend
+from ratelimit.decorators import ratelimit
 from rest_framework import filters, generics, permissions, status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -28,6 +29,7 @@ class CustomTokenObtainPairView(TokenObtainPairView):
     cross-site scripting (XSS) attacks.
     """
 
+    @ratelimit(key="ip", rate="50/m", block=True)
     def post(self, request, *args, **kwargs):
         try:
             response = super().post(request, *args, **kwargs)
@@ -143,6 +145,7 @@ def is_authenticated_view(request):
 
 @api_view(["POST"])
 @permission_classes([permissions.AllowAny])
+@ratelimit(key="ip", rate="5/m", block=True)
 def register_user(request):
     """Register a new user."""
     serializer = RegisterSerializer(data=request.data)

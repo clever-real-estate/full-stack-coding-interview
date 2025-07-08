@@ -1,14 +1,15 @@
+import logging
+import shutil
+import time
+
+import psutil
 from django.conf import settings
 from django.core.cache import cache
 from django.db import connection
-from rest_framework import status, permissions
+from ratelimit.decorators import ratelimit
+from rest_framework import permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-import psutil
-import shutil
-import time
-import logging
-
 
 # Initialize logger
 logger = logging.getLogger(__name__)
@@ -36,6 +37,7 @@ class HealthCheckView(APIView):
 
     permission_classes = [permissions.AllowAny]  # Public endpoint for monitoring
 
+    @ratelimit(key="ip", rate="10/m", block=True)
     def get(self, request):
         """
         Perform comprehensive system health checks.
