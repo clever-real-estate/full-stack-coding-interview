@@ -1,6 +1,11 @@
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+
+
 # Create your views here.
 
 
@@ -104,3 +109,16 @@ class CustomRefreshToken(TokenRefreshView):
                     {"refreshed": False, "error": str(e.detail)}, status=400
                 )
             return Response({"refreshed": False})
+
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def logout_view(request):
+    """Logs out the user by clearing JWT tokens from cookies."""
+    response = Response({"message": "Successfully logged out."}, status=200)
+
+    # Delete the cookies by setting empty values and expired max_age
+    response.delete_cookie("access_token", path="/")
+    response.delete_cookie("refresh_token", path="/")
+
+    return response
