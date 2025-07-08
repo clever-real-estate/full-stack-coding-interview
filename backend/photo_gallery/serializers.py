@@ -1,6 +1,7 @@
-from rest_framework import serializers
-from .models import Photographer, Photo, Like
 from django.contrib.auth.models import User
+from rest_framework import serializers
+
+from .models import Like, Photo, Photographer
 
 
 class PhotographerSerializer(serializers.ModelSerializer):
