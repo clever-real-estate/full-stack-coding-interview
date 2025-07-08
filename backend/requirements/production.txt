@@ -1,0 +1,9 @@
+-r base.txt
+
+# Production tools
+gunicorn>=21.2.0
+whitenoise>=6.5.0
+sentry-sdk>=1.32.0
+
+# Security
+django-ratelimit>=4.1.0
