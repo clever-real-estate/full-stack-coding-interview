@@ -15,11 +15,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
+from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path, re_path
-from django.views.generic import TemplateView
-from django.views.static import serve
-from django.conf import settings
+from django.views.generic import RedirectView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -27,16 +26,11 @@ urlpatterns = [
     path("api/health/", include("health_check.urls")),
     # Serve robots.txt from static
     path(
-        "robots.txt",
-        TemplateView.as_view(template_name="robots.txt", content_type="text/plain"),
+        "favicon.ico",
+        RedirectView.as_view(url=settings.STATIC_URL + "favicon.svg", permanent=True),
     ),
-    # Serve favicon.ico from static
-    re_path(
-        r"^favicon\.ico$",
-        serve,
-        {
-            "path": "favicon.ico",
-            "document_root": settings.STATICFILES_DIRS[0],
-        },
+    path(
+        "robots.txt",
+        RedirectView.as_view(url=settings.STATIC_URL + "robots.txt", permanent=True),
     ),
 ]
