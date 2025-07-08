@@ -3,6 +3,7 @@ from django.urls import path
 from .views import (
     CustomRefreshToken,
     CustomTokenObtainPairView,
+    PhotoListView,
     change_password,
     forgot_password,
     is_authenticated_view,
@@ -19,4 +20,6 @@ urlpatterns = [
     path("auth/is-authenticated/", is_authenticated_view, name="is_authenticated"),
     path("auth/forgot-password/", forgot_password, name="forgot_password"),
     path("auth/change-password/", change_password, name="change_password"),
+    # Photo related URLs
+    path("photos/", PhotoListView.as_view(), name="photo-list"),
 ]

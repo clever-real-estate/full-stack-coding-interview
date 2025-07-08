@@ -2,14 +2,16 @@ import random
 import string
 
 from django.contrib.auth.models import User
-from rest_framework import permissions, status
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters, generics, permissions, status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from .email.services import EmailService
-from .serializers import RegisterSerializer, UserSerializer
+from .models import Photo
+from .serializers import PhotoSerializer, RegisterSerializer, UserSerializer
 
 # Create your views here.
 
@@ -241,3 +243,27 @@ def change_password(request):
     user.save()
 
     return Response({"success": "Password changed successfully."})
+
+
+class PhotoListView(generics.ListAPIView):
+    """
+    View to list all photos with optional filtering.
+
+    Filters supported:
+      - photographer (by id)
+      - width
+      - height
+      - avg_color
+    """
+
+    queryset = Photo.objects.all().select_related("photographer")
+    serializer_class = PhotoSerializer
+    permission_classes = [IsAuthenticated]
+    filter_backends = [
+        DjangoFilterBackend,
+        filters.OrderingFilter,
+        filters.SearchFilter,
+    ]
+    filterset_fields = ["photographer", "width", "height", "avg_color"]
+    ordering_fields = ["id", "width", "height", "created_at"]
+    search_fields = ["alt", "photographer__name"]
