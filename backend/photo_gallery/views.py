@@ -1,10 +1,9 @@
-from rest_framework.response import Response
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
+from .serializers import UserSerializer
 
 # Create your views here.
 
@@ -122,3 +121,12 @@ def logout_view(request):
     response.delete_cookie("refresh_token", path="/")
 
     return response
+
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def is_authenticated_view(request):
+    """Check if the user is authenticated and return user data."""
+    user = request.user
+    serialized_user = UserSerializer(user)
+    return Response({"authenticated": True, "user": serialized_user.data})
