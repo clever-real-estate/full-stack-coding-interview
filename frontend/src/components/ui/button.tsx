@@ -1,4 +1,5 @@
-import { Slot } from "@radix-ui/react-slot";
+import { Icon } from "@iconify/react";
+import { Slot, Slottable } from "@radix-ui/react-slot";
 import * as React from "react";
 import { tv } from "tailwind-variants";
 import type { VariantProps } from "tailwind-variants";
@@ -34,15 +35,20 @@ function Button({
   variant,
   size,
   asChild = false,
+  loading = false,
   ...props
 }: React.ComponentProps<"button"> &
   VariantProps<typeof buttonVariants> & {
     asChild?: boolean;
+    loading?: boolean;
   }) {
   const Comp = asChild ? Slot : "button";
 
   return (
-    <Comp data-slot="button" className={buttonVariants({ variant, size, className })} {...props} />
+    <Comp data-slot="button" className={buttonVariants({ variant, size, className })} {...props}>
+      {loading && <Icon icon="lucide:loader-circle" className="animate-spin" />}
+      <Slottable>{props.children}</Slottable>
+    </Comp>
   );
 }
 
