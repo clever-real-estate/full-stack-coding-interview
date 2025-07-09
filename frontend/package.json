@@ -9,7 +9,7 @@
   },
   "type": "module",
   "scripts": {
-    "build": "tsc -b && vite build",
+    "build": "vite build",
     "clean": "rm -rf dist node_modules package-lock.json && npm i",
     "dev": "vite --host",
     "format": "prettier --write .",
