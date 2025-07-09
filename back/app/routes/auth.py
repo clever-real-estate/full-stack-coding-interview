@@ -10,16 +10,6 @@ user_service = UserService()
 auth_service = AuthService()
 
 
-@router.post("/", response_model=UserResponse, status_code=status.HTTP_200_OK)
-def authenticate(token: str):
-    result = auth_service.authenticate(token)
-    if result is None:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token"
-        )
-    return result
-
-
 @router.post("/login", response_model=Token, status_code=status.HTTP_200_OK)
 async def login(request: Request):
     body = await request.json()
