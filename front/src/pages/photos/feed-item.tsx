@@ -1,18 +1,20 @@
 import { Link } from "react-router-dom";
 
-import { LinksIcon, StarFillIcon, StarLineIcon } from "@/components/icons";
+import { LinksIcon } from "@/components/icons";
+import LikeButton from "@/components/ui/like-button";
 import type { PhotoSchema } from "@/schemas/photo";
 
 import "./feed-item.css";
 
 interface FeedItemProps {
 	photo: PhotoSchema;
+	onLike: () => void;
 }
 
-export default function FeedItem({ photo }: FeedItemProps) {
+export default function FeedItem({ photo, onLike }: FeedItemProps) {
 	return (
 		<div className="flex gap-3 p-2 xxs:p-3 md:p-4 border border-primary/8 bg-primary/1 rounded-md">
-			{photo.liked ? <StarFillIcon /> : <StarLineIcon />}
+			<LikeButton liked={photo.liked} onClick={onLike} />
 
 			<img
 				className="feed-item-image h-full max-w-[75px] rounded-md"

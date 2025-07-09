@@ -1,10 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
+
 import { http } from "@/lib/http";
-import { PhotoSchema } from "@/schemas/photo";
+import type { PhotoSchema } from "@/schemas/photo";
 
 export function useGetPhotos() {
-    return useQuery<PhotoSchema[]>({
-        queryKey: ["photos"],
-        queryFn: () => http.get<PhotoSchema[]>("/photos").then((res) => res.data),
-    });
+	return useQuery<PhotoSchema[]>({
+		queryKey: ["photos"],
+		queryFn: () => http.get<PhotoSchema[]>("/photos").then((res) => res.data),
+	});
 }
