@@ -29,8 +29,11 @@ async def login(request: Request):
 @router.post(
     "/register", response_model=UserResponse, status_code=status.HTTP_201_CREATED
 )
-def register(user: UserInput):
-    result = user_service.create(user)
+async def register(request: Request):
+    body = await request.json()
+
+    user_register = UserInput(email=body["username"], password=body["password"])
+    result = user_service.create(user_register)
     if result is None:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
