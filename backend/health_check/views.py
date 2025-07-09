@@ -6,6 +6,7 @@ import psutil
 from django.conf import settings
 from django.core.cache import cache
 from django.db import connection
+from django.utils.decorators import method_decorator
 from django_ratelimit.decorators import ratelimit
 from rest_framework import permissions, status
 from rest_framework.response import Response
@@ -37,7 +38,7 @@ class HealthCheckView(APIView):
 
     permission_classes = [permissions.AllowAny]  # Public endpoint for monitoring
 
-    @ratelimit(key="ip", rate="10/m", block=True)
+    @method_decorator(ratelimit(key="ip", rate="10/m", block=True))
     def get(self, request):
         """
         Perform comprehensive system health checks.
