@@ -1,11 +1,24 @@
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 import Header from "@/components/ui/header";
+import { useAuth } from "@/contexts/AuthContext";
 import FormLogin from "./form-login";
 
 export default function Auth() {
-    return (
-        <div className="flex flex-col gap-10 py-9 max-w-[320px] mx-auto">
-            <Header title="Sign in to your account" />
-            <FormLogin />
-        </div>
-    );
+	const { isAuthenticated } = useAuth();
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		if (isAuthenticated) {
+			navigate("/photos");
+		}
+	}, [isAuthenticated, navigate]);
+
+	return (
+		<div className="flex flex-col gap-10 py-9 max-w-[320px] mx-auto">
+			<Header title="Sign in to your account" />
+			<FormLogin />
+		</div>
+	);
 }
