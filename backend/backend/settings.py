@@ -248,3 +248,26 @@ CACHES = {
         "LOCATION": config("REDIS_URL"),
     }
 }
+
+# Security Settings
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# Hide Django version and server information
+DISALLOWED_USER_AGENTS = []
+SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
+
+# Additional security headers
+SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin"
+
+if not DEBUG:
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_REDIRECT_EXEMPT = []
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+
+    # Hide server information in production
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+    USE_TZ = True
