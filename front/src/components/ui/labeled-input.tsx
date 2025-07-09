@@ -29,7 +29,10 @@ export default function LabeledInput({
 				<div className="flex justify-between">
 					<Label id={id} label={label} />
 					{link && (
-						<Link to={link.href} className="text-md text-primary">
+						<Link
+							to={link.href}
+							className="text-md text-primary hover:underline cursor-not-allowed"
+						>
 							{link.anchor}
 						</Link>
 					)}

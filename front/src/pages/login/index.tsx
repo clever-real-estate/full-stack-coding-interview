@@ -16,7 +16,7 @@ export default function Login() {
 	}, [isAuthenticated, navigate]);
 
 	return (
-		<div className="flex flex-col gap-10 py-9 max-w-[320px] mx-auto">
+		<div className="flex flex-col gap-10 py-9 max-w-[320px] mx-auto px-2">
 			<Header title="Sign in to your account" itemsPosition="center" />
 			<FormLogin />
 		</div>

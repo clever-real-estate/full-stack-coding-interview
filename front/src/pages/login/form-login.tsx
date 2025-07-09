@@ -33,7 +33,7 @@ export default function FormLogin() {
 				placeholder="********"
 				type="password"
 				link={{
-					href: "/photos",
+					href: "/",
 					anchor: "Forgot password?",
 				}}
 				error={errors.password?.message}

@@ -6,7 +6,7 @@ import Register from "@/pages/register";
 
 export function App() {
 	return (
-		<main className="min-h-screen max-w-[640px] mx-auto">
+		<main>
 			<Routes>
 				<Route path="/login" element={<Login />} />
 				<Route path="/register" element={<Register />} />
