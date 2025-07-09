@@ -25,6 +25,7 @@ class PhotoSerializer(serializers.ModelSerializer):
     """Serializer for the Photo model."""
 
     photographer = PhotographerSerializer(read_only=True)
+    is_liked = serializers.SerializerMethodField()
 
     class Meta:
         model = Photo
@@ -44,7 +45,15 @@ class PhotoSerializer(serializers.ModelSerializer):
             "src_portrait",
             "src_landscape",
             "src_tiny",
+            "is_liked",
         ]
+
+    def get_is_liked(self, obj):
+        """Check if the current user liked this photo."""
+        user = self.context.get("request") and self.context["request"].user
+        if user and user.is_authenticated:
+            return obj.likes.filter(user=user).exists()
+        return False
 
 
 class LikeSerializer(serializers.ModelSerializer):
