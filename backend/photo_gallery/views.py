@@ -1,3 +1,4 @@
+from django.utils.decorators import method_decorator
 from django_filters.rest_framework import DjangoFilterBackend
 from django_ratelimit.decorators import ratelimit
 from rest_framework import filters, generics, status
@@ -65,12 +66,21 @@ def toggle_like_photo(request, photo_id):
         return Response({"liked": True}, status=status.HTTP_201_CREATED)
 
 
-class LikedPhotosView(APIView):
+@method_decorator(ratelimit(key="ip", rate="20/m", block=True), name="dispatch")
+class LikedPhotosView(generics.ListAPIView):
     """View to list all photos liked by the authenticated user."""
 
+    serializer_class = PhotoSerializer
     permission_classes = [IsAuthenticated]
 
-    def get(self, request):
-        liked_photos = Photo.objects.filter(likes__user=request.user).distinct()
-        serializer = PhotoSerializer(liked_photos, many=True)
-        return Response(serializer.data)
+    filter_backends = [
+        DjangoFilterBackend,
+        filters.OrderingFilter,
+        filters.SearchFilter,
+    ]
+    filterset_fields = ["photographer", "width", "height", "avg_color"]
+    ordering_fields = ["id", "width", "height", "created_at"]
+    search_fields = ["alt", "photographer__name"]
+
+    def get_queryset(self):
+        return Photo.objects.filter(likes__user=self.request.user).distinct()
