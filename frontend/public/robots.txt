@@ -1,0 +1,3 @@
+# Do not crawl this site
+User-agent: *
+Disallow: /
