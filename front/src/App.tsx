@@ -5,7 +5,7 @@ import Photos from "@/pages/photos";
 
 export function App() {
   return (
-    <main className='min-h-screen max-w-[320px] mx-auto'>
+    <main className='min-h-screen max-w-[640px] mx-auto'>
       <Routes>
         <Route path="/photos" element={<Photos />} />
         <Route path="*" element={<Auth />} />
