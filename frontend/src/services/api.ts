@@ -1,7 +1,7 @@
 import axios from "axios";
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 
-import { API_BASE_URL, IS_DEV, REQUEST_TIMEOUT } from "../helpers/constants";
+import { API_BASE_URL, REQUEST_TIMEOUT } from "../helpers/constants";
 import { refreshTokens } from "./auth";
 
 // Create Axios instance
@@ -19,23 +19,15 @@ apiClient.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
     const status = error.response?.status;
-    const message = error.response?.data?.detail || error.response?.data?.message || error.message;
-
-    // Log errors in development
-    if (IS_DEV) {
-      console.error(`❌ ${originalRequest?.method?.toUpperCase()} ${originalRequest?.url}`, {
-        status,
-        message,
-        data: error.response?.data,
-      });
-    }
+    const isAuthEndpoint = ["/auth/login", "/auth/register", "/auth/refresh"].some((path) =>
+      originalRequest.url?.includes(path)
+    );
 
     // Handle 401 - Token expired, try to refresh
     if (status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
       // Don't try to refresh on auth endpoints to avoid infinite loops
-      const isAuthEndpoint = originalRequest.url?.includes("/auth/");
       if (isAuthEndpoint) return Promise.reject(error);
 
       try {
@@ -50,6 +42,8 @@ apiClient.interceptors.response.use(
           return Promise.reject(new Error("Session expired"));
         }
       } catch (refreshError) {
+        console.log("🔄 Token refresh failed, redirecting to login", refreshError);
+
         return Promise.reject(refreshError);
       }
     }
