@@ -1,25 +1,24 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
-import { useLogin } from "@/hooks/useLogin";
-import { type LoginSchema, loginSchema } from "@/schemas/auth";
+import { useRegister } from "@/hooks/useRegister";
+import { type RegisterSchema, registerSchema } from "@/schemas/register";
+import LabeledInput from "../../components/ui/labeled-input";
 
-import FormLoginInput from "./form-login-input";
-
-export default function FormLogin() {
+export default function FormRegister() {
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm<LoginSchema>({ resolver: zodResolver(loginSchema) });
+	} = useForm<RegisterSchema>({ resolver: zodResolver(registerSchema) });
 
-	const { mutate, isPending, loginError } = useLogin();
+	const { mutate, isPending, registerError } = useRegister();
 
-	const onSubmit: SubmitHandler<LoginSchema> = (data) => mutate(data);
+	const onSubmit: SubmitHandler<RegisterSchema> = (data) => mutate(data);
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
-			<FormLoginInput
+			<LabeledInput
 				id="username"
 				label="Username"
 				placeholder="testing"
@@ -27,25 +26,21 @@ export default function FormLogin() {
 				error={errors.username?.message}
 				{...register("username")}
 			/>
-			<FormLoginInput
+			<LabeledInput
 				id="password"
 				label="Password"
 				placeholder="********"
 				type="password"
-				link={{
-					href: "/photos",
-					anchor: "Forgot password?",
-				}}
 				error={errors.password?.message}
 				{...register("password")}
 			/>
 
 			<div className="grid gap-3">
-				<Button type="submit" size="lg" disabled={isPending}>
-					Sign in
+				<Button variant="default" type="submit" size="lg" disabled={isPending}>
+					Create account
 				</Button>
-				{loginError && (
-					<span className="text-xs text-red-500">{loginError}</span>
+				{registerError && (
+					<span className="text-xs text-red-500">{registerError}</span>
 				)}
 			</div>
 		</form>

@@ -1,5 +1,6 @@
 import Logo from "@/assets/logo.svg";
 import { useLogout } from "@/hooks/useLogout";
+import { cn } from "@/lib/utils";
 import { Button } from "./button";
 
 interface HeaderProps {
@@ -21,7 +22,12 @@ export default function Header({
 
 	return (
 		<header className={`flex flex-col gap-6 items-${itemsPosition}`}>
-			<div className="flex justify-between items-end w-full">
+			<div
+				className={cn(
+					"flex justify-between items-end w-full",
+					itemsPosition === "center" ? "justify-center" : "justify-between",
+				)}
+			>
 				<img src={imageSrc} alt={imageAlt} width={75} height={75} />
 
 				{showLogout && (
