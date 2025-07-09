@@ -1,0 +1,2709 @@
+{
+	"info": {
+		"_postman_id": "93de9e53-d1ec-409c-ad0a-a546d83f528e",
+		"name": "Clever Photo Gallery",
+		"description": "The **Photo Gallery API** powers a modern photo-sharing platform that allows users to register, log in, view photos, like/unlike them, and manage their accounts.\n\nBuilt with Django REST Framework and secured using JWTs stored in HTTP-only cookies, the API emphasizes performance, security, and developer experience.  \n\n### ✅ Key Features\n\n- 🔐 **Authentication** – Secure login, logout, and token refresh using JWT\n    \n- 👤 **User Management** – Register, update profile, change password, reset password\n    \n- 🖼️ **Photo Browsing** – List all photos with support for search, filtering, ordering, and pagination\n    \n- ❤️ **Likes** – Like/unlike photos and view photos liked by the user\n    \n- ⚙️ **Health Check** – Public endpoint to monitor database, Redis, email config, and system health\n    \n- 🛡️ **Rate Limiting** – Applied to critical endpoints like login and register",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14276388"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"john_doe\",\n    \"password\": \"P@$$w0r123\",\n    \"first_name\": \"John\",\n    \"last_name\": \"Doe\",\n    \"email\": \"john.doe@example.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/auth/register/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"auth",
+								"register",
+								""
+							]
+						},
+						"description": "Used to create a new user in the system."
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"john_doe\",\n    \"password\": \"P@$$w0r123\",\n    \"first_name\": \"John\",\n    \"last_name\": \"Doe\",\n    \"email\": \"john.doe@example.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/api/auth/register/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"auth",
+										"register",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 08 Jul 2025 22:50:09 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.13.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, origin"
+								},
+								{
+									"key": "Allow",
+									"value": "OPTIONS, POST"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "176"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"user\": {\n        \"id\": 1,\n        \"username\": \"john_doe\",\n        \"email\": \"john.doe@example.com\",\n        \"first_name\": \"John\",\n        \"last_name\": \"Doe\",\n        \"likes\": []\n    },\n    \"message\": \"User registered successfully.\"\n}"
+						},
+						{
+							"name": "Error - Empty Body",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/auth/register/",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"auth",
+										"register",
+										""
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 08 Jul 2025 22:38:01 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.13.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, origin"
+								},
+								{
+									"key": "Allow",
+									"value": "POST, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "106"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"errors\": {\n        \"username\": [\n            \"This field is required.\"\n        ],\n        \"password\": [\n            \"This field is required.\"\n        ]\n    }\n}"
+						},
+						{
+							"name": "Error - Invalid Details",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"john doe\",\n    \"password\": \"P@$$\"   \n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/auth/register/",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"auth",
+										"register",
+										""
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 08 Jul 2025 22:43:13 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.13.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, origin"
+								},
+								{
+									"key": "Allow",
+									"value": "OPTIONS, POST"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "316"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"errors\": {\n        \"username\": [\n            \"Enter a valid username. This value may contain only letters, numbers, and @/./+/-/_ characters.\"\n        ],\n        \"email\": [\n            \"This field is required.\"\n        ],\n        \"first_name\": [\n            \"This field is required.\"\n        ],\n        \"last_name\": [\n            \"This field is required.\"\n        ],\n        \"password\": [\n            \"Ensure this field has at least 8 characters.\"\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"john_doe\",\n    \"password\": \"P@$$w0rd123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/auth/login/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"auth",
+								"login",
+								""
+							]
+						},
+						"description": "Used to log a user in. The system uses http only cookies for auth"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"john_doe\",\n    \"password\": \"P@$$w0r123\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/api/auth/login/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"auth",
+										"login",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 08 Jul 2025 23:15:47 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.13.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, origin"
+								},
+								{
+									"key": "Allow",
+									"value": "POST, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "16"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzUyMDE3NDQ3LCJpYXQiOjE3NTIwMTY1NDcsImp0aSI6IjViNzZkNmRlN2E1ZTRlY2Y4ODZmNGRjMTdiZTcwYmM1IiwidXNlcl9pZCI6MX0.xXqPqDCoXYVEayvyYs3m_pjWGlLotHhDpw-KBob6irY; expires=Tue, 08 Jul 2025 23:30:47 GMT; HttpOnly; Max-Age=900; Path=/; SameSite=None; Secure"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "refresh_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc1MjYyMTM0NywiaWF0IjoxNzUyMDE2NTQ3LCJqdGkiOiJhZGEyNjg2ZGNjYmY0YmMxODU2NTliNWExNGZmZjA5MCIsInVzZXJfaWQiOjF9.joSu8Rw3Lhdf4JARxkQ2xYRCds1Rn2JrCti3p0gNKaI; expires=Tue, 15 Jul 2025 23:15:47 GMT; HttpOnly; Max-Age=604800; Path=/; SameSite=None; Secure"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true\n}"
+						},
+						{
+							"name": "Error - Empty Body",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/auth/login/",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"auth",
+										"login",
+										""
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 08 Jul 2025 23:06:06 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.13.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, origin"
+								},
+								{
+									"key": "Allow",
+									"value": "POST, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "105"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"error\": {\n        \"username\": [\n            \"This field is required.\"\n        ],\n        \"password\": [\n            \"This field is required.\"\n        ]\n    }\n}"
+						},
+						{
+							"name": "Error - Invalid Credentials",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"james_jane\",\n    \"password\": \"123456789\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/auth/login/",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"auth",
+										"login",
+										""
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 08 Jul 2025 23:10:05 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.13.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, origin"
+								},
+								{
+									"key": "Allow",
+									"value": "POST, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "78"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"error\": \"No active account found with the given credentials\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Refresh Tokens",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/auth/refresh/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"auth",
+								"refresh",
+								""
+							]
+						},
+						"description": "Used to get a new set of tokens."
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:8000/api/auth/refresh/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"auth",
+										"refresh",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 08 Jul 2025 23:29:33 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.13.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, origin"
+								},
+								{
+									"key": "Allow",
+									"value": "POST, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "18"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzUyMDE4MjcyLCJpYXQiOjE3NTIwMTcyMDMsImp0aSI6IjUyOTFlNWI2ZjZiZDRiMTU4NjYyNzJmZDZkM2RiYTRiIiwidXNlcl9pZCI6MX0.QkmD-C3zxtnib1M3pKiGgikUzdV1LKEm72DLRvw7rCk; expires=Tue, 08 Jul 2025 23:44:33 GMT; HttpOnly; Max-Age=900; Path=/; SameSite=None; Secure"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"refreshed\": true\n}"
+						},
+						{
+							"name": "Error - Not Logged In",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/auth/refresh/",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"auth",
+										"refresh",
+										""
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 08 Jul 2025 23:26:13 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.13.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, origin"
+								},
+								{
+									"key": "Allow",
+									"value": "POST, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "65"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"refreshed\": false,\n    \"error\": {\n        \"message\": \"Refresh token not found\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/auth/logout/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"auth",
+								"logout",
+								""
+							]
+						},
+						"description": "Used to log out the currently logged in user"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:8000/api/auth/logout/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"auth",
+										"logout",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 08 Jul 2025 23:17:42 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.13.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, origin"
+								},
+								{
+									"key": "Allow",
+									"value": "POST, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "38"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "access_token=\"\"; expires=Thu, 01 Jan 1970 00:00:00 GMT; Max-Age=0; Path=/"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "refresh_token=\"\"; expires=Thu, 01 Jan 1970 00:00:00 GMT; Max-Age=0; Path=/"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Successfully logged out.\"\n}"
+						},
+						{
+							"name": "Error - Not Logged In",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/auth/logout/",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"auth",
+										"logout",
+										""
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 08 Jul 2025 23:17:52 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.13.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "WWW-Authenticate",
+									"value": "Bearer realm=\"api\""
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, origin"
+								},
+								{
+									"key": "Allow",
+									"value": "POST, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "58"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"detail\": \"Authentication credentials were not provided.\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/auth/is-authenticated/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"auth",
+								"is-authenticated",
+								""
+							]
+						},
+						"description": "Used to get the details of the logged in user."
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:8000/api/auth/is-authenticated/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"auth",
+										"is-authenticated",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 08 Jul 2025 23:20:02 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.13.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, origin"
+								},
+								{
+									"key": "Allow",
+									"value": "GET, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "140"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"authenticated\": true,\n    \"user\": {\n        \"id\": 1,\n        \"username\": \"john_doe\",\n        \"email\": \"john.doe@example.com\",\n        \"first_name\": \"John\",\n        \"last_name\": \"Doe\",\n        \"likes\": []\n    }\n}"
+						},
+						{
+							"name": "Error - Not Logged In",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/auth/is-authenticated/",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"auth",
+										"is-authenticated",
+										""
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 08 Jul 2025 23:21:47 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.13.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "WWW-Authenticate",
+									"value": "Bearer realm=\"api\""
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, origin"
+								},
+								{
+									"key": "Allow",
+									"value": "GET, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "58"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"detail\": \"Authentication credentials were not provided.\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Forgot Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"john.doe@example.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/auth/forgot-password/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"auth",
+								"forgot-password",
+								""
+							]
+						},
+						"description": "Used to start the password reset flow."
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"john.doe@example.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/api/auth/forgot-password/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"auth",
+										"forgot-password",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 08 Jul 2025 23:23:36 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.13.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, origin"
+								},
+								{
+									"key": "Allow",
+									"value": "POST, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "81"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"If an account with this email exists, a new password has been sent.\"\n}"
+						},
+						{
+							"name": "Error - Invalid Body",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/auth/forgot-password/",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"auth",
+										"forgot-password",
+										""
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 08 Jul 2025 23:23:04 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.13.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, origin"
+								},
+								{
+									"key": "Allow",
+									"value": "POST, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "30"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Email is required.\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Change Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"old_password\": \"fIhPfcjS7q\",\n    \"new_password\": \"P@$$w0rd123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/auth/change-password/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"auth",
+								"change-password",
+								""
+							]
+						},
+						"description": "Used to change the password of a logged in user."
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"old_password\": \"fIhPfcjS7q\",\n    \"new_password\": \"P@$$w0rd123\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/api/auth/change-password/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"auth",
+										"change-password",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 08 Jul 2025 23:32:27 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.13.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, origin"
+								},
+								{
+									"key": "Allow",
+									"value": "OPTIONS, POST"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "44"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": \"Password changed successfully.\"\n}"
+						},
+						{
+							"name": "Error - Invalid Data",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/auth/change-password/",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"auth",
+										"change-password",
+										""
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 08 Jul 2025 23:31:04 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.13.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, origin"
+								},
+								{
+									"key": "Allow",
+									"value": "OPTIONS, POST"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "72"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": {\n        \"message\": \"Both old_password and new_password are required.\"\n    }\n}"
+						},
+						{
+							"name": "Error - Same Old & New Passwords",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"old_password\": \"fIhPfcjS7q\",\n    \"new_password\": \"fIhPfcjS7q\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/auth/change-password/",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"auth",
+										"change-password",
+										""
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 08 Jul 2025 23:31:59 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.13.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, origin"
+								},
+								{
+									"key": "Allow",
+									"value": "OPTIONS, POST"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "76"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": {\n        \"message\": \"New password cannot be the same as the old password.\"\n    }\n}"
+						},
+						{
+							"name": "Error - Not Logged In",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"old_password\": \"fIhPfcjS7q\",\n    \"new_password\": \"P@$$w0rd123\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/auth/change-password/",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"auth",
+										"change-password",
+										""
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 08 Jul 2025 23:33:02 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.13.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "WWW-Authenticate",
+									"value": "Bearer realm=\"api\""
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, origin"
+								},
+								{
+									"key": "Allow",
+									"value": "OPTIONS, POST"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "58"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"detail\": \"Authentication credentials were not provided.\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Profile",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"first_name\": \"Jimmy\",\n    \"last_name\": \"Denton\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/auth/update-profile/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"auth",
+								"update-profile",
+								""
+							]
+						},
+						"description": "Used to update the user's profile"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"first_name\": \"Jimmy\",\n    \"last_name\": \"Denton\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/api/auth/update-profile/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"auth",
+										"update-profile",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 08 Jul 2025 23:37:33 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.13.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, origin"
+								},
+								{
+									"key": "Allow",
+									"value": "PATCH, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "108"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Profile updated successfully\",\n    \"user\": {\n        \"first_name\": \"Jimmy\",\n        \"last_name\": \"Denton\"\n    }\n}"
+						},
+						{
+							"name": "Error - Empty Body",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/auth/update-profile/",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"auth",
+										"update-profile",
+										""
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 08 Jul 2025 23:36:31 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.13.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, origin"
+								},
+								{
+									"key": "Allow",
+									"value": "PATCH, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "71"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": {\n        \"message\": \"First name must be between 2 and 50 characters.\"\n    }\n}"
+						},
+						{
+							"name": "Error - Invalid Data",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"first_name\": \"Jimmy\",\n    \"last_name\": \"D\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API_URL}}/auth/update-profile/",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"auth",
+										"update-profile",
+										""
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 08 Jul 2025 23:37:15 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.13.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, origin"
+								},
+								{
+									"key": "Allow",
+									"value": "PATCH, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "70"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": {\n        \"message\": \"Last name must be between 2 and 50 characters.\"\n    }\n}"
+						}
+					]
+				}
+			],
+			"description": "This folder contains all auth related functions that can be performed"
+		},
+		{
+			"name": "Photos",
+			"item": [
+				{
+					"name": "Get Photos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/photos/?ordering=width",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"photos",
+								""
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "4",
+									"description": "The maximum number of records to return",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "2",
+									"description": "The page that the records should be from",
+									"disabled": true
+								},
+								{
+									"key": "search",
+									"value": "kinga",
+									"description": "Searches the photographer's name or alt text",
+									"disabled": true
+								},
+								{
+									"key": "ordering",
+									"value": "width",
+									"description": "The field that you want to order by. Can be one of `[\"id\", \"width\", \"height\", \"created_at\"]`"
+								}
+							]
+						},
+						"description": "Used to get a list of photos."
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:8000/api/photos/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"photos",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 08 Jul 2025 23:40:49 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.13.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, origin"
+								},
+								{
+									"key": "Allow",
+									"value": "GET, HEAD, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "13865"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"count\": 10,\n    \"next\": null,\n    \"previous\": null,\n    \"results\": [\n        {\n            \"id\": 1,\n            \"photographer\": {\n                \"id\": 1,\n                \"name\": \"Felix\",\n                \"url\": \"https://www.pexels.com/@felix-57767809\",\n                \"pexels_id\": 57767809,\n                \"photo_count\": 1,\n                \"created_at\": \"2025-07-08T22:25:17.188830Z\",\n                \"updated_at\": \"2025-07-08T22:25:17.188848Z\"\n            },\n            \"width\": 3888,\n            \"height\": 5184,\n            \"url\": \"https://www.pexels.com/photo/a-small-island-surrounded-by-trees-in-the-middle-of-a-lake-21751820/\",\n            \"alt\": \"A small island surrounded by trees in the middle of a lake\",\n            \"avg_color\": \"#333831\",\n            \"src_original\": \"https://images.pexels.com/photos/21751820/pexels-photo-21751820.jpeg\",\n            \"src_large2x\": \"https://images.pexels.com/photos/21751820/pexels-photo-21751820.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940\",\n            \"src_large\": \"https://images.pexels.com/photos/21751820/pexels-photo-21751820.jpeg?auto=compress&cs=tinysrgb&h=650&w=940\",\n            \"src_medium\": \"https://images.pexels.com/photos/21751820/pexels-photo-21751820.jpeg?auto=compress&cs=tinysrgb&h=350\",\n            \"src_small\": \"https://images.pexels.com/photos/21751820/pexels-photo-21751820.jpeg?auto=compress&cs=tinysrgb&h=130\",\n            \"src_portrait\": \"https://images.pexels.com/photos/21751820/pexels-photo-21751820.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800\",\n            \"src_landscape\": \"https://images.pexels.com/photos/21751820/pexels-photo-21751820.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200\",\n            \"src_tiny\": \"https://images.pexels.com/photos/21751820/pexels-photo-21751820.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=200&w=280\"\n        },\n        {\n            \"id\": 2,\n            \"photographer\": {\n                \"id\": 2,\n                \"name\": \"Centre for Ageing Better\",\n                \"url\": \"https://www.pexels.com/@centre-for-ageing-better-55954677\",\n                \"pexels_id\": 55954677,\n                \"photo_count\": 1,\n                \"created_at\": \"2025-07-08T22:25:17.214592Z\",\n                \"updated_at\": \"2025-07-08T22:25:17.214600Z\"\n            },\n            \"width\": 5284,\n            \"height\": 3514,\n            \"url\": \"https://www.pexels.com/photo/elderly-man-and-woman-with-bikes-at-park-21405575/\",\n            \"alt\": \"Two older people cycling\",\n            \"avg_color\": \"#6D755E\",\n            \"src_original\": \"https://images.pexels.com/photos/21405575/pexels-photo-21405575.jpeg\",\n            \"src_large2x\": \"https://images.pexels.com/photos/21405575/pexels-photo-21405575.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940\",\n            \"src_large\": \"https://images.pexels.com/photos/21405575/pexels-photo-21405575.jpeg?auto=compress&cs=tinysrgb&h=650&w=940\",\n            \"src_medium\": \"https://images.pexels.com/photos/21405575/pexels-photo-21405575.jpeg?auto=compress&cs=tinysrgb&h=350\",\n            \"src_small\": \"https://images.pexels.com/photos/21405575/pexels-photo-21405575.jpeg?auto=compress&cs=tinysrgb&h=130\",\n            \"src_portrait\": \"https://images.pexels.com/photos/21405575/pexels-photo-21405575.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800\",\n            \"src_landscape\": \"https://images.pexels.com/photos/21405575/pexels-photo-21405575.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200\",\n            \"src_tiny\": \"https://images.pexels.com/photos/21405575/pexels-photo-21405575.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=200&w=280\"\n        },\n        {\n            \"id\": 3,\n            \"photographer\": {\n                \"id\": 3,\n                \"name\": \"Victor  de Dompablo\",\n                \"url\": \"https://www.pexels.com/@vkiller\",\n                \"pexels_id\": 1023620,\n                \"photo_count\": 1,\n                \"created_at\": \"2025-07-08T22:25:17.221184Z\",\n                \"updated_at\": \"2025-07-08T22:25:17.221188Z\"\n            },\n            \"width\": 3456,\n            \"height\": 4608,\n            \"url\": \"https://www.pexels.com/photo/people-on-a-beach-in-black-and-white-21294736/\",\n            \"alt\": \"Black and white photo of people walking on the beach\",\n            \"avg_color\": \"#757472\",\n            \"src_original\": \"https://images.pexels.com/photos/21294736/pexels-photo-21294736.jpeg\",\n            \"src_large2x\": \"https://images.pexels.com/photos/21294736/pexels-photo-21294736.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940\",\n            \"src_large\": \"https://images.pexels.com/photos/21294736/pexels-photo-21294736.jpeg?auto=compress&cs=tinysrgb&h=650&w=940\",\n            \"src_medium\": \"https://images.pexels.com/photos/21294736/pexels-photo-21294736.jpeg?auto=compress&cs=tinysrgb&h=350\",\n            \"src_small\": \"https://images.pexels.com/photos/21294736/pexels-photo-21294736.jpeg?auto=compress&cs=tinysrgb&h=130\",\n            \"src_portrait\": \"https://images.pexels.com/photos/21294736/pexels-photo-21294736.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800\",\n            \"src_landscape\": \"https://images.pexels.com/photos/21294736/pexels-photo-21294736.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200\",\n            \"src_tiny\": \"https://images.pexels.com/photos/21294736/pexels-photo-21294736.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=200&w=280\"\n        },\n        {\n            \"id\": 4,\n            \"photographer\": {\n                \"id\": 4,\n                \"name\": \"Amim kashmiri\",\n                \"url\": \"https://www.pexels.com/@amim-kashmiri-1172536446\",\n                \"pexels_id\": 1172536446,\n                \"photo_count\": 1,\n                \"created_at\": \"2025-07-08T22:25:17.225932Z\",\n                \"updated_at\": \"2025-07-08T22:25:17.225941Z\"\n            },\n            \"width\": 6000,\n            \"height\": 4000,\n            \"url\": \"https://www.pexels.com/photo/arg-karim-khan-zand-21617723/\",\n            \"alt\": \"arg karim khan zand\",\n            \"avg_color\": \"#434343\",\n            \"src_original\": \"https://images.pexels.com/photos/21617723/pexels-photo-21617723.jpeg\",\n            \"src_large2x\": \"https://images.pexels.com/photos/21617723/pexels-photo-21617723.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940\",\n            \"src_large\": \"https://images.pexels.com/photos/21617723/pexels-photo-21617723.jpeg?auto=compress&cs=tinysrgb&h=650&w=940\",\n            \"src_medium\": \"https://images.pexels.com/photos/21617723/pexels-photo-21617723.jpeg?auto=compress&cs=tinysrgb&h=350\",\n            \"src_small\": \"https://images.pexels.com/photos/21617723/pexels-photo-21617723.jpeg?auto=compress&cs=tinysrgb&h=130\",\n            \"src_portrait\": \"https://images.pexels.com/photos/21617723/pexels-photo-21617723.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800\",\n            \"src_landscape\": \"https://images.pexels.com/photos/21617723/pexels-photo-21617723.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200\",\n            \"src_tiny\": \"https://images.pexels.com/photos/21617723/pexels-photo-21617723.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=200&w=280\"\n        },\n        {\n            \"id\": 5,\n            \"photographer\": {\n                \"id\": 5,\n                \"name\": \"Kinga Runo\",\n                \"url\": \"https://www.pexels.com/@kinga-runo-1157203540\",\n                \"pexels_id\": 1157203540,\n                \"photo_count\": 1,\n                \"created_at\": \"2025-07-08T22:25:17.229023Z\",\n                \"updated_at\": \"2025-07-08T22:25:17.229029Z\"\n            },\n            \"width\": 5207,\n            \"height\": 7800,\n            \"url\": \"https://www.pexels.com/photo/portrait-of-hugging-couple-in-black-and-white-21328017/\",\n            \"alt\": \"Couple photography, Kinga Runo, Bath, Bristol \",\n            \"avg_color\": \"#636363\",\n            \"src_original\": \"https://images.pexels.com/photos/21328017/pexels-photo-21328017.jpeg\",\n            \"src_large2x\": \"https://images.pexels.com/photos/21328017/pexels-photo-21328017.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940\",\n            \"src_large\": \"https://images.pexels.com/photos/21328017/pexels-photo-21328017.jpeg?auto=compress&cs=tinysrgb&h=650&w=940\",\n            \"src_medium\": \"https://images.pexels.com/photos/21328017/pexels-photo-21328017.jpeg?auto=compress&cs=tinysrgb&h=350\",\n            \"src_small\": \"https://images.pexels.com/photos/21328017/pexels-photo-21328017.jpeg?auto=compress&cs=tinysrgb&h=130\",\n            \"src_portrait\": \"https://images.pexels.com/photos/21328017/pexels-photo-21328017.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800\",\n            \"src_landscape\": \"https://images.pexels.com/photos/21328017/pexels-photo-21328017.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200\",\n            \"src_tiny\": \"https://images.pexels.com/photos/21328017/pexels-photo-21328017.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=200&w=280\"\n        },\n        {\n            \"id\": 6,\n            \"photographer\": {\n                \"id\": 6,\n                \"name\": \"Matteo Roman\",\n                \"url\": \"https://www.pexels.com/@matteo-roman-1151921619\",\n                \"pexels_id\": 1151921619,\n                \"photo_count\": 1,\n                \"created_at\": \"2025-07-08T22:25:17.232154Z\",\n                \"updated_at\": \"2025-07-08T22:25:17.232161Z\"\n            },\n            \"width\": 4160,\n            \"height\": 6240,\n            \"url\": \"https://www.pexels.com/photo/roofs-of-buildings-in-london-21315872/\",\n            \"alt\": \"A glimpse of London\",\n            \"avg_color\": \"#91A197\",\n            \"src_original\": \"https://images.pexels.com/photos/21315872/pexels-photo-21315872.jpeg\",\n            \"src_large2x\": \"https://images.pexels.com/photos/21315872/pexels-photo-21315872.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940\",\n            \"src_large\": \"https://images.pexels.com/photos/21315872/pexels-photo-21315872.jpeg?auto=compress&cs=tinysrgb&h=650&w=940\",\n            \"src_medium\": \"https://images.pexels.com/photos/21315872/pexels-photo-21315872.jpeg?auto=compress&cs=tinysrgb&h=350\",\n            \"src_small\": \"https://images.pexels.com/photos/21315872/pexels-photo-21315872.jpeg?auto=compress&cs=tinysrgb&h=130\",\n            \"src_portrait\": \"https://images.pexels.com/photos/21315872/pexels-photo-21315872.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800\",\n            \"src_landscape\": \"https://images.pexels.com/photos/21315872/pexels-photo-21315872.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200\",\n            \"src_tiny\": \"https://images.pexels.com/photos/21315872/pexels-photo-21315872.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=200&w=280\"\n        },\n        {\n            \"id\": 7,\n            \"photographer\": {\n                \"id\": 7,\n                \"name\": \"Badr Samih\",\n                \"url\": \"https://www.pexels.com/@badr-samih-1061561024\",\n                \"pexels_id\": 1061561024,\n                \"photo_count\": 1,\n                \"created_at\": \"2025-07-08T22:25:17.235842Z\",\n                \"updated_at\": \"2025-07-08T22:25:17.235849Z\"\n            },\n            \"width\": 5184,\n            \"height\": 3456,\n            \"url\": \"https://www.pexels.com/photo/silhouettes-of-people-horseback-riding-on-a-beach-at-sunset-21294950/\",\n            \"alt\": \"End of the day with the horses of Casablanca\",\n            \"avg_color\": \"#7C401B\",\n            \"src_original\": \"https://images.pexels.com/photos/21294950/pexels-photo-21294950.jpeg\",\n            \"src_large2x\": \"https://images.pexels.com/photos/21294950/pexels-photo-21294950.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940\",\n            \"src_large\": \"https://images.pexels.com/photos/21294950/pexels-photo-21294950.jpeg?auto=compress&cs=tinysrgb&h=650&w=940\",\n            \"src_medium\": \"https://images.pexels.com/photos/21294950/pexels-photo-21294950.jpeg?auto=compress&cs=tinysrgb&h=350\",\n            \"src_small\": \"https://images.pexels.com/photos/21294950/pexels-photo-21294950.jpeg?auto=compress&cs=tinysrgb&h=130\",\n            \"src_portrait\": \"https://images.pexels.com/photos/21294950/pexels-photo-21294950.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800\",\n            \"src_landscape\": \"https://images.pexels.com/photos/21294950/pexels-photo-21294950.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200\",\n            \"src_tiny\": \"https://images.pexels.com/photos/21294950/pexels-photo-21294950.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=200&w=280\"\n        },\n        {\n            \"id\": 8,\n            \"photographer\": {\n                \"id\": 8,\n                \"name\": \"Marcelo Gonzalez\",\n                \"url\": \"https://www.pexels.com/@marcelo-gonzalez-1141370437\",\n                \"pexels_id\": 1141370437,\n                \"photo_count\": 1,\n                \"created_at\": \"2025-07-08T22:25:17.238723Z\",\n                \"updated_at\": \"2025-07-08T22:25:17.238734Z\"\n            },\n            \"width\": 2862,\n            \"height\": 4296,\n            \"url\": \"https://www.pexels.com/photo/sunlit-lake-on-salt-flat-21274611/\",\n            \"alt\": \"Profundidad\",\n            \"avg_color\": \"#798792\",\n            \"src_original\": \"https://images.pexels.com/photos/21274611/pexels-photo-21274611.jpeg\",\n            \"src_large2x\": \"https://images.pexels.com/photos/21274611/pexels-photo-21274611.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940\",\n            \"src_large\": \"https://images.pexels.com/photos/21274611/pexels-photo-21274611.jpeg?auto=compress&cs=tinysrgb&h=650&w=940\",\n            \"src_medium\": \"https://images.pexels.com/photos/21274611/pexels-photo-21274611.jpeg?auto=compress&cs=tinysrgb&h=350\",\n            \"src_small\": \"https://images.pexels.com/photos/21274611/pexels-photo-21274611.jpeg?auto=compress&cs=tinysrgb&h=130\",\n            \"src_portrait\": \"https://images.pexels.com/photos/21274611/pexels-photo-21274611.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800\",\n            \"src_landscape\": \"https://images.pexels.com/photos/21274611/pexels-photo-21274611.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200\",\n            \"src_tiny\": \"https://images.pexels.com/photos/21274611/pexels-photo-21274611.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=200&w=280\"\n        },\n        {\n            \"id\": 9,\n            \"photographer\": {\n                \"id\": 9,\n                \"name\": \"Guzel'S\",\n                \"url\": \"https://www.pexels.com/@guzel-s-3331480\",\n                \"pexels_id\": 3331480,\n                \"photo_count\": 1,\n                \"created_at\": \"2025-07-08T22:25:17.241898Z\",\n                \"updated_at\": \"2025-07-08T22:25:17.241908Z\"\n            },\n            \"width\": 2920,\n            \"height\": 3965,\n            \"url\": \"https://www.pexels.com/photo/a-large-group-of-pink-and-white-flowers-21705409/\",\n            \"alt\": \"Free stock photo of awakening, background, blooming\",\n            \"avg_color\": \"#8F806B\",\n            \"src_original\": \"https://images.pexels.com/photos/21705409/pexels-photo-21705409.jpeg\",\n            \"src_large2x\": \"https://images.pexels.com/photos/21705409/pexels-photo-21705409.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940\",\n            \"src_large\": \"https://images.pexels.com/photos/21705409/pexels-photo-21705409.jpeg?auto=compress&cs=tinysrgb&h=650&w=940\",\n            \"src_medium\": \"https://images.pexels.com/photos/21705409/pexels-photo-21705409.jpeg?auto=compress&cs=tinysrgb&h=350\",\n            \"src_small\": \"https://images.pexels.com/photos/21705409/pexels-photo-21705409.jpeg?auto=compress&cs=tinysrgb&h=130\",\n            \"src_portrait\": \"https://images.pexels.com/photos/21705409/pexels-photo-21705409.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800\",\n            \"src_landscape\": \"https://images.pexels.com/photos/21705409/pexels-photo-21705409.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200\",\n            \"src_tiny\": \"https://images.pexels.com/photos/21705409/pexels-photo-21705409.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=200&w=280\"\n        },\n        {\n            \"id\": 10,\n            \"photographer\": {\n                \"id\": 10,\n                \"name\": \"Lukas  Faust\",\n                \"url\": \"https://www.pexels.com/@lukasfst\",\n                \"pexels_id\": 54872664,\n                \"photo_count\": 1,\n                \"created_at\": \"2025-07-08T22:25:17.245374Z\",\n                \"updated_at\": \"2025-07-08T22:25:17.245383Z\"\n            },\n            \"width\": 2551,\n            \"height\": 4536,\n            \"url\": \"https://www.pexels.com/photo/aerial-view-of-a-surfer-riding-a-wave-21077134/\",\n            \"alt\": \"Canggu Surfer\",\n            \"avg_color\": \"#8C968E\",\n            \"src_original\": \"https://images.pexels.com/photos/21077134/pexels-photo-21077134.jpeg\",\n            \"src_large2x\": \"https://images.pexels.com/photos/21077134/pexels-photo-21077134.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940\",\n            \"src_large\": \"https://images.pexels.com/photos/21077134/pexels-photo-21077134.jpeg?auto=compress&cs=tinysrgb&h=650&w=940\",\n            \"src_medium\": \"https://images.pexels.com/photos/21077134/pexels-photo-21077134.jpeg?auto=compress&cs=tinysrgb&h=350\",\n            \"src_small\": \"https://images.pexels.com/photos/21077134/pexels-photo-21077134.jpeg?auto=compress&cs=tinysrgb&h=130\",\n            \"src_portrait\": \"https://images.pexels.com/photos/21077134/pexels-photo-21077134.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800\",\n            \"src_landscape\": \"https://images.pexels.com/photos/21077134/pexels-photo-21077134.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200\",\n            \"src_tiny\": \"https://images.pexels.com/photos/21077134/pexels-photo-21077134.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=200&w=280\"\n        }\n    ]\n}"
+						},
+						{
+							"name": "Error - Not Logged In",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/photos/",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"photos",
+										""
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 08 Jul 2025 23:41:21 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.13.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "WWW-Authenticate",
+									"value": "Bearer realm=\"api\""
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, origin"
+								},
+								{
+									"key": "Allow",
+									"value": "GET, HEAD, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "58"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"detail\": \"Authentication credentials were not provided.\"\n}"
+						},
+						{
+							"name": "Success - Pagination",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/photos/?limit=4&page=2",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"photos",
+										""
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "4",
+											"description": "The maximum number of records to return"
+										},
+										{
+											"key": "page",
+											"value": "2",
+											"description": "The page that the records should be from"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 08 Jul 2025 23:49:53 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.13.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, origin"
+								},
+								{
+									"key": "Allow",
+									"value": "GET, HEAD, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "5665"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"count\": 10,\n    \"next\": \"http://127.0.0.1:8000/api/photos/?limit=4&page=3\",\n    \"previous\": \"http://127.0.0.1:8000/api/photos/?limit=4\",\n    \"results\": [\n        {\n            \"id\": 5,\n            \"photographer\": {\n                \"id\": 5,\n                \"name\": \"Kinga Runo\",\n                \"url\": \"https://www.pexels.com/@kinga-runo-1157203540\",\n                \"pexels_id\": 1157203540,\n                \"photo_count\": 1,\n                \"created_at\": \"2025-07-08T22:25:17.229023Z\",\n                \"updated_at\": \"2025-07-08T22:25:17.229029Z\"\n            },\n            \"width\": 5207,\n            \"height\": 7800,\n            \"url\": \"https://www.pexels.com/photo/portrait-of-hugging-couple-in-black-and-white-21328017/\",\n            \"alt\": \"Couple photography, Kinga Runo, Bath, Bristol \",\n            \"avg_color\": \"#636363\",\n            \"src_original\": \"https://images.pexels.com/photos/21328017/pexels-photo-21328017.jpeg\",\n            \"src_large2x\": \"https://images.pexels.com/photos/21328017/pexels-photo-21328017.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940\",\n            \"src_large\": \"https://images.pexels.com/photos/21328017/pexels-photo-21328017.jpeg?auto=compress&cs=tinysrgb&h=650&w=940\",\n            \"src_medium\": \"https://images.pexels.com/photos/21328017/pexels-photo-21328017.jpeg?auto=compress&cs=tinysrgb&h=350\",\n            \"src_small\": \"https://images.pexels.com/photos/21328017/pexels-photo-21328017.jpeg?auto=compress&cs=tinysrgb&h=130\",\n            \"src_portrait\": \"https://images.pexels.com/photos/21328017/pexels-photo-21328017.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800\",\n            \"src_landscape\": \"https://images.pexels.com/photos/21328017/pexels-photo-21328017.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200\",\n            \"src_tiny\": \"https://images.pexels.com/photos/21328017/pexels-photo-21328017.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=200&w=280\"\n        },\n        {\n            \"id\": 6,\n            \"photographer\": {\n                \"id\": 6,\n                \"name\": \"Matteo Roman\",\n                \"url\": \"https://www.pexels.com/@matteo-roman-1151921619\",\n                \"pexels_id\": 1151921619,\n                \"photo_count\": 1,\n                \"created_at\": \"2025-07-08T22:25:17.232154Z\",\n                \"updated_at\": \"2025-07-08T22:25:17.232161Z\"\n            },\n            \"width\": 4160,\n            \"height\": 6240,\n            \"url\": \"https://www.pexels.com/photo/roofs-of-buildings-in-london-21315872/\",\n            \"alt\": \"A glimpse of London\",\n            \"avg_color\": \"#91A197\",\n            \"src_original\": \"https://images.pexels.com/photos/21315872/pexels-photo-21315872.jpeg\",\n            \"src_large2x\": \"https://images.pexels.com/photos/21315872/pexels-photo-21315872.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940\",\n            \"src_large\": \"https://images.pexels.com/photos/21315872/pexels-photo-21315872.jpeg?auto=compress&cs=tinysrgb&h=650&w=940\",\n            \"src_medium\": \"https://images.pexels.com/photos/21315872/pexels-photo-21315872.jpeg?auto=compress&cs=tinysrgb&h=350\",\n            \"src_small\": \"https://images.pexels.com/photos/21315872/pexels-photo-21315872.jpeg?auto=compress&cs=tinysrgb&h=130\",\n            \"src_portrait\": \"https://images.pexels.com/photos/21315872/pexels-photo-21315872.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800\",\n            \"src_landscape\": \"https://images.pexels.com/photos/21315872/pexels-photo-21315872.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200\",\n            \"src_tiny\": \"https://images.pexels.com/photos/21315872/pexels-photo-21315872.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=200&w=280\"\n        },\n        {\n            \"id\": 7,\n            \"photographer\": {\n                \"id\": 7,\n                \"name\": \"Badr Samih\",\n                \"url\": \"https://www.pexels.com/@badr-samih-1061561024\",\n                \"pexels_id\": 1061561024,\n                \"photo_count\": 1,\n                \"created_at\": \"2025-07-08T22:25:17.235842Z\",\n                \"updated_at\": \"2025-07-08T22:25:17.235849Z\"\n            },\n            \"width\": 5184,\n            \"height\": 3456,\n            \"url\": \"https://www.pexels.com/photo/silhouettes-of-people-horseback-riding-on-a-beach-at-sunset-21294950/\",\n            \"alt\": \"End of the day with the horses of Casablanca\",\n            \"avg_color\": \"#7C401B\",\n            \"src_original\": \"https://images.pexels.com/photos/21294950/pexels-photo-21294950.jpeg\",\n            \"src_large2x\": \"https://images.pexels.com/photos/21294950/pexels-photo-21294950.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940\",\n            \"src_large\": \"https://images.pexels.com/photos/21294950/pexels-photo-21294950.jpeg?auto=compress&cs=tinysrgb&h=650&w=940\",\n            \"src_medium\": \"https://images.pexels.com/photos/21294950/pexels-photo-21294950.jpeg?auto=compress&cs=tinysrgb&h=350\",\n            \"src_small\": \"https://images.pexels.com/photos/21294950/pexels-photo-21294950.jpeg?auto=compress&cs=tinysrgb&h=130\",\n            \"src_portrait\": \"https://images.pexels.com/photos/21294950/pexels-photo-21294950.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800\",\n            \"src_landscape\": \"https://images.pexels.com/photos/21294950/pexels-photo-21294950.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200\",\n            \"src_tiny\": \"https://images.pexels.com/photos/21294950/pexels-photo-21294950.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=200&w=280\"\n        },\n        {\n            \"id\": 8,\n            \"photographer\": {\n                \"id\": 8,\n                \"name\": \"Marcelo Gonzalez\",\n                \"url\": \"https://www.pexels.com/@marcelo-gonzalez-1141370437\",\n                \"pexels_id\": 1141370437,\n                \"photo_count\": 1,\n                \"created_at\": \"2025-07-08T22:25:17.238723Z\",\n                \"updated_at\": \"2025-07-08T22:25:17.238734Z\"\n            },\n            \"width\": 2862,\n            \"height\": 4296,\n            \"url\": \"https://www.pexels.com/photo/sunlit-lake-on-salt-flat-21274611/\",\n            \"alt\": \"Profundidad\",\n            \"avg_color\": \"#798792\",\n            \"src_original\": \"https://images.pexels.com/photos/21274611/pexels-photo-21274611.jpeg\",\n            \"src_large2x\": \"https://images.pexels.com/photos/21274611/pexels-photo-21274611.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940\",\n            \"src_large\": \"https://images.pexels.com/photos/21274611/pexels-photo-21274611.jpeg?auto=compress&cs=tinysrgb&h=650&w=940\",\n            \"src_medium\": \"https://images.pexels.com/photos/21274611/pexels-photo-21274611.jpeg?auto=compress&cs=tinysrgb&h=350\",\n            \"src_small\": \"https://images.pexels.com/photos/21274611/pexels-photo-21274611.jpeg?auto=compress&cs=tinysrgb&h=130\",\n            \"src_portrait\": \"https://images.pexels.com/photos/21274611/pexels-photo-21274611.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800\",\n            \"src_landscape\": \"https://images.pexels.com/photos/21274611/pexels-photo-21274611.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200\",\n            \"src_tiny\": \"https://images.pexels.com/photos/21274611/pexels-photo-21274611.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=200&w=280\"\n        }\n    ]\n}"
+						},
+						{
+							"name": "Success - Search",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/photos/",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"photos",
+										""
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "4",
+											"description": "The maximum number of records to return",
+											"disabled": true
+										},
+										{
+											"key": "page",
+											"value": "2",
+											"description": "The page that the records should be from",
+											"disabled": true
+										},
+										{
+											"key": "search",
+											"value": "kinga",
+											"description": "Searches the photographer's name or alt text",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 08 Jul 2025 23:53:58 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.13.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, origin"
+								},
+								{
+									"key": "Allow",
+									"value": "GET, HEAD, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1451"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"count\": 1,\n    \"next\": null,\n    \"previous\": null,\n    \"results\": [\n        {\n            \"id\": 5,\n            \"photographer\": {\n                \"id\": 5,\n                \"name\": \"Kinga Runo\",\n                \"url\": \"https://www.pexels.com/@kinga-runo-1157203540\",\n                \"pexels_id\": 1157203540,\n                \"photo_count\": 1,\n                \"created_at\": \"2025-07-08T22:25:17.229023Z\",\n                \"updated_at\": \"2025-07-08T22:25:17.229029Z\"\n            },\n            \"width\": 5207,\n            \"height\": 7800,\n            \"url\": \"https://www.pexels.com/photo/portrait-of-hugging-couple-in-black-and-white-21328017/\",\n            \"alt\": \"Couple photography, Kinga Runo, Bath, Bristol \",\n            \"avg_color\": \"#636363\",\n            \"src_original\": \"https://images.pexels.com/photos/21328017/pexels-photo-21328017.jpeg\",\n            \"src_large2x\": \"https://images.pexels.com/photos/21328017/pexels-photo-21328017.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940\",\n            \"src_large\": \"https://images.pexels.com/photos/21328017/pexels-photo-21328017.jpeg?auto=compress&cs=tinysrgb&h=650&w=940\",\n            \"src_medium\": \"https://images.pexels.com/photos/21328017/pexels-photo-21328017.jpeg?auto=compress&cs=tinysrgb&h=350\",\n            \"src_small\": \"https://images.pexels.com/photos/21328017/pexels-photo-21328017.jpeg?auto=compress&cs=tinysrgb&h=130\",\n            \"src_portrait\": \"https://images.pexels.com/photos/21328017/pexels-photo-21328017.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800\",\n            \"src_landscape\": \"https://images.pexels.com/photos/21328017/pexels-photo-21328017.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200\",\n            \"src_tiny\": \"https://images.pexels.com/photos/21328017/pexels-photo-21328017.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=200&w=280\"\n        }\n    ]\n}"
+						},
+						{
+							"name": "Success - Ordering",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/photos/?ordering=width",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"photos",
+										""
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "4",
+											"description": "The maximum number of records to return",
+											"disabled": true
+										},
+										{
+											"key": "page",
+											"value": "2",
+											"description": "The page that the records should be from",
+											"disabled": true
+										},
+										{
+											"key": "search",
+											"value": "kinga",
+											"description": "Searches the photographer's name or alt text",
+											"disabled": true
+										},
+										{
+											"key": "ordering",
+											"value": "width",
+											"description": "The field that you want to order by. Can be one of `[\"id\", \"width\", \"height\", \"created_at\"]`"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Tue, 08 Jul 2025 23:58:09 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.13.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, origin"
+								},
+								{
+									"key": "Allow",
+									"value": "GET, HEAD, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "13865"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"count\": 10,\n    \"next\": null,\n    \"previous\": null,\n    \"results\": [\n        {\n            \"id\": 10,\n            \"photographer\": {\n                \"id\": 10,\n                \"name\": \"Lukas  Faust\",\n                \"url\": \"https://www.pexels.com/@lukasfst\",\n                \"pexels_id\": 54872664,\n                \"photo_count\": 1,\n                \"created_at\": \"2025-07-08T22:25:17.245374Z\",\n                \"updated_at\": \"2025-07-08T22:25:17.245383Z\"\n            },\n            \"width\": 2551,\n            \"height\": 4536,\n            \"url\": \"https://www.pexels.com/photo/aerial-view-of-a-surfer-riding-a-wave-21077134/\",\n            \"alt\": \"Canggu Surfer\",\n            \"avg_color\": \"#8C968E\",\n            \"src_original\": \"https://images.pexels.com/photos/21077134/pexels-photo-21077134.jpeg\",\n            \"src_large2x\": \"https://images.pexels.com/photos/21077134/pexels-photo-21077134.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940\",\n            \"src_large\": \"https://images.pexels.com/photos/21077134/pexels-photo-21077134.jpeg?auto=compress&cs=tinysrgb&h=650&w=940\",\n            \"src_medium\": \"https://images.pexels.com/photos/21077134/pexels-photo-21077134.jpeg?auto=compress&cs=tinysrgb&h=350\",\n            \"src_small\": \"https://images.pexels.com/photos/21077134/pexels-photo-21077134.jpeg?auto=compress&cs=tinysrgb&h=130\",\n            \"src_portrait\": \"https://images.pexels.com/photos/21077134/pexels-photo-21077134.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800\",\n            \"src_landscape\": \"https://images.pexels.com/photos/21077134/pexels-photo-21077134.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200\",\n            \"src_tiny\": \"https://images.pexels.com/photos/21077134/pexels-photo-21077134.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=200&w=280\"\n        },\n        {\n            \"id\": 8,\n            \"photographer\": {\n                \"id\": 8,\n                \"name\": \"Marcelo Gonzalez\",\n                \"url\": \"https://www.pexels.com/@marcelo-gonzalez-1141370437\",\n                \"pexels_id\": 1141370437,\n                \"photo_count\": 1,\n                \"created_at\": \"2025-07-08T22:25:17.238723Z\",\n                \"updated_at\": \"2025-07-08T22:25:17.238734Z\"\n            },\n            \"width\": 2862,\n            \"height\": 4296,\n            \"url\": \"https://www.pexels.com/photo/sunlit-lake-on-salt-flat-21274611/\",\n            \"alt\": \"Profundidad\",\n            \"avg_color\": \"#798792\",\n            \"src_original\": \"https://images.pexels.com/photos/21274611/pexels-photo-21274611.jpeg\",\n            \"src_large2x\": \"https://images.pexels.com/photos/21274611/pexels-photo-21274611.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940\",\n            \"src_large\": \"https://images.pexels.com/photos/21274611/pexels-photo-21274611.jpeg?auto=compress&cs=tinysrgb&h=650&w=940\",\n            \"src_medium\": \"https://images.pexels.com/photos/21274611/pexels-photo-21274611.jpeg?auto=compress&cs=tinysrgb&h=350\",\n            \"src_small\": \"https://images.pexels.com/photos/21274611/pexels-photo-21274611.jpeg?auto=compress&cs=tinysrgb&h=130\",\n            \"src_portrait\": \"https://images.pexels.com/photos/21274611/pexels-photo-21274611.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800\",\n            \"src_landscape\": \"https://images.pexels.com/photos/21274611/pexels-photo-21274611.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200\",\n            \"src_tiny\": \"https://images.pexels.com/photos/21274611/pexels-photo-21274611.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=200&w=280\"\n        },\n        {\n            \"id\": 9,\n            \"photographer\": {\n                \"id\": 9,\n                \"name\": \"Guzel'S\",\n                \"url\": \"https://www.pexels.com/@guzel-s-3331480\",\n                \"pexels_id\": 3331480,\n                \"photo_count\": 1,\n                \"created_at\": \"2025-07-08T22:25:17.241898Z\",\n                \"updated_at\": \"2025-07-08T22:25:17.241908Z\"\n            },\n            \"width\": 2920,\n            \"height\": 3965,\n            \"url\": \"https://www.pexels.com/photo/a-large-group-of-pink-and-white-flowers-21705409/\",\n            \"alt\": \"Free stock photo of awakening, background, blooming\",\n            \"avg_color\": \"#8F806B\",\n            \"src_original\": \"https://images.pexels.com/photos/21705409/pexels-photo-21705409.jpeg\",\n            \"src_large2x\": \"https://images.pexels.com/photos/21705409/pexels-photo-21705409.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940\",\n            \"src_large\": \"https://images.pexels.com/photos/21705409/pexels-photo-21705409.jpeg?auto=compress&cs=tinysrgb&h=650&w=940\",\n            \"src_medium\": \"https://images.pexels.com/photos/21705409/pexels-photo-21705409.jpeg?auto=compress&cs=tinysrgb&h=350\",\n            \"src_small\": \"https://images.pexels.com/photos/21705409/pexels-photo-21705409.jpeg?auto=compress&cs=tinysrgb&h=130\",\n            \"src_portrait\": \"https://images.pexels.com/photos/21705409/pexels-photo-21705409.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800\",\n            \"src_landscape\": \"https://images.pexels.com/photos/21705409/pexels-photo-21705409.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200\",\n            \"src_tiny\": \"https://images.pexels.com/photos/21705409/pexels-photo-21705409.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=200&w=280\"\n        },\n        {\n            \"id\": 3,\n            \"photographer\": {\n                \"id\": 3,\n                \"name\": \"Victor  de Dompablo\",\n                \"url\": \"https://www.pexels.com/@vkiller\",\n                \"pexels_id\": 1023620,\n                \"photo_count\": 1,\n                \"created_at\": \"2025-07-08T22:25:17.221184Z\",\n                \"updated_at\": \"2025-07-08T22:25:17.221188Z\"\n            },\n            \"width\": 3456,\n            \"height\": 4608,\n            \"url\": \"https://www.pexels.com/photo/people-on-a-beach-in-black-and-white-21294736/\",\n            \"alt\": \"Black and white photo of people walking on the beach\",\n            \"avg_color\": \"#757472\",\n            \"src_original\": \"https://images.pexels.com/photos/21294736/pexels-photo-21294736.jpeg\",\n            \"src_large2x\": \"https://images.pexels.com/photos/21294736/pexels-photo-21294736.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940\",\n            \"src_large\": \"https://images.pexels.com/photos/21294736/pexels-photo-21294736.jpeg?auto=compress&cs=tinysrgb&h=650&w=940\",\n            \"src_medium\": \"https://images.pexels.com/photos/21294736/pexels-photo-21294736.jpeg?auto=compress&cs=tinysrgb&h=350\",\n            \"src_small\": \"https://images.pexels.com/photos/21294736/pexels-photo-21294736.jpeg?auto=compress&cs=tinysrgb&h=130\",\n            \"src_portrait\": \"https://images.pexels.com/photos/21294736/pexels-photo-21294736.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800\",\n            \"src_landscape\": \"https://images.pexels.com/photos/21294736/pexels-photo-21294736.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200\",\n            \"src_tiny\": \"https://images.pexels.com/photos/21294736/pexels-photo-21294736.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=200&w=280\"\n        },\n        {\n            \"id\": 1,\n            \"photographer\": {\n                \"id\": 1,\n                \"name\": \"Felix\",\n                \"url\": \"https://www.pexels.com/@felix-57767809\",\n                \"pexels_id\": 57767809,\n                \"photo_count\": 1,\n                \"created_at\": \"2025-07-08T22:25:17.188830Z\",\n                \"updated_at\": \"2025-07-08T22:25:17.188848Z\"\n            },\n            \"width\": 3888,\n            \"height\": 5184,\n            \"url\": \"https://www.pexels.com/photo/a-small-island-surrounded-by-trees-in-the-middle-of-a-lake-21751820/\",\n            \"alt\": \"A small island surrounded by trees in the middle of a lake\",\n            \"avg_color\": \"#333831\",\n            \"src_original\": \"https://images.pexels.com/photos/21751820/pexels-photo-21751820.jpeg\",\n            \"src_large2x\": \"https://images.pexels.com/photos/21751820/pexels-photo-21751820.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940\",\n            \"src_large\": \"https://images.pexels.com/photos/21751820/pexels-photo-21751820.jpeg?auto=compress&cs=tinysrgb&h=650&w=940\",\n            \"src_medium\": \"https://images.pexels.com/photos/21751820/pexels-photo-21751820.jpeg?auto=compress&cs=tinysrgb&h=350\",\n            \"src_small\": \"https://images.pexels.com/photos/21751820/pexels-photo-21751820.jpeg?auto=compress&cs=tinysrgb&h=130\",\n            \"src_portrait\": \"https://images.pexels.com/photos/21751820/pexels-photo-21751820.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800\",\n            \"src_landscape\": \"https://images.pexels.com/photos/21751820/pexels-photo-21751820.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200\",\n            \"src_tiny\": \"https://images.pexels.com/photos/21751820/pexels-photo-21751820.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=200&w=280\"\n        },\n        {\n            \"id\": 6,\n            \"photographer\": {\n                \"id\": 6,\n                \"name\": \"Matteo Roman\",\n                \"url\": \"https://www.pexels.com/@matteo-roman-1151921619\",\n                \"pexels_id\": 1151921619,\n                \"photo_count\": 1,\n                \"created_at\": \"2025-07-08T22:25:17.232154Z\",\n                \"updated_at\": \"2025-07-08T22:25:17.232161Z\"\n            },\n            \"width\": 4160,\n            \"height\": 6240,\n            \"url\": \"https://www.pexels.com/photo/roofs-of-buildings-in-london-21315872/\",\n            \"alt\": \"A glimpse of London\",\n            \"avg_color\": \"#91A197\",\n            \"src_original\": \"https://images.pexels.com/photos/21315872/pexels-photo-21315872.jpeg\",\n            \"src_large2x\": \"https://images.pexels.com/photos/21315872/pexels-photo-21315872.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940\",\n            \"src_large\": \"https://images.pexels.com/photos/21315872/pexels-photo-21315872.jpeg?auto=compress&cs=tinysrgb&h=650&w=940\",\n            \"src_medium\": \"https://images.pexels.com/photos/21315872/pexels-photo-21315872.jpeg?auto=compress&cs=tinysrgb&h=350\",\n            \"src_small\": \"https://images.pexels.com/photos/21315872/pexels-photo-21315872.jpeg?auto=compress&cs=tinysrgb&h=130\",\n            \"src_portrait\": \"https://images.pexels.com/photos/21315872/pexels-photo-21315872.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800\",\n            \"src_landscape\": \"https://images.pexels.com/photos/21315872/pexels-photo-21315872.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200\",\n            \"src_tiny\": \"https://images.pexels.com/photos/21315872/pexels-photo-21315872.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=200&w=280\"\n        },\n        {\n            \"id\": 7,\n            \"photographer\": {\n                \"id\": 7,\n                \"name\": \"Badr Samih\",\n                \"url\": \"https://www.pexels.com/@badr-samih-1061561024\",\n                \"pexels_id\": 1061561024,\n                \"photo_count\": 1,\n                \"created_at\": \"2025-07-08T22:25:17.235842Z\",\n                \"updated_at\": \"2025-07-08T22:25:17.235849Z\"\n            },\n            \"width\": 5184,\n            \"height\": 3456,\n            \"url\": \"https://www.pexels.com/photo/silhouettes-of-people-horseback-riding-on-a-beach-at-sunset-21294950/\",\n            \"alt\": \"End of the day with the horses of Casablanca\",\n            \"avg_color\": \"#7C401B\",\n            \"src_original\": \"https://images.pexels.com/photos/21294950/pexels-photo-21294950.jpeg\",\n            \"src_large2x\": \"https://images.pexels.com/photos/21294950/pexels-photo-21294950.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940\",\n            \"src_large\": \"https://images.pexels.com/photos/21294950/pexels-photo-21294950.jpeg?auto=compress&cs=tinysrgb&h=650&w=940\",\n            \"src_medium\": \"https://images.pexels.com/photos/21294950/pexels-photo-21294950.jpeg?auto=compress&cs=tinysrgb&h=350\",\n            \"src_small\": \"https://images.pexels.com/photos/21294950/pexels-photo-21294950.jpeg?auto=compress&cs=tinysrgb&h=130\",\n            \"src_portrait\": \"https://images.pexels.com/photos/21294950/pexels-photo-21294950.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800\",\n            \"src_landscape\": \"https://images.pexels.com/photos/21294950/pexels-photo-21294950.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200\",\n            \"src_tiny\": \"https://images.pexels.com/photos/21294950/pexels-photo-21294950.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=200&w=280\"\n        },\n        {\n            \"id\": 5,\n            \"photographer\": {\n                \"id\": 5,\n                \"name\": \"Kinga Runo\",\n                \"url\": \"https://www.pexels.com/@kinga-runo-1157203540\",\n                \"pexels_id\": 1157203540,\n                \"photo_count\": 1,\n                \"created_at\": \"2025-07-08T22:25:17.229023Z\",\n                \"updated_at\": \"2025-07-08T22:25:17.229029Z\"\n            },\n            \"width\": 5207,\n            \"height\": 7800,\n            \"url\": \"https://www.pexels.com/photo/portrait-of-hugging-couple-in-black-and-white-21328017/\",\n            \"alt\": \"Couple photography, Kinga Runo, Bath, Bristol \",\n            \"avg_color\": \"#636363\",\n            \"src_original\": \"https://images.pexels.com/photos/21328017/pexels-photo-21328017.jpeg\",\n            \"src_large2x\": \"https://images.pexels.com/photos/21328017/pexels-photo-21328017.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940\",\n            \"src_large\": \"https://images.pexels.com/photos/21328017/pexels-photo-21328017.jpeg?auto=compress&cs=tinysrgb&h=650&w=940\",\n            \"src_medium\": \"https://images.pexels.com/photos/21328017/pexels-photo-21328017.jpeg?auto=compress&cs=tinysrgb&h=350\",\n            \"src_small\": \"https://images.pexels.com/photos/21328017/pexels-photo-21328017.jpeg?auto=compress&cs=tinysrgb&h=130\",\n            \"src_portrait\": \"https://images.pexels.com/photos/21328017/pexels-photo-21328017.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800\",\n            \"src_landscape\": \"https://images.pexels.com/photos/21328017/pexels-photo-21328017.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200\",\n            \"src_tiny\": \"https://images.pexels.com/photos/21328017/pexels-photo-21328017.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=200&w=280\"\n        },\n        {\n            \"id\": 2,\n            \"photographer\": {\n                \"id\": 2,\n                \"name\": \"Centre for Ageing Better\",\n                \"url\": \"https://www.pexels.com/@centre-for-ageing-better-55954677\",\n                \"pexels_id\": 55954677,\n                \"photo_count\": 1,\n                \"created_at\": \"2025-07-08T22:25:17.214592Z\",\n                \"updated_at\": \"2025-07-08T22:25:17.214600Z\"\n            },\n            \"width\": 5284,\n            \"height\": 3514,\n            \"url\": \"https://www.pexels.com/photo/elderly-man-and-woman-with-bikes-at-park-21405575/\",\n            \"alt\": \"Two older people cycling\",\n            \"avg_color\": \"#6D755E\",\n            \"src_original\": \"https://images.pexels.com/photos/21405575/pexels-photo-21405575.jpeg\",\n            \"src_large2x\": \"https://images.pexels.com/photos/21405575/pexels-photo-21405575.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940\",\n            \"src_large\": \"https://images.pexels.com/photos/21405575/pexels-photo-21405575.jpeg?auto=compress&cs=tinysrgb&h=650&w=940\",\n            \"src_medium\": \"https://images.pexels.com/photos/21405575/pexels-photo-21405575.jpeg?auto=compress&cs=tinysrgb&h=350\",\n            \"src_small\": \"https://images.pexels.com/photos/21405575/pexels-photo-21405575.jpeg?auto=compress&cs=tinysrgb&h=130\",\n            \"src_portrait\": \"https://images.pexels.com/photos/21405575/pexels-photo-21405575.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800\",\n            \"src_landscape\": \"https://images.pexels.com/photos/21405575/pexels-photo-21405575.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200\",\n            \"src_tiny\": \"https://images.pexels.com/photos/21405575/pexels-photo-21405575.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=200&w=280\"\n        },\n        {\n            \"id\": 4,\n            \"photographer\": {\n                \"id\": 4,\n                \"name\": \"Amim kashmiri\",\n                \"url\": \"https://www.pexels.com/@amim-kashmiri-1172536446\",\n                \"pexels_id\": 1172536446,\n                \"photo_count\": 1,\n                \"created_at\": \"2025-07-08T22:25:17.225932Z\",\n                \"updated_at\": \"2025-07-08T22:25:17.225941Z\"\n            },\n            \"width\": 6000,\n            \"height\": 4000,\n            \"url\": \"https://www.pexels.com/photo/arg-karim-khan-zand-21617723/\",\n            \"alt\": \"arg karim khan zand\",\n            \"avg_color\": \"#434343\",\n            \"src_original\": \"https://images.pexels.com/photos/21617723/pexels-photo-21617723.jpeg\",\n            \"src_large2x\": \"https://images.pexels.com/photos/21617723/pexels-photo-21617723.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940\",\n            \"src_large\": \"https://images.pexels.com/photos/21617723/pexels-photo-21617723.jpeg?auto=compress&cs=tinysrgb&h=650&w=940\",\n            \"src_medium\": \"https://images.pexels.com/photos/21617723/pexels-photo-21617723.jpeg?auto=compress&cs=tinysrgb&h=350\",\n            \"src_small\": \"https://images.pexels.com/photos/21617723/pexels-photo-21617723.jpeg?auto=compress&cs=tinysrgb&h=130\",\n            \"src_portrait\": \"https://images.pexels.com/photos/21617723/pexels-photo-21617723.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800\",\n            \"src_landscape\": \"https://images.pexels.com/photos/21617723/pexels-photo-21617723.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200\",\n            \"src_tiny\": \"https://images.pexels.com/photos/21617723/pexels-photo-21617723.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=200&w=280\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Liked Photos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/photos/liked/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"photos",
+								"liked",
+								""
+							]
+						},
+						"description": "Used to geta. list of photos liked by the current user."
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:8000/api/photos/liked/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"photos",
+										"liked",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 09 Jul 2025 00:07:09 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.13.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, origin"
+								},
+								{
+									"key": "Allow",
+									"value": "GET, HEAD, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1462"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"count\": 1,\n    \"next\": null,\n    \"previous\": null,\n    \"results\": [\n        {\n            \"id\": 1,\n            \"photographer\": {\n                \"id\": 1,\n                \"name\": \"Felix\",\n                \"url\": \"https://www.pexels.com/@felix-57767809\",\n                \"pexels_id\": 57767809,\n                \"photo_count\": 1,\n                \"created_at\": \"2025-07-08T22:25:17.188830Z\",\n                \"updated_at\": \"2025-07-08T22:25:17.188848Z\"\n            },\n            \"width\": 3888,\n            \"height\": 5184,\n            \"url\": \"https://www.pexels.com/photo/a-small-island-surrounded-by-trees-in-the-middle-of-a-lake-21751820/\",\n            \"alt\": \"A small island surrounded by trees in the middle of a lake\",\n            \"avg_color\": \"#333831\",\n            \"src_original\": \"https://images.pexels.com/photos/21751820/pexels-photo-21751820.jpeg\",\n            \"src_large2x\": \"https://images.pexels.com/photos/21751820/pexels-photo-21751820.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940\",\n            \"src_large\": \"https://images.pexels.com/photos/21751820/pexels-photo-21751820.jpeg?auto=compress&cs=tinysrgb&h=650&w=940\",\n            \"src_medium\": \"https://images.pexels.com/photos/21751820/pexels-photo-21751820.jpeg?auto=compress&cs=tinysrgb&h=350\",\n            \"src_small\": \"https://images.pexels.com/photos/21751820/pexels-photo-21751820.jpeg?auto=compress&cs=tinysrgb&h=130\",\n            \"src_portrait\": \"https://images.pexels.com/photos/21751820/pexels-photo-21751820.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800\",\n            \"src_landscape\": \"https://images.pexels.com/photos/21751820/pexels-photo-21751820.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200\",\n            \"src_tiny\": \"https://images.pexels.com/photos/21751820/pexels-photo-21751820.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=200&w=280\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Like & Unlike Photo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/photos/1/like-toggle/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"photos",
+								"1",
+								"like-toggle",
+								""
+							]
+						},
+						"description": "Used to like/dislike a photo"
+					},
+					"response": [
+						{
+							"name": "Success - Liked",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:8000/api/photos/1/like-toggle/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"photos",
+										"1",
+										"like-toggle",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 09 Jul 2025 00:06:28 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.13.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, origin"
+								},
+								{
+									"key": "Allow",
+									"value": "POST, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "14"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"liked\": true\n}"
+						},
+						{
+							"name": "Success - Unliked",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/photos/1/like-toggle/",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"photos",
+										"1",
+										"like-toggle",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 09 Jul 2025 00:06:43 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.13.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, origin"
+								},
+								{
+									"key": "Allow",
+									"value": "POST, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "15"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"liked\": false\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Photo By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/photos/3/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"photos",
+								"3",
+								""
+							]
+						},
+						"description": "Used to get the details of a photo by ID"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/photos/3/",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"photos",
+										"3",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 09 Jul 2025 03:11:35 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.13.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, origin"
+								},
+								{
+									"key": "Allow",
+									"value": "GET, HEAD, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1405"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 3,\n    \"photographer\": {\n        \"id\": 3,\n        \"name\": \"Victor  de Dompablo\",\n        \"url\": \"https://www.pexels.com/@vkiller\",\n        \"pexels_id\": 1023620,\n        \"photo_count\": 1,\n        \"created_at\": \"2025-07-08T22:25:17.221184Z\",\n        \"updated_at\": \"2025-07-08T22:25:17.221188Z\"\n    },\n    \"width\": 3456,\n    \"height\": 4608,\n    \"url\": \"https://www.pexels.com/photo/people-on-a-beach-in-black-and-white-21294736/\",\n    \"alt\": \"Black and white photo of people walking on the beach\",\n    \"avg_color\": \"#757472\",\n    \"src_original\": \"https://images.pexels.com/photos/21294736/pexels-photo-21294736.jpeg\",\n    \"src_large2x\": \"https://images.pexels.com/photos/21294736/pexels-photo-21294736.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940\",\n    \"src_large\": \"https://images.pexels.com/photos/21294736/pexels-photo-21294736.jpeg?auto=compress&cs=tinysrgb&h=650&w=940\",\n    \"src_medium\": \"https://images.pexels.com/photos/21294736/pexels-photo-21294736.jpeg?auto=compress&cs=tinysrgb&h=350\",\n    \"src_small\": \"https://images.pexels.com/photos/21294736/pexels-photo-21294736.jpeg?auto=compress&cs=tinysrgb&h=130\",\n    \"src_portrait\": \"https://images.pexels.com/photos/21294736/pexels-photo-21294736.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800\",\n    \"src_landscape\": \"https://images.pexels.com/photos/21294736/pexels-photo-21294736.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200\",\n    \"src_tiny\": \"https://images.pexels.com/photos/21294736/pexels-photo-21294736.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=200&w=280\",\n    \"is_liked\": false\n}"
+						}
+					]
+				}
+			],
+			"description": "This folder contin endpoints that allow the user to perform different actions on the Photo resource"
+		},
+		{
+			"name": "Core",
+			"item": [
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/health/",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"health",
+								""
+							]
+						},
+						"description": "Used to check the health of the system"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{API_URL}}/health/",
+									"host": [
+										"{{API_URL}}"
+									],
+									"path": [
+										"health",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 09 Jul 2025 00:10:27 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "WSGIServer/0.2 CPython/3.13.3"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept, origin"
+								},
+								{
+									"key": "Allow",
+									"value": "GET, HEAD, OPTIONS"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "853"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"healthy_with_warnings\",\n    \"timestamp\": 1752019827.2027688,\n    \"version\": \"1.0.0\",\n    \"checks\": {\n        \"database\": {\n            \"status\": \"healthy\",\n            \"response_time_ms\": 0.74,\n            \"connection\": \"mysql\",\n            \"message\": \"Database connection successful\"\n        },\n        \"redis\": {\n            \"status\": \"healthy\",\n            \"response_time_ms\": 1.25,\n            \"message\": \"Redis cache read/write successful\"\n        },\n        \"email\": {\n            \"status\": \"healthy\",\n            \"configuration\": {\n                \"host\": \"smtp.ethereal.email\",\n                \"port\": 587,\n                \"use_tls\": true,\n                \"backend\": \"django.core.mail.backends.smtp.EmailBackend\"\n            },\n            \"message\": \"Email configuration valid\"\n        },\n        \"system_resources\": {\n            \"status\": \"warning\",\n            \"memory_usage_percent\": 58.2,\n            \"memory_available_gb\": 15.03,\n            \"disk_usage_percent\": 94.66,\n            \"disk_free_gb\": 24.58,\n            \"warnings\": [\n                \"High disk usage: 94.66208008816082%\"\n            ],\n            \"message\": \"System resources monitored\"\n        },\n        \"django_config\": {\n            \"status\": \"healthy\",\n            \"debug_mode\": true,\n            \"issues\": [],\n            \"message\": \"Django configuration validated\"\n        }\n    }\n}"
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "API_URL",
+			"value": "http://127.0.0.1:8000/api",
+			"type": "string"
+		},
+		{
+			"key": "BASE_URL",
+			"value": "http://127.0.0.1:8000",
+			"type": "string"
+		}
+	]
+}
