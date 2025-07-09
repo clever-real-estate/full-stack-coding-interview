@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
 from django_filters.rest_framework import DjangoFilterBackend
 from django_ratelimit.decorators import ratelimit
@@ -84,3 +85,16 @@ class LikedPhotosView(generics.ListAPIView):
 
     def get_queryset(self):
         return Photo.objects.filter(likes__user=self.request.user).distinct()
+
+
+class PhotoDetailView(APIView):
+    """
+    Retrieve a single photo by its ID.
+    """
+
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, pk):
+        photo = get_object_or_404(Photo, pk=pk)
+        serializer = PhotoSerializer(photo, context={"request": request})
+        return Response(serializer.data, status=status.HTTP_200_OK)
