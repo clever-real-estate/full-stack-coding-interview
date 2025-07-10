@@ -1,0 +1,66 @@
+name: Back Tests
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "front/**"
+      - .github/workflows/front**.yml
+  pull_request:
+    branches:
+      - main
+    types: [opened, reopened, synchronize]
+    paths-ignore:
+      - "front/**"
+      - .github/workflows/front**.yml
+
+env:
+  POSTGRES_USER: root
+  POSTGRES_PASSWORD: root
+  POSTGRES_DB: clever
+  DATABASE_URL: postgresql://root:root@localhost:5432/clever
+  ACCESS_TOKEN_EXPIRE_MINUTES: 60
+  SECRET_KEY: 09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7
+  app_dir: back
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:latest
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: ${{ env.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ env.POSTGRES_DB }}
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout code
+        id: checkout
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.7.19"
+          enable-cache: true
+          cache-dependency-glob: |
+            ${{ env.app_dir }}/pyproject.toml
+            ${{ env.app_dir }}/uv.lock
+
+      - name: Install dependencies
+        working-directory: ${{ env.app_dir }}
+        run: uv sync --frozen --no-install-project
+
+      - name: Run tests
+        working-directory: ${{ env.app_dir }}
+        run: uv run -m pytest tests

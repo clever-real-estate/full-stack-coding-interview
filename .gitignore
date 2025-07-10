@@ -1,0 +1,66 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+*.egg
+*.log
+
+# VSCode
+.vscode/
+
+# macOS
+.DS_Store
+
+# Environments
+.env
+.venv/
+venv/
+ENV/
+
+# Alembic
+alembic/versions/*.pyc
+
+# Docker
+*.pid
+docker-compose.override.yml
+
+# Node
+node_modules/
+
+# CSV and data
+*.csv
+
+# Misc
+*.swp
+*.swo
+
+# Ignore build and dist
+build/
+dist/
+
+# Ignore SVG exports
+*.svg
+
+# Ignore coverage reports
+htmlcov/
+.coverage
+.coverage.*
+
+# Ignore test output
+.pytest_cache/
+
+# Ignore backup files
+*~
+
+# Ignore logs
+*.log
+
+# Ignore front-end build artifacts
+front/dist/
+front/build/
+
+# Temporary files
+DEVELOPMENT_PLAN.md

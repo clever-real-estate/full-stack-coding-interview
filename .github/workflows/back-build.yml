@@ -1,0 +1,52 @@
+name: Back Build
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "front/**"
+      - .github/workflows/front**.yml
+  pull_request:
+    branches:
+      - main
+    types: [opened, reopened, synchronize]
+    paths:
+      - .github/workflows/back-build.yml
+
+env:
+  app_dir: back
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        id: checkout
+        uses: actions/checkout@v4
+
+      - name: Login to DockerHub
+        id: login-docker-hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DH_USERNAME }}
+          password: ${{ secrets.DH_TOKEN }}
+
+      - name: Generate tag
+        id: generate-tag
+        run: |
+          SHA=$(echo $GITHUB_SHA | head -c7)
+          echo "sha=$SHA" >> $GITHUB_OUTPUT
+
+      - name: Build and push the image to DockerHub
+        id: build-push-image
+        working-directory: ${{ github.workspace }}/${{ env.app_dir }}
+        env:
+          DH_REPOSITORY: ${{ vars.DH_REPOSITORY }}
+          IMAGE_TAG: ${{ steps.generate-tag.outputs.sha }}
+        run: |
+          docker build -t $DH_REPOSITORY:$IMAGE_TAG .
+          docker tag $DH_REPOSITORY:$IMAGE_TAG $DH_REPOSITORY:latest
+          docker push $DH_REPOSITORY:$IMAGE_TAG
+          docker push $DH_REPOSITORY:latest

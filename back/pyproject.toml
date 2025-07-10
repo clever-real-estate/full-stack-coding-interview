@@ -1,0 +1,22 @@
+[project]
+name = "back"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12.9"
+dependencies = [
+    "fastapi[all]>=0.115.14",
+    "sqlmodel>=0.0.24",
+    "psycopg2-binary>=2.9.9",
+    "pydantic>2.0",
+    "jwt>=1.4.0",
+    "passlib[bcrypt]<2.0.0,>=1.7.4",
+    "bcrypt==4.3.0",
+    "PyJWT<3.0.0,>=2.8.0",
+    "alembic>=1.16.2",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.1",
+]
