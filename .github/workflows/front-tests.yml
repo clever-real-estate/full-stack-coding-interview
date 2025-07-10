@@ -48,4 +48,4 @@ jobs:
 
       - name: Run tests
         working-directory: ${{ env.app_dir }}
-        run: pnpm test
+        run: pnpm test:e2e
