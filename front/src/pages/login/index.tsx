@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import Header from "@/components/ui/header";
 import { useAuth } from "@/contexts/AuthContext";
@@ -19,6 +19,12 @@ export default function Login() {
 		<div className="flex flex-col gap-10 py-9 max-w-[320px] mx-auto px-2">
 			<Header title="Sign in to your account" itemsPosition="center" />
 			<FormLogin />
+			<Link
+				to="/register"
+				className="text-md text-center text-primary hover:underline"
+			>
+				Create an account
+			</Link>
 		</div>
 	);
 }
