@@ -15,10 +15,16 @@ import {
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@/components/ui/sidebar";
 import { Button } from "./ui/button";
 import { useAuth, type StoreUser } from "@/features/auth/store";
+import { useRouter } from "@tanstack/react-router";
 
 export function NavUser({ user }: { user: StoreUser }) {
 	const { isMobile } = useSidebar();
 	const { logout } = useAuth();
+	const router = useRouter();
+	const handleLogout = () => {
+		logout();
+		router.navigate({ to: "/auth/login", replace: true });
+	};
 	return (
 		<SidebarMenu>
 			<SidebarMenuItem>
@@ -81,7 +87,7 @@ export function NavUser({ user }: { user: StoreUser }) {
 						</DropdownMenuGroup>
 						<DropdownMenuSeparator />
 						<DropdownMenuItem>
-							<Button variant="ghost" onClick={logout}>
+							<Button variant="ghost" onClick={handleLogout}>
 								<LogOut />
 								Log out
 							</Button>

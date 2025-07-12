@@ -46,7 +46,6 @@ const items = [
 
 export function AppSidebar() {
 	const user = useAuth((s) => s.user);
-	const logout = useAuth((s) => s.logout);
 
 	return (
 		<Sidebar collapsible="icon" variant="inset">
