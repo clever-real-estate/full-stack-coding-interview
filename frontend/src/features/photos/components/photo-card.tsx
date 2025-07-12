@@ -42,7 +42,7 @@ export const PhotoCard: React.FC<PhotoCardProps> = ({ photo }) => {
 				</div>
 
 				<div className="p-4 space-y-3">
-					<h3 className="font-medium text-sm line-clamp-2 text-gray-900 leading-relaxed">{photo.alt}</h3>
+					<h3 className="font-medium text-sm line-clamp-2  leading-relaxed">{photo.alt}</h3>
 
 					<div className="flex items-center justify-between">
 						<div className="flex items-center space-x-2 min-w-0 flex-1">

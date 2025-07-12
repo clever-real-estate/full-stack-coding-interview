@@ -1,4 +1,4 @@
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
+import { Camera, Settings, SwitchCamera, UserCircle } from "lucide-react";
 
 import {
 	Sidebar,
@@ -18,24 +18,19 @@ import { NavUser } from "./nav-user";
 // Menu items.
 const items = [
 	{
-		title: "Home",
+		title: "All photos",
 		url: "/app",
-		icon: Home,
+		icon: SwitchCamera,
 	},
 	{
-		title: "Lojas",
-		url: "/app/lojas",
-		icon: Inbox,
-	},
-	{
-		title: "Minha loja",
-		url: "/app/lojas/dashboard",
-		icon: Calendar,
-	},
-	{
-		title: "Search",
+		title: "My photos",
 		url: "#",
-		icon: Search,
+		icon: Camera,
+	},
+	{
+		title: "Photographers",
+		url: "#",
+		icon: UserCircle,
 	},
 	{
 		title: "Settings",
@@ -51,7 +46,7 @@ export function AppSidebar() {
 		<Sidebar collapsible="icon" variant="inset">
 			<SidebarContent>
 				<SidebarGroup>
-					<SidebarGroupLabel>Achei SJ</SidebarGroupLabel>
+					<SidebarGroupLabel>CL</SidebarGroupLabel>
 					<SidebarGroupContent>
 						<SidebarMenu>
 							{items.map((item) => (

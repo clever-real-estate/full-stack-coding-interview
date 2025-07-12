@@ -16,6 +16,7 @@ import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@/c
 import { Button } from "./ui/button";
 import { useAuth, type StoreUser } from "@/features/auth/store";
 import { useRouter } from "@tanstack/react-router";
+import { ModeToggle } from "./mode-toogle";
 
 export function NavUser({ user }: { user: StoreUser }) {
 	const { isMobile } = useSidebar();
@@ -27,6 +28,9 @@ export function NavUser({ user }: { user: StoreUser }) {
 	};
 	return (
 		<SidebarMenu>
+			<div className="my-2">
+				<ModeToggle />
+			</div>
 			<SidebarMenuItem>
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
@@ -87,7 +91,7 @@ export function NavUser({ user }: { user: StoreUser }) {
 						</DropdownMenuGroup>
 						<DropdownMenuSeparator />
 						<DropdownMenuItem>
-							<Button variant="ghost" onClick={handleLogout}>
+							<Button className="w-full" variant="ghost" onClick={handleLogout}>
 								<LogOut />
 								Log out
 							</Button>

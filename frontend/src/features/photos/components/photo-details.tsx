@@ -1,7 +1,7 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, ExternalLink, Heart, Share2 } from "lucide-react";
+import { ChevronLeft, ChevronRight, ExternalLink, Share2, Star } from "lucide-react";
 import { usePhotoFacade } from "../use-photo-facade";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -42,7 +42,6 @@ export default function PhotoDetails() {
 			<DialogContent className="min-w-[90vw] w-full h-[90vh] p-0 overflow-hidden">
 				{selectedPhoto && (
 					<div className="flex flex-col md:flex-row h-full">
-						{/* Image Section */}
 						<div className="flex-1 relative bg-background flex items-center justify-center min-h-[50vh] md:min-h-full">
 							<img
 								src={imageSrc}
@@ -51,7 +50,6 @@ export default function PhotoDetails() {
 								sizes="(max-width: 768px) 100vw, 70vw"
 							/>
 
-							{/* Navigation Arrows */}
 							<Button
 								variant="secondary"
 								size="icon"
@@ -72,7 +70,6 @@ export default function PhotoDetails() {
 								<ChevronRight className="h-3 w-3 md:h-4 md:w-4" />
 							</Button>
 
-							{/* Color Badge */}
 							<div className="absolute top-2 md:top-4 left-2 md:left-4">
 								<div
 									className="w-6 h-6 md:w-8 md:h-8 rounded-full border-2 border-white shadow-lg"
@@ -82,7 +79,6 @@ export default function PhotoDetails() {
 							</div>
 						</div>
 
-						{/* Info Panel */}
 						<div className="w-full md:w-80 bg-background p-4 md:p-6 overflow-y-auto max-h-[40vh] md:max-h-full">
 							<DialogHeader className="mb-4 md:mb-6">
 								<DialogTitle className="text-base md:text-lg font-semibold leading-relaxed pr-8">
@@ -91,7 +87,6 @@ export default function PhotoDetails() {
 							</DialogHeader>
 
 							<div className="space-y-4 md:space-y-6">
-								{/* Action Buttons */}
 								<div className="flex gap-2">
 									<Button
 										size="sm"
@@ -99,8 +94,8 @@ export default function PhotoDetails() {
 										onClick={() => toggleLike(selectedPhoto)}
 										className="flex-1"
 									>
-										<Heart className={`h-4 w-4 mr-2 ${isLiked ? "fill-current" : ""}`} />
-										{isLiked ? "Liked" : "Like"}
+										<Star className={`h-4 w-4 mr-2 ${isLiked ? "fill-current" : ""}`} />
+										{isLiked ? "Favorite" : "Add to favorite"}
 									</Button>
 
 									<Button size="sm" variant="outline" className="px-2 bg-transparent">
@@ -108,7 +103,6 @@ export default function PhotoDetails() {
 									</Button>
 								</div>
 
-								{/* Photographer Info */}
 								<div className="space-y-3">
 									<h3 className="font-medium  text-sm md:text-base">Photographer</h3>
 									<a
@@ -128,7 +122,6 @@ export default function PhotoDetails() {
 									</a>
 								</div>
 
-								{/* Photo Details */}
 								<div className="space-y-3">
 									<h3 className="font-medium  text-sm md:text-base">Photo Details</h3>
 									<div className="grid grid-cols-2 gap-2 md:gap-3 text-xs md:text-sm">
@@ -145,7 +138,6 @@ export default function PhotoDetails() {
 									</div>
 								</div>
 
-								{/* Color Information */}
 								<div className="space-y-3">
 									<h3 className="font-medium  text-sm md:text-base">Color Information</h3>
 									<div className="flex items-center gap-3">

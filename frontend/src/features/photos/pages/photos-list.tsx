@@ -4,10 +4,11 @@ import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import PhotoList from "../components/photo-list";
 import PhotoDetails from "../components/photo-details";
 import { usePhotoFacade } from "../use-photo-facade";
-import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 
 export default function PhotosList() {
-	const { photos, isLoading, error, isFavorite, toggleFavorites, selectedPhoto, unselectPhoto } = usePhotoFacade();
+	const { photos, isLoading, error, isFavorite, toggleFavorites } = usePhotoFacade();
 
 	if (isLoading) {
 		return (
@@ -47,10 +48,16 @@ export default function PhotosList() {
 	return (
 		<div className="flex flex-col">
 			<div className="flex items-center gap-4 mb-4">
-				<h1 className="flex-1">{isFavorite ? "Favorite photos" : "All photos"}</h1>
-				<Button variant={isFavorite ? "secondary" : "outline"} onClick={toggleFavorites}>
-					{isFavorite ? "Show All" : "Show Favorites"}
-				</Button>
+				<h1 className="flex-1 text-xl  font-semibold ">{isFavorite ? "Favorite photos" : "All photos"}</h1>
+				<div className="flex items-center gap-2">
+					<Label htmlFor="favorite-switch" className="text-sm select-none cursor-pointer">
+						Show All
+					</Label>
+					<Switch checked={isFavorite} onCheckedChange={toggleFavorites} id="favorite-switch" />
+					<Label htmlFor="favorite-switch" className="text-sm select-none cursor-pointer">
+						Show Favorites
+					</Label>
+				</div>
 			</div>
 			<PhotoDetails />
 			<PhotoList photos={photos} />
