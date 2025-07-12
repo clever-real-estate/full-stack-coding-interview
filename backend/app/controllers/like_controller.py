@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required
 from app.services.like_service import LikeService
+from app.models import LikeSchema
 
 bp = Blueprint("like_controller", __name__, url_prefix="/likes")
 
@@ -8,6 +9,9 @@ bp = Blueprint("like_controller", __name__, url_prefix="/likes")
 
 def create_like():
     data = request.get_json()
+    errors = LikeSchema().validate(data)
+    if errors:
+        return jsonify({"errors": errors}), 400
     like = LikeService.create_like(data)
     return jsonify(like), 201
 

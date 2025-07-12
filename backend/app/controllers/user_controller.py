@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 from app.services.user_service import UserService
 from app.services.auth_service import AuthService
+from app.models import UserSchema
 
 bp = Blueprint("user_controller", __name__, url_prefix="/users")
 
@@ -8,7 +9,12 @@ bp = Blueprint("user_controller", __name__, url_prefix="/users")
 def login():
     try:
         data = request.get_json()
+        errors = UserSchema(only=["username", "password"]).validate(data)
+        if errors:
+            return jsonify({"errors": errors}), 400
         token, user = UserService.authenticate(data)
+        if "password" in user:
+            user = {k: v for k, v in user.items() if k != "password"}
         return jsonify({"token": token, "user": user})
     except Exception as e:
         return jsonify({'error': str(e)}), 401
@@ -23,6 +29,9 @@ def list_users():
 @bp.route("", methods=["POST"])
 def register():
     data = request.get_json()
+    errors = UserSchema(only=["username", "password"]).validate(data)
+    if errors:
+        return jsonify({"errors": errors}), 400
     user = UserService.create_user(data["username"], data["password"])
     return jsonify({"id": user.id, "username": user.username}), 201
 

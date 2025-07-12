@@ -3,18 +3,15 @@ from flask_cors import CORS
 from app.config import Config
 from app.extensions import db
 from app.routes.routes import register_routes
-from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager, verify_jwt_in_request
 
 def create_app():
-    migrate = Migrate()
     app = Flask(__name__)
     CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
     app.config.from_object(Config)
     jwt = JWTManager(app)
     
     db.init_app(app)
-    migrate.init_app(app, db)
     @app.after_request
     def after_request(response):
         response.headers.add("Access-Control-Allow-Headers", "Content-Type,Authorization")
