@@ -1,0 +1,40 @@
+# Node
+node_modules/
+
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Django/SQLite
+*.sqlite3
+db.sqlite3
+
+# VSCode
+.vscode/
+
+# MacOS
+.DS_Store
+
+# Logs
+*.log
+
+# Env files
+.env
+.env.*
+
+# Test coverage
+coverage/
+htmlcov/
+
+# Build output
+frontend/photo-gallery/build/
+
+# Misc
+*.swp
+*.swo
+
+# System
+Thumbs.db 
