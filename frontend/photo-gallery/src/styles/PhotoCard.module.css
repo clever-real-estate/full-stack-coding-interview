@@ -1,0 +1,129 @@
+.photoCard {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 16px;
+  transition: box-shadow 0.2s;
+}
+
+.photoCard:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.likeButton {
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.likeButton:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.likeButton:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+}
+
+.photoImage {
+  width: 120px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.photoInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.photographerName {
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 4px;
+  line-height: 1.2;
+}
+
+.photoAlt {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 8px;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.colorInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.colorCode {
+  font-size: 11px;
+  color: #999;
+  font-family: monospace;
+}
+
+.colorSwatch {
+  width: 16px;
+  height: 16px;
+  border-radius: 2px;
+  border: 1px solid #e0e0e0;
+}
+
+.portfolioLink {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #1976d2;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+  flex-shrink: 0;
+}
+
+.portfolioLink:hover {
+  background-color: rgba(25, 118, 210, 0.1);
+  text-decoration: none;
+}
+
+.linkIcon {
+  width: 16px;
+  height: 16px;
+}
+
+@media (max-width: 768px) {
+  .photoCard {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  
+  .photoImage {
+    width: 100%;
+    height: 200px;
+  }
+  
+  .portfolioLink {
+    align-self: flex-start;
+  }
+} 
