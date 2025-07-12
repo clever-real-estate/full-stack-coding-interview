@@ -50,22 +50,19 @@ export const usePhotoFacade = (options: { favorite: boolean } = { favorite: fals
 		navigate({ to: "/app", search: (prev) => ({ ...prev, photo: undefined }), resetScroll: false });
 	};
 
-	const likePhoto = async (photoId: number) => {
-		if (!user) return;
-		await api.likePhoto(photoId, user.id);
-		updateLike(photoId, true);
-	};
-
-	const unlikePhoto = async (photoId: number) => {
-		if (!user) return;
-		await api.unlikePhoto(photoId, user.id);
-		updateLike(photoId, false);
-	};
-
 	const toggleLike = async (photo: Photo) => {
-		if (!photo.id) return;
-		if (photo.is_liked) return unlikePhoto(photo.id);
-		return likePhoto(photo.id);
+		if (!photo.id || !user) return;
+		updateLike(photo.id, !photo.is_liked);
+
+		try {
+			if (photo.is_liked) {
+				await api.unlikePhoto(photo.id, user?.id);
+				return;
+			}
+			await api.likePhoto(photo.id, user?.id);
+		} catch (err) {
+			updateLike(photo.id, photo.is_liked);
+		}
 	};
 
 	const navigatePhoto = (direction: "next" | "prev") => {
