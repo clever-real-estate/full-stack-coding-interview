@@ -52,7 +52,7 @@ export default function PhotosList() {
 					{isFavorite ? "Show All" : "Show Favorites"}
 				</Button>
 			</div>
-			<PhotoDetails selectedPhoto={selectedPhoto} onUnselect={unselectPhoto} />
+			<PhotoDetails />
 			<PhotoList photos={photos} />
 		</div>
 	);

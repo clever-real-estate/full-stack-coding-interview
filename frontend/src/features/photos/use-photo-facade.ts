@@ -43,11 +43,11 @@ export const usePhotoFacade = (options: { favorite: boolean } = { favorite: fals
 		const found = photos?.find((p) => p.id === id);
 		if (!found) return;
 		console.log("FOUND", found);
-		navigate({ to: "/app", search: (prev) => ({ ...prev, photo: found.id }) });
+		navigate({ to: "/app", search: (prev) => ({ ...prev, photo: found.id }), resetScroll: false });
 	};
 
 	const unselectPhoto = () => {
-		navigate({ to: "/app", search: (prev) => ({ ...prev, photo: undefined }) });
+		navigate({ to: "/app", search: (prev) => ({ ...prev, photo: undefined }), resetScroll: false });
 	};
 
 	const likePhoto = async (photoId: number) => {
@@ -62,6 +62,26 @@ export const usePhotoFacade = (options: { favorite: boolean } = { favorite: fals
 		updateLike(photoId, false);
 	};
 
+	const toggleLike = async (photo: Photo) => {
+		if (!photo.id) return;
+		if (photo.is_liked) return unlikePhoto(photo.id);
+		return likePhoto(photo.id);
+	};
+
+	const navigatePhoto = (direction: "next" | "prev") => {
+		if (!selectedPhoto || !photos.length) return;
+		const currentIndex = photos.findIndex((p) => p.id === selectedPhoto.id);
+		if (currentIndex === -1) return;
+		let newIndex;
+		if (direction === "next") {
+			newIndex = (currentIndex + 1) % photos.length;
+		} else {
+			newIndex = (currentIndex - 1 + photos.length) % photos.length;
+		}
+		const nextPhoto = photos[newIndex];
+		if (nextPhoto) selectPhoto(nextPhoto.id);
+	};
+
 	return {
 		photos: photos ?? [],
 		isLoading: photosQuery.isLoading,
@@ -69,9 +89,10 @@ export const usePhotoFacade = (options: { favorite: boolean } = { favorite: fals
 		selectPhoto,
 		unselectPhoto,
 		isFavorite,
-		likePhoto,
+		toggleLike,
 		toggleFavorites,
-		unlikePhoto,
+
 		selectedPhoto,
+		navigatePhoto,
 	};
 };

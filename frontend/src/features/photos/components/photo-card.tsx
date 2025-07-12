@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import type { Photo } from "../types";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Star, Expand } from "lucide-react";
+import { ExternalLink, Star } from "lucide-react";
 import { usePhotoFacade } from "../use-photo-facade";
 
 interface PhotoCardProps {
@@ -12,67 +12,61 @@ interface PhotoCardProps {
 	onDislike?: (photo: Photo) => void;
 }
 
-export const PhotoCard: React.FC<PhotoCardProps> = ({ photo, onLike, onDislike }) => {
-	const [liked, setLiked] = useState(photo.is_liked);
-	const [animate, setAnimate] = useState(false);
-	const { selectPhoto, likePhoto, unlikePhoto } = usePhotoFacade();
-	const handleLikeToggle = () => {
-		setAnimate(true);
-		setTimeout(() => setAnimate(false), 500);
-		if (liked) {
-			setLiked(false);
-			unlikePhoto(photo.id);
-		} else {
-			setLiked(true);
-			likePhoto(photo.id);
-		}
-	};
+export const PhotoCard: React.FC<PhotoCardProps> = ({ photo }) => {
+	const { selectPhoto, toggleLike } = usePhotoFacade();
 
 	return (
-		<Card className="flex items-center w-full max-w-sm m-2 drop-shadow-border !border-none ">
-			<CardContent className="flex gap-4 items-start w-full">
-				<Button
-					onClick={handleLikeToggle}
-					variant={"ghost"}
-					size="icon"
-					className="text-xl self-start rounded-full"
-					aria-label={liked ? "Dislike this photo" : "Like this photo"}
-				>
-					<Star
-						className={`transition-all duration-300 ${
-							liked ? "text-amber-300 fill-amber-300" : "text-gray-400"
-						} ${animate ? "scale-125" : "scale-100"}`}
-						strokeWidth={liked ? 1.5 : 2}
-						size={22}
-					/>
-				</Button>
-
-				<div
-					className="relative group cursor-pointer"
-					onClick={() => selectPhoto(photo.id)}
-					tabIndex={0}
-					role="button"
-					aria-label="Expand photo"
-				>
-					<img
-						src={photo.src_medium || photo.src_large || photo.src_original}
-						alt={photo.alt}
-						className="w-24 h-24 object-cover rounded-md"
-						loading="lazy"
-					/>
-					<div className="absolute inset-0 flex items-center justify-center bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity rounded-md">
-						<Expand />
+		<Card key={photo.id} className="group overflow-hidden hover:shadow-lg transition-shadow duration-300">
+			<CardContent className="p-0">
+				<div className="relative aspect-square overflow-hidden">
+					<div className="cursor-pointer" role="button" onClick={() => selectPhoto(photo.id)}>
+						<img
+							src={photo.src_large || photo.src_medium}
+							alt={photo.alt}
+							className="object-cover transition-transform w-full h-full duration-300 group-hover:scale-105 cursor-pointer"
+						/>
+						<div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 					</div>
+					<Button
+						size="icon"
+						variant="secondary"
+						className="absolute top-3 right-3 h-8 w-8 bg-white/90 hover:bg-white transition-colors duration-200"
+						onClick={() => toggleLike(photo)}
+					>
+						<Star
+							className={`h-4 w-4 transition-colors duration-200 ${
+								photo.is_liked ? "fill-amber-500 text-amber-500" : "text-gray-600 hover:text-amber-500"
+							}`}
+						/>
+					</Button>
 				</div>
 
-				<div className="flex flex-col gap-2 justify-between h-full  flex-1 overflow-hidden">
-					<div className="flex flex-col">
-						<CardTitle className="text-base font-semibold truncate">{photo.photographer}</CardTitle>
-						<CardDescription className="text-sm text-muted-foreground truncate">
-							{photo.alt || "Untitled"}
-						</CardDescription>
+				<div className="p-4 space-y-3">
+					<h3 className="font-medium text-sm line-clamp-2 text-gray-900 leading-relaxed">{photo.alt}</h3>
+
+					<div className="flex items-center justify-between">
+						<div className="flex items-center space-x-2 min-w-0 flex-1">
+							<span className="text-xs text-gray-500">by</span>
+							<a
+								href={photo.photographer_url}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors duration-200 truncate flex items-center gap-1 group/link"
+							>
+								{photo.photographer}
+								<ExternalLink className="h-3 w-3 opacity-0 group-hover/link:opacity-100 transition-opacity duration-200 flex-shrink-0" />
+							</a>
+						</div>
 					</div>
-					<Badge style={{ backgroundColor: photo.avg_color, color: "#fff" }}>{photo.avg_color}</Badge>
+
+					<div className="flex items-center justify-between pt-2 border-t border-gray-100">
+						<Badge style={{ backgroundColor: photo.avg_color }} variant="secondary" className="text-xs">
+							{photo.avg_color}
+						</Badge>
+						<span className="text-xs text-gray-400">
+							{photo.width} x {photo.height}
+						</span>
+					</div>
 				</div>
 			</CardContent>
 		</Card>
