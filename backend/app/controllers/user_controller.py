@@ -9,15 +9,16 @@ bp = Blueprint("user_controller", __name__, url_prefix="/users")
 def login():
     try:
         data = request.get_json()
-        errors = UserSchema(only=["username", "password"]).validate(data)
+        errors = UserSchema(only=["username", "password"]).validate(data, many=False)
         if errors:
-            return jsonify({"errors": errors}), 400
+            first_field = next(iter(errors))
+            return jsonify({"message": f"{first_field} is required", "error": 'Validation error'}), 400
         token, user = UserService.authenticate(data)
         if "password" in user:
             user = {k: v for k, v in user.items() if k != "password"}
         return jsonify({"token": token, "user": user})
     except Exception as e:
-        return jsonify({'error': str(e)}), 401
+        return jsonify({'message': str(e)}), 404
 
 
 

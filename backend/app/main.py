@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 from app.config import Config
 from app.extensions import db
@@ -25,6 +25,7 @@ def create_app():
                 verify_jwt_in_request()
             except Exception as e:
                 app.logger.exception(e)
+                return jsonify({"message": "Unauthorized"}), 401
                 
         
     register_routes(app)

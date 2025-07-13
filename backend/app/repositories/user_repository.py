@@ -9,7 +9,7 @@ class UserRepository:
     @staticmethod
     def find_by_username(username):
         user = User.query.filter_by(username=username).first()
-        return user.to_dict()
+        return None if user is None else user.to_dict()
 
     @staticmethod
     def save(user):

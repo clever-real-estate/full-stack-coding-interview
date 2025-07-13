@@ -1,4 +1,4 @@
-const baseUrl = import.meta.env.VITE_API_URL;
+const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 export const safeAwait = async <T>(promise: Promise<T>): Promise<[T, never] | [never, Error]> => {
 	try {
@@ -19,6 +19,14 @@ export async function apiFetch<T>(url: string, options?: RequestInit): Promise<T
 		headers,
 		...options,
 	});
-	if (!res.ok) throw new Error("API error");
-	return res.json();
+	const data = await res.json();
+	if (!res.ok) {
+		if (res.status === 401) {
+			localStorage.clear();
+			window.location.href = "/auth/login";
+			return Promise.reject(new Error("Unauthorized. Redirecting to login."));
+		}
+		throw new Error(data?.message || "An error ocurred");
+	}
+	return data;
 }

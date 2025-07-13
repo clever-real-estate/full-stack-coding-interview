@@ -6,7 +6,7 @@ import {
 	SidebarFooter,
 	SidebarGroup,
 	SidebarGroupContent,
-	SidebarGroupLabel,
+	SidebarHeader,
 	SidebarMenu,
 	SidebarMenuButton,
 	SidebarMenuItem,
@@ -14,6 +14,7 @@ import {
 import { Link } from "@tanstack/react-router";
 import { useAuth } from "@/features/auth/store";
 import { NavUser } from "./nav-user";
+import logo from "@/logo.svg";
 
 // Menu items.
 const items = [
@@ -45,8 +46,10 @@ export function AppSidebar() {
 	return (
 		<Sidebar collapsible="icon" variant="inset">
 			<SidebarContent>
+				<SidebarHeader>
+					<img src={logo} className="size-12" alt="logo" />
+				</SidebarHeader>
 				<SidebarGroup>
-					<SidebarGroupLabel>CL</SidebarGroupLabel>
 					<SidebarGroupContent>
 						<SidebarMenu>
 							{items.map((item) => (
