@@ -1,34 +1,95 @@
-# Clever's Fullstack Coding Interview
-👋 Hello!, Hola!, Witam!
+# Monorepo: Vite + React (Frontend) & Flask (Backend)
 
-Thank you for taking the time to interview with Clever. This coding challenge is meant to be an exercise to see how you code throughout the stack. We don't want this to take too much of your time (and if does, certainly let us know!).
+## 🐳 Running with Docker Compose
 
-### Requirements
-- Create a small web app to display photos and details about the photos.
-- For the back end, we primarily use Django and Ruby on Rails, but you're welcome to use whatever Python or Ruby framework you're most familiar with.
-- For the front end, although we'd like to see a small react app that interfaces with an API from the backend, if this ends up taking too much time, we are open to other options.
-- However, please use either `npm` or `yarn` for any front end package management.
+In the root folder, run:
 
-#### Product requirements
-- Make the "Sign in" page functional.
-- Make "All photos" require authentication to access.
-- Only need to show 10 photos on the "All photos" page. Paging is not required.
-- The authenticated user should be able to like a photo and have that like persisted to the database.
-- If pages are mobile responsive, thats a plus!
+```bash
+docker compose build
+docker compose up
+```
 
-### Details
-- We've provided a CSV with each row representing a photo & it's details. We'd like these to be the photos (and their details) we show on the front end of the app.
-- We want to keep this an open ended challenge, so take a look at the attached Figma mocks and add data models to the back end as you see fit. Use the attached CSV for the data.
-- Mocks for these pages are provided in [Figma](https://www.figma.com/file/wr1seCuhlRtoFGuz1iWgyF/Frontend-Coding-Mocks?type=design&node-id=0%3A1&mode=design&t=Uw1av3TypDUDcLAd-1). If you have any issues accessing, or aren't familiar with how to use Figma, just let us know.
-- There is also a logo and an icon provided (SVGs) included in this repo.
+## 🧪 Running services separately
+Frontend:
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
-### Final Thoughts
-- You can fork this repo and commit your code there. Please open a PR from the fork _back_ to the main repo, and once done, please add the following users as members so we can review:
-  - James Crain (@imjamescrain)
-  - Jimmy Lien (@jlien)
-  - Nick Clucas (@nickcluc)
-  - Ryan McCue (@rymccue)
-- If you do find yourself spending too much time on the exercise itself, let us know what next steps you would take in a README file.
-- We'll circle back with you and review 1:1.
+Backend:
+```bash
+cd backend
 
-**Any questions**, just let us know. Send emails to <a href="mailto:nick.clucas@movewithclever.com">nick.clucas@movewithclever.com</a>. Good luck!
+# Create a virtual environment
+python -m venv .venv
+
+# Activate the virtual environment
+# On Linux/macOS:
+source .venv/bin/activate
+# On Windows:
+.venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the application
+python run.py
+```
+Access:
+
+Frontend: http://localhost:5173
+
+Backend: http://localhost:5000
+
+## ⚙️ Requirements
+Node.js 20+
+
+Python 3.11+
+
+Docker 20.10+
+
+## Seeded User for login:
+
+Username: 'user1'
+
+Password: 'password1'
+
+# 🚧 Future Improvements (If I Had More Time)
+
+---
+
+## 🧩 Frontend (React + Vite)
+
+### 🔐 Advanced User Features
+- Full user system with **sign up**, **profile editing**, and **password reset** workflows.
+- **Avatar upload and preview** functionality integrated into the user profile page.
+
+### 📷 Photo Upload System
+- Upload individual photos with previews and validations.
+- Bulk photo import via **CSV file** with automatic parsing and **bulk insert** into the database.
+
+### 💬 Social Features
+- Users could **comment on photos** from other users.
+- Real-time **photo feed** using WebSockets or SSE.
+- Integrated **notification system** for likes, comments, and new uploads.
+
+### 🧪 Unit Testing
+- Add **unit tests** for components and utility functions using `Vitest` or `Jest` for better reliability and future-proofing.
+- Set up coverage reports and test watch mode for fast feedback.
+
+---
+
+## 🧠 Backend (Flask)
+
+### 🧪 Testing
+- Add **unit and integration tests** using `pytest` and `coverage`.
+
+### 🗃️ Database & Migrations
+- Replace SQLite with **PostgreSQL** for better scalability and performance.
+- Set up a **robust migration system** using `Flask-Migrate` to handle schema changes reliably in different environments.
+
+### 🛑 Error Handling
+- Add **custom exception classes** to improve error clarity, reduce repetition, and return consistent API error responses.
+
+
