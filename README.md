@@ -57,8 +57,6 @@ Password: 'password1'
 
 # 🚧 Future Improvements (If I Had More Time)
 
-This monorepo lays the foundation for a complete web application, built with **React + Vite** on the frontend and **Flask** on the backend. While the current implementation delivers a solid MVP, here’s what I would have implemented given more time:
-
 ---
 
 ## 🧩 Frontend (React + Vite)
@@ -76,22 +74,22 @@ This monorepo lays the foundation for a complete web application, built with **R
 - Real-time **photo feed** using WebSockets or SSE.
 - Integrated **notification system** for likes, comments, and new uploads.
 
+### 🧪 Unit Testing
+- Add **unit tests** for components and utility functions using `Vitest` or `Jest` for better reliability and future-proofing.
+- Set up coverage reports and test watch mode for fast feedback.
+
 ---
 
 ## 🧠 Backend (Flask)
+
+### 🧪 Testing
+- Add **unit and integration tests** using `pytest` and `coverage`.
 
 ### 🗃️ Database & Migrations
 - Replace SQLite with **PostgreSQL** for better scalability and performance.
 - Set up a **robust migration system** using `Flask-Migrate` to handle schema changes reliably in different environments.
 
-### 🧱 Business Logic
-- Better **separation of concerns** by splitting business rules from route handlers into services/use cases.
-- More modular and testable architecture to improve long-term maintainability.
+### 🛑 Error Handling
+- Add **custom exception classes** to improve error clarity, reduce repetition, and return consistent API error responses.
 
----
 
-## 🧪 Testing & CI/CD (Planned)
-- Add **unit and integration tests** using `pytest` and `coverage`.
-- Set up **CI pipeline** for linting, testing, and auto-deployments using GitHub Actions.
-
----
