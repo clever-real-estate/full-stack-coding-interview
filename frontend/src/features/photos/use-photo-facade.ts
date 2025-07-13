@@ -42,7 +42,6 @@ export const usePhotoFacade = (options: { favorite: boolean } = { favorite: fals
 		if (!id) return;
 		const found = photos?.find((p) => p.id === id);
 		if (!found) return;
-		console.log("FOUND", found);
 		navigate({ to: "/app", search: (prev) => ({ ...prev, photo: found.id }), resetScroll: false });
 	};
 

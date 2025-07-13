@@ -7,7 +7,6 @@ import { useIsMobile } from "@/hooks/use-mobile";
 
 export default function PhotoDetails() {
 	const { toggleLike, selectedPhoto, unselectPhoto, navigatePhoto } = usePhotoFacade();
-	console.log("SELECTED", selectedPhoto);
 	const [isOpen, setIsOpen] = useState(false);
 	const [transitioning, setTransitioning] = useState(false);
 
