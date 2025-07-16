@@ -1,5 +1,10 @@
 # Rodrigo's notes
 
+When doing the initial fork, I used the "use this template" option
+instead of forking, so now I have to copy everything at once. This is what the commit history looked like before:
+<img width="873" height="246" alt="image" src="https://github.com/user-attachments/assets/ce693329-ecf4-49c5-a578-d815689ef5d4" />
+
+
 ## About the app
 
 Despite demanding some more time to implement, I believe those kind of takehomes exercises are indeed a good reflection of the day to day work. Of course there are some things that I would do differently if I had more time, but I believe I've implemented all the requirements. I've also spent some time trying to achieve an almost pixel perfect reflection of the figma mockups. I'm proud of the result for the most part. 
