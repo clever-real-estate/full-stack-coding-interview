@@ -7,9 +7,9 @@ instead of forking, so now I have to copy everything at once. This is what the c
 
 ## About the app
 
-Despite demanding some more time to implement, I believe those kind of takehomes exercises are indeed a good reflection of the day to day work. Of course there are some things that I would do differently if I had more time, but I believe I've implemented all the requirements. I've also spent some time trying to achieve an almost pixel perfect reflection of the figma mockups. I'm proud of the result for the most part. 
+Despite demanding more time to implement, I believe that kind of take-home exercise is indeed a good reflection of day-to-day work. Of course, there are some things that I would do differently if I had more time, but I believe I've implemented all the requirements. I've also spent some time trying to achieve an almost pixel-perfect reflection of the Figma mockups. I'm proud of the result for the most part. 
 
-So, The app is a simple rails app with a react frontend.
+So, the app is a simple Rails app with a React frontend.
 
 ## Rails side
 
@@ -20,30 +20,30 @@ I've used the following commands to generate the app:
 
 After that, just the basic setup. 
 
-I've decided to have the BaseControllers ( session, users, application) in the `app/controllers` folder. those are the ones that handle the login and return the base template. Photos and Likes are handled with an special `ApiController` that handles the  special authentication (there is a different fallbackto just return 404 instead of redirecting to the login page) and returns just json responses.
+I've decided to have the BaseControllers ( session, users, application) in the `app/controllers` folder. Those are the ones that handle the login and return the base template. Photos and Likes are handled with a special `ApiController` that handles the  special authentication (there is a different fallback to just return 404 instead of redirecting to the login page) and returns just JSON responses.
 
 In terms of Likes, I've created a Like model, and its controller has `like` and `unlike` actions. 
 And the like counter is (smartly, I guess) implemented using the  native [counter_cache](https://api.rubyonrails.org/classes/ActiveRecord/CounterCache.html) module.
 
 ### Database
 
-I've used sqlite3 for the database. I've created a `db/seeds.rb` file to populate the database with the data from the csv file. It adds two test users and loads the photos from the csv file.
+I've used sqlite3 for the database. I've created a `db/seeds.rb` file to populate the database with the data from the CSV file. It adds two test users and loads the photos from the csv file.
 
 ### Tests
 
-I've used minitest for the test, for the simple reason that I've never used it before (just rspec). There are just tests for the controllers since I believe the rest of the app is pretty straightforward.
+I've used minitest for the test, for the simple reason that I've never used it before (just RSpec). There are just tests for the controllers since I believe the rest of the app is pretty straightforward.
 
 ## React side
 
-On the react side, nothing too fancy. I've used react-query (I guess it is called tanstack query now), and tailwind. 
+On the React side, nothing too fancy. I've used react-query (I guess it is called tanstack query now) and tailwind. 
 
 The like/unlike functionality is implemented using the `toggleLike` function in the `AllPhotos` component.
 
-Using typescript for the frontend.
+Using TypeScript for the frontend.
 
 ## UI 
 
-As I mentioned, I've tried to get as close as possible to the figma mockups. Pretty much just using tailwind classes with some really small customizations (like font-family and a few font sizes)
+As I mentioned, I've tried to get as close as possible to the Figma mockups. Pretty much just using tailwind classes with some really small customizations (like font-family and a few font sizes)
 
 ## How to run the app
 
@@ -59,7 +59,7 @@ The login page should have pre-filled credentials, and you can also check the `d
 
 ## Final thoughts
 
-I've enjoyed implementing this exercise. There was not many new things for me, I guess just the new rails version, and somethings for its assets pipeline.
+I've enjoyed implementing this exercise. There was not many new things for me, I guess just the new Rails version, and some things for its asset pipeline.
 
 Let me know if we need to discuss anything else. Thanks!
 
