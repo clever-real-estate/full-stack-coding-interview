@@ -1,0 +1,65 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# == Schema Information
+#
+# Table name: photos
+#
+#  id               :integer          not null, primary key
+#  alt              :text
+#  avg_color        :string
+#  height           :integer
+#  likes_count      :integer          default(0), not null
+#  photographer     :string
+#  photographer_url :string
+#  src_landscape    :string
+#  src_large        :string
+#  src_large2x      :string
+#  src_medium       :string
+#  src_original     :string
+#  src_portrait     :string
+#  src_small        :string
+#  src_tiny         :string
+#  url              :string
+#  width            :integer
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  pexels_id        :integer
+#  photographer_id  :integer
+#
+one:
+  pexels_id: 1
+  width: 1
+  height: 1
+  url: MyString
+  photographer: MyString
+  photographer_url: MyString
+  photographer_id: 1
+  avg_color: MyString
+  src_original: MyString
+  src_large2x: MyString
+  src_large: MyString
+  src_medium: MyString
+  src_small: MyString
+  src_portrait: MyString
+  src_landscape: MyString
+  src_tiny: MyString
+  alt: MyText
+
+two:
+  pexels_id: 1
+  width: 1
+  height: 1
+  url: MyString
+  photographer: MyString
+  photographer_url: MyString
+  photographer_id: 1
+  avg_color: MyString
+  src_original: MyString
+  src_large2x: MyString
+  src_large: MyString
+  src_medium: MyString
+  src_small: MyString
+  src_portrait: MyString
+  src_landscape: MyString
+  src_tiny: MyString
+  alt: MyText

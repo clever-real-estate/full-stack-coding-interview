@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+@theme {
+    --font-sans: "Helvetica", sans-serif;
+    --text-sm: 14px;
+    --color-gray-700: #111827
+    --color-blue-600: #0075EB
+}
