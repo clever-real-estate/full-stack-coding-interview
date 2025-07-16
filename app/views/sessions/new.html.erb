@@ -1,0 +1,55 @@
+<div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-md w-full space-y-8">
+    <div>
+      <div class="mx-auto h-16 w-16 flex items-center justify-center rounded-full">
+        <img src="/logo.svg" alt="Logo"  class="h-16 w-16" />
+      </div>
+      <h2 class="mt-6 text-center text-xl font-bold text-gray-700">
+        Sign in to your account
+      </h2>
+    </div>
+
+    <% if flash[:alert] %>
+      <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md">
+        <%= flash[:alert] %>
+      </div>
+    <% end %>
+
+    <% if flash[:notice] %>
+      <div class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-md">
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
+
+    <%= form_with url: session_path, class: "mt-8 space-y-6" do |form| %>
+      <div class="rounded-md shadow-sm -space-y-px">
+          <label for="session_email_address" class="block text-sm font-bold text-gray-700 mb-1">Username</label>
+          <%= form.email_field :email_address, 
+              required: true, 
+              autofocus: true, 
+              autocomplete: "username", 
+              placeholder: "test@test.com", 
+              value: (params[:email_address] || (Rails.env.development? ? "test@test.com" : nil)),
+              class: "appearance-none w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
+        </div>
+        <div>
+          <div class="flex flex-row justify-between">
+            <label for="session_password" class="block text-sm font-bold text-gray-700 mb-1">Password</label>
+            <%= link_to "Forgot your password?", new_password_path, class: "text-sm text-blue-600 font-normal" %>
+          </div>
+          <%= form.password_field :password, 
+              required: true, 
+              autocomplete: "current-password", 
+              placeholder: "********", 
+              maxlength: 72,
+              value: (Rails.env.development? ? "1234" : nil),
+              class: "appearance-none w-full px-3 py-2 border cursor-pointer border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
+        </div>
+      <div>
+        <%= form.submit "Sign in", class: "group cursor-pointer relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
+      </div>
+      </div>
+
+    <% end %>
+  </div>
+</div>
