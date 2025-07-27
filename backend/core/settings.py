@@ -21,11 +21,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'photos.apps.PhotosConfig',
+    'rest_framework',
+    'rest_framework_simplejwt',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -83,3 +87,38 @@ STATIC_URL = 'static/'
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# --- API & SECURITY CONFIGURATION (BEGINNING) ---
+# CORS (Cross-Origin Resource Sharing) Configuration
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173", # Vite React default
+    "http://127.0.0.1:5173",
+]
+
+# Django REST Framework Configuration
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated', # Secure by default
+    ],
+}
+
+# Read the contents of our keys
+with open(BASE_DIR / 'certs/private.pem', 'rb') as f:
+    PRIVATE_KEY = f.read()
+with open(BASE_DIR / 'certs/public.pem', 'rb') as f:
+    PUBLIC_KEY = f.read()
+
+# Simple JWT Configuration
+SIMPLE_JWT = {
+    "SIGNING_KEY": PRIVATE_KEY,
+    "VERIFYING_KEY": PUBLIC_KEY,
+    "ALGORITHM": "RS256",
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "AUTH_HEADER_TYPES": ("Bearer",),
+}
+# --- API & SECURITY CONFIGURATION (END) ---
+
