@@ -4,3 +4,15 @@ __pycache__/
 
 # Virtual environment
 venv/
+*/venv/
+
+# Environment variables
+.env
+*.env
+
+# Database
+*.sqlite3
+db.sqlite3
+
+# Log files
+*.log
