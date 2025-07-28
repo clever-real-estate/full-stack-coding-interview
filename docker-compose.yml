@@ -7,12 +7,12 @@ services:
       - ./backend:/app/backend
       - ./data/photos.csv:/app/data/photos.csv
     working_dir: /app/backend
+    command: gunicorn core.wsgi:application --bind 0.0.0.0:8000
   frontend:
     build: ./frontend
     ports:
       - "5173:80"
     volumes:
       - ./frontend:/app/frontend
-      - /app/node_modules
     depends_on:
       - backend
