@@ -7,10 +7,12 @@ services:
       - ./backend:/app/backend
       - ./data/photos.csv:/app/data/photos.csv
     working_dir: /app/backend
-  # frontend:
-  #   build: ./frontend
-  #   ports:
-  #     - "3000:3000"
-  #   volumes:
-  #     - ./frontend:/app/frontend
-  #   working_dir: /app/frontend
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:80"
+    volumes:
+      - ./frontend:/app/frontend
+      - /app/node_modules
+    depends_on:
+      - backend
