@@ -1,0 +1,10 @@
+@config "../tailwind.config.js";
+@import "tailwindcss";
+@theme {
+  --color-primary: #3b82f6;
+  --font-display: "Inter", sans-serif;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

@@ -1,0 +1,42 @@
+services:
+  backend:
+    build: ./backend
+    volumes:
+      - ./backend:/app/backend
+      - ./data/photos.csv:/app/data/photos.csv
+    ports:
+      - "8000:8000"
+    working_dir: /app/backend
+    command: gunicorn core.wsgi:application --bind 0.0.0.0:8000
+    networks:
+      - app-network
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      - frontend_build:/usr/share/nginx/html
+    depends_on:
+      - backend
+      - frontend
+    networks:
+      - app-network
+
+volumes:
+  frontend_build:
+
+networks:
+  app-network:
+    driver: bridge
+

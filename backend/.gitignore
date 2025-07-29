@@ -1,0 +1,28 @@
+# Python / Django
+__pycache__/
+*.pyc
+
+# Virtual environment
+venv/
+*/venv/
+
+# Environment variables
+.env
+*.env
+
+# Database
+*.sqlite3
+db.sqlite3
+
+# Log files
+*.log
+
+# JWT and PEM files
+*.pem
+*.key
+
+# Django static files collection directory
+staticfiles/
+
+# Media files (user-uploaded content)
+mediafiles/

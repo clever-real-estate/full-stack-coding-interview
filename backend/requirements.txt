@@ -1,0 +1,7 @@
+django
+djangorestframework
+djangorestframework-simplejwt
+python-decouple
+django-cors-headers
+gunicorn
+cryptography
