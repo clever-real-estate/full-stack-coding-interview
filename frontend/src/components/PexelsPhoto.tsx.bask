@@ -1,0 +1,94 @@
+import {
+  memo,
+  useState, 
+  useCallback,
+} from 'react';
+import { Link } from 'react-router-dom';
+
+import {
+  generateSrcSet,
+  getOptimizedImageUrl,
+  getImageBaseUrl,
+} from '@/utils/imageUtils';
+import { Photo } from '@/types';
+
+interface PhotoProps {
+  photo: Photo;
+  className?: string;
+  isLoaded: boolean;
+  height: number;
+  quality: number;
+  priority: 'high' | 'low';
+  placeholder: string;
+}
+
+const PexelsPhoto = memo(({
+  photo,
+  className = '',
+  isLoaded,
+  height,
+  quality = 75,
+  priority = 'low',
+  placeholder,
+}: PhotoProps) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasError, setHasError] = useState(false);
+  const baseUrl = getImageBaseUrl(photo.image_url);
+  const src = getOptimizedImageUrl(photo.image_url, height, quality);
+  const srcSet = generateSrcSet(baseUrl, 'webp', quality);
+
+  const handleLoad = useCallback(() => {
+    setIsLoading(false);
+  }, []);
+
+  const handleError = useCallback(() => {
+    setIsLoading(false);
+    setHasError(true);
+  }, []);
+
+  if (hasError) {
+    return (
+      <div className={`photo-container ${className}`} role="img" aria-label={photo.alt_text}>
+        <div className="photo-error">
+          <span>📷</span>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <Link to={`/photo/${photo.id}`} className="block">
+      <div className="relative overflow-hidden rounded-lg">
+        <picture>
+          <source
+            type="image/avif"
+            srcSet={isLoading || !isLoaded ? srcSet : undefined}
+          />
+          <source
+            type="image/webp"
+            srcSet={isLoading || !isLoaded ? srcSet : undefined}
+          />
+          <img
+            src={isLoading || !isLoaded ? src : placeholder}
+            alt={`${photo.alt_text} by ${photo.photographer}`}
+            className={`w-full h-full object-cover transition-opacity duration-300 photo-image ${isLoading || !isLoaded ? 'photo-image--loading opacity-100' : 'opacity-0 blur-md'}`}
+            onLoad={handleLoad}
+            onError={handleError}
+            loading={priority === 'high' ? 'eager' : 'lazy'}
+            decoding="async"
+            fetchPriority={priority}
+          />
+          {!isLoading && isLoaded && (
+            <img
+              src={placeholder}
+              alt="photo-image--loading"
+              className="w-full h-full object-cover absolute top-0 left-0 blur-md opacity-50"
+            />
+          )}
+        </picture>
+      </div>
+    </Link>
+  );
+});
+
+export default PexelsPhoto;

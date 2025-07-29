@@ -1,41 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-
+import { useAuth } from '@/hooks/useAuth';
 import apiClient from '@/api/apiClient';
 import Logo from '@/assets/logo.svg';
 
 const SignInPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const { user, login, isLoading: authLoading } = useAuth();
   const navigate = useNavigate();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [localError, setLocalError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      navigate('/photos');
+    }
+  }, [user, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(null);
+    setLocalError(null);
+    setIsSubmitting(true);
 
-    setIsLoading(true);
     try {
-      const data = {
-        email,
-        password,
-      }
-      console.log('Sending POST to /api/users/signin/', { email });
-      await apiClient.post('/api/users/signin/', data);
-      console.log('Signin successful, navigating to dashboard');
-      navigate('/dashboard');
+      const credentials = { username, password };
+      console.log('Attempting login with:', { username });
+      const response = await apiClient.post<{ access: string; refresh: string }>('/token/', credentials);
+      const { access, refresh } = response.data;
+      login(access, refresh);
+      console.log('Login successful, navigating to /photos');
+      navigate('/photos');
     } catch (err: any) {
-      console.error('Signin error:', err.response?.data || err.message);
+      console.error('Login error:', err.response?.data || err.message);
       if (err.response && err.response.data) {
         const apiErrors = err.response.data;
-        const errorMessage = Object.values(apiErrors).flat().join(' ');
-        setError(errorMessage || 'An unknown error occurred.');
+        setLocalError(Object.values(apiErrors).flat().join(' ') || 'An unknown error occurred.');
       } else {
-        setError('Failed to connect to the server. Please try again later.');
+        setLocalError('Failed to connect to the server. Please try again later.');
       }
     } finally {
-      setIsLoading(false);
+      setIsSubmitting(false);
     }
   };
 
@@ -43,8 +48,8 @@ const SignInPage = () => {
     <div className="min-h-screen bg-white-100 flex items-center justify-center p-4">
       <div className="w-full max-w-xs space-y-3">
         <div className="flex justify-center">
-          <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
-            <img
+          <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center">
+            <img
               src={Logo}
               alt="Company Logo"
               decoding="async"
@@ -59,17 +64,17 @@ const SignInPage = () => {
         <div className="bg-white p-4 rounded-lg">
           <form className="space-y-3" onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                Email address
+              <label htmlFor="username" className="block text-sm font-medium text-gray-700">
+                Username
               </label>
               <input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
+                id="username"
+                name="username"
+                type="text"
+                autoComplete="username"
                 required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 className="p-2 mt-1 block w-full border-2 border-gray-300 rounded-md focus:border-blue-500 focus:ring-blue-500 text-sm py-1.5"
               />
             </div>
@@ -88,14 +93,14 @@ const SignInPage = () => {
                 className="p-2 mt-1 block w-full border-2 border-gray-300 rounded-md focus:border-blue-500 focus:ring-blue-500 text-sm py-1.5"
               />
             </div>
-            {error && <div className="text-red-600 text-sm">{error}</div>}
+            {localError && <div className="text-red-600 text-sm">{localError}</div>}
             <div>
               <button
                 type="submit"
-                disabled={isLoading}
+                disabled={isSubmitting || authLoading}
                 className="w-full py-1.5 px-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-blue-300 text-sm"
               >
-                {isLoading ? 'Signing in...' : 'Sign In'}
+                {isSubmitting || authLoading ? 'Signing in...' : 'Sign In'}
               </button>
             </div>
           </form>

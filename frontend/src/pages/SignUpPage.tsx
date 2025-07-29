@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import apiClient from '@/api/apiClient';
-import Logo from '@/assets/logo.svg';
+import logo from '@/assets/logo.svg';
 
 const SignUpPage = () => {
   const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -27,10 +26,9 @@ const SignUpPage = () => {
     try {
       const data = {
         username,
-        email,
         password,
       }
-      console.log('Sending POST to /api/users/signup/', { username, email });
+      console.log('Sending POST to /api/users/signup/', { username });
       await apiClient.post('/users/signup/', data);
       console.log('Signup successful, navigating to /signin');
       navigate('/signin');
@@ -52,9 +50,9 @@ const SignUpPage = () => {
     <div className="min-h-screen bg-white-100 flex items-center justify-center p-4">
       <div className="w-full max-w-xs space-y-3">
         <div className="flex justify-center">
-          <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
+          <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center">
             <img
-              src={Logo}
+              src={logo}
               alt="Company Logo"
               decoding="async"
               fetchPriority="high"
@@ -81,22 +79,6 @@ const SignUpPage = () => {
                 required
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="p-2 mt-1 block w-full border-2 border-gray-300 rounded-md focus:border-blue-500 focus:ring-blue-500 text-sm py-1.5"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                Email address
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
                 className="p-2 mt-1 block w-full border-2 border-gray-300 rounded-md focus:border-blue-500 focus:ring-blue-500 text-sm py-1.5"
               />
             </div>

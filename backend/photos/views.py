@@ -46,18 +46,32 @@ class LikeToggleAPIView(APIView):
         """
         Handles the POST request to toggle a like on a photo.
         """
-        photo = get_object_or_404(Photo, id=photo_id)
-        
-        like, created = Like.objects.get_or_create(user=request.user, photo=photo)
-        
+        try:
+            photo_id = int(photo_id)
+        except ValueError:
+            return Response({'error': 'Invalid photo ID'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            photo = Photo.objects.get(id=photo_id)
+        except Photo.DoesNotExist:
+            return Response({'error': 'Photo not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        try:
+            like, created = Like.objects.get_or_create(user=request.user, photo=photo)
+        except Like.MultipleObjectsReturned:
+            Like.objects.filter(user=request.user, photo=photo).delete()
+            created = False
+
         if not created:
             like.delete()
+            photo.refresh_from_db()
             return Response({
                 'status': 'unliked',
                 'likes_count': photo.likes.count(),
                 'message': 'Photo unliked successfully'
             }, status=status.HTTP_200_OK)
-        
+
+        photo.refresh_from_db()
         return Response({
             'status': 'liked',
             'likes_count': photo.likes.count(),

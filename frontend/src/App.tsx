@@ -6,9 +6,7 @@ import {
 
 import SignInPage from '@/pages/SignInPage';
 import SignUpPage from '@/pages/SignUpPage';
-import AllPhotosPage from '@/pages/AllPhotosPage';
-
-import MainLayout from '@/components/layout/MainLayout';
+import PhotoGallery from '@/pages/PhotoGallery';
 
 function App() {
   return (
@@ -16,8 +14,7 @@ function App() {
       <Routes>
         <Route path="/signin" element={<SignInPage />}/>
         <Route path="/signup" element={<SignUpPage />}/>
-        <Route element={<MainLayout />} />
-        <Route path="/" element={<AllPhotosPage />} />
+        <Route path="/photos" element={<PhotoGallery />} />
       </Routes>
     </BrowserRouter>
   );
