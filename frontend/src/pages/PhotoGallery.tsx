@@ -166,7 +166,7 @@ const PhotoGallery = () => {
               {photos.map((photo, index) => (
                 <PhotoItem
                   key={photo.id}
-                  ref={el => photoRefs.current[index] = el}
+                  ref={(el: any) => photoRefs.current[index] = el}
                   photo={photo}
                   onToggleLike={handleLikeToggle}
                   index={index}
