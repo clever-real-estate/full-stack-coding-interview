@@ -38,7 +38,10 @@ export default function PhotoDetails() {
 	const isLiked = selectedPhoto?.is_liked;
 	return (
 		<Dialog open={isOpen} onOpenChange={onOpenChange}>
-			<DialogContent className="min-w-[90vw] w-full h-[90vh] p-0 overflow-hidden">
+			<DialogContent
+				data-testid={`photo-details-${selectedPhoto?.id}`}
+				className="min-w-[90vw] w-full h-[90vh] p-0 overflow-hidden"
+			>
 				{selectedPhoto && (
 					<div className="flex flex-col md:flex-row h-full">
 						<div className="flex-1 relative bg-background flex items-center justify-center min-h-[50vh] md:min-h-full">

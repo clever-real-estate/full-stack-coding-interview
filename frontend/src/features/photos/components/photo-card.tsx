@@ -16,10 +16,19 @@ export const PhotoCard: React.FC<PhotoCardProps> = ({ photo }) => {
 	const { selectPhoto, toggleLike } = usePhotoFacade();
 
 	return (
-		<Card key={photo.id} className="group overflow-hidden hover:shadow-lg transition-shadow duration-300">
+		<Card
+			key={photo.id}
+			data-testid={`photo-card-${photo.id}`}
+			className="group overflow-hidden hover:shadow-lg transition-shadow duration-300"
+		>
 			<CardContent className="p-0">
 				<div className="relative aspect-square overflow-hidden">
-					<div className="cursor-pointer" role="button" onClick={() => selectPhoto(photo.id)}>
+					<div
+						className="cursor-pointer"
+						role="button"
+						data-testid={`photo-card-image-${photo.id}`}
+						onClick={() => selectPhoto(photo.id)}
+					>
 						<img
 							src={photo.src_large || photo.src_medium}
 							alt={photo.alt}
@@ -29,7 +38,9 @@ export const PhotoCard: React.FC<PhotoCardProps> = ({ photo }) => {
 					</div>
 					<Button
 						size="icon"
+						aria-description="like-button"
 						variant="secondary"
+						data-liked={photo.is_liked}
 						className="absolute top-3 right-3 h-8 w-8 bg-white/90 hover:bg-white transition-colors duration-200"
 						onClick={() => toggleLike(photo)}
 					>
