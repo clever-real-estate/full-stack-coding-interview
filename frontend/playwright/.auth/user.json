@@ -1,0 +1,18 @@
+{
+  "cookies": [],
+  "origins": [
+    {
+      "origin": "http://localhost:5173",
+      "localStorage": [
+        {
+          "name": "auth",
+          "value": "{\"state\":{\"user\":{\"id\":1,\"token\":null,\"username\":\"Vinicius\"}},\"version\":0}"
+        },
+        {
+          "name": "bearer",
+          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc1Mzk2NzcwNCwianRpIjoiZDk0MjE4NjAtMmJlZS00NmRhLWIyMTgtMzZhMTZkOGQ1NjgwIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjEiLCJuYmYiOjE3NTM5Njc3MDQsImNzcmYiOiI0MmUzMDRlOS03ODI2LTQwNzktODg2NS0yOWUzYzg4MDczOTciLCJleHAiOjE3NTM5Njg2MDR9.DoF5lG6xIwzpL_RbiFtpKQ32LxseY6Qig4xSh-Kmeu4"
+        }
+      ]
+    }
+  ]
+}
